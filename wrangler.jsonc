@@ -2,16 +2,5 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "toolhub-production",
   "compatibility_date": "2024-03-20",
-  "pages_build_output_dir": "out",
-  "headers": [
-    {
-      "pattern": "/*",
-      "headers": {
-        "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob:; worker-src 'self' blob: https://cdnjs.cloudflare.com",
-        "X-Frame-Options": "DENY",
-        "X-Content-Type-Options": "nosniff",
-        "Referrer-Policy": "strict-origin-when-cross-origin"
-      }
-    }
-  ]
+  "pages_build_output_dir": "out"
 }
