@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://toolhub.pages.dev'),
   title: {
     default: "ToolHub — Privacy-First Web Tools",
     template: "%s | ToolHub",
