@@ -29,23 +29,285 @@ const MODULE_REGISTRY: Record<string, any> = {
     ssr: false,
     loading: () => <SkeletonLoader /> 
   }),
+  'image-compressor': dynamic(() => import('@/components/tools/modules/ImageCompressor'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'pdf-merger': dynamic(() => import('@/components/tools/modules/PdfMerger'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'pdf-compressor': dynamic(() => import('@/components/tools/modules/PdfCompressor'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'qr-code-generator': dynamic(() => import('@/components/tools/modules/QrCodeGenerator'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'password-generator': dynamic(() => import('@/components/tools/modules/PasswordGenerator'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'json-formatter': dynamic(() => import('@/components/tools/modules/JsonFormatter'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'live-transcription': dynamic(() => import('@/components/tools/modules/LiveTranscription'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'image-bulk-converter': dynamic(() => import('@/components/tools/modules/ImageBulkConverter'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'esign-pdf': dynamic(() => import('@/components/tools/modules/EsignPdf'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'pdf-form-filler': dynamic(() => import('@/components/tools/modules/PdfFormFiller'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'pdf-ocr': dynamic(() => import('@/components/tools/modules/PdfOcr'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'resume-builder': dynamic(() => import('@/components/tools/modules/ResumeBuilder'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'ai-image-upscaler': dynamic(() => import('@/components/tools/modules/AiImageUpscaler'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'multi-model-ai-chat': dynamic(() => import('@/components/tools/modules/MultiModelAiChat'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'ai-document-chat': dynamic(() => import('@/components/tools/modules/AiDocumentChat'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'ai-video-subtitler': dynamic(() => import('@/components/tools/modules/AiVideoSubtitler'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'mp3-compressor': dynamic(() => import('@/components/tools/modules/Mp3Compressor'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'gif-to-mp4': dynamic(() => import('@/components/tools/modules/GifToMp4'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'video-trimmer': dynamic(() => import('@/components/tools/modules/VideoTrimmer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'tiktok-video-downloader': dynamic(() => import('@/components/tools/modules/TiktokVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ad-blocker-extension': dynamic(() => import('@/components/tools/modules/AdBlockerExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'youtube-downloader': dynamic(() => import('@/components/tools/modules/YoutubeDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'instagram-video-downloader': dynamic(() => import('@/components/tools/modules/InstagramVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'youtube-video-downloader-extension': dynamic(() => import('@/components/tools/modules/YoutubeVideoDownloaderExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'facebook-video-downloader': dynamic(() => import('@/components/tools/modules/FacebookVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-translator': dynamic(() => import('@/components/tools/modules/AiTranslator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'grammar-checker-extension': dynamic(() => import('@/components/tools/modules/GrammarCheckerExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-word': dynamic(() => import('@/components/tools/modules/PdfToWord'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-image-generator': dynamic(() => import('@/components/tools/modules/AiImageGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'speed-test': dynamic(() => import('@/components/tools/modules/SpeedTest'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'twitter-video-downloader': dynamic(() => import('@/components/tools/modules/TwitterVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'spotify-mp3-downloader': dynamic(() => import('@/components/tools/modules/SpotifyMp3Downloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'compress-image-to-50kb': dynamic(() => import('@/components/tools/modules/CompressImageTo50kb'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'currency-converter': dynamic(() => import('@/components/tools/modules/CurrencyConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'logo-maker': dynamic(() => import('@/components/tools/modules/LogoMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'mp4-to-mp3': dynamic(() => import('@/components/tools/modules/Mp4ToMp3'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'word-to-pdf': dynamic(() => import('@/components/tools/modules/WordToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-writing-assistant': dynamic(() => import('@/components/tools/modules/AiWritingAssistant'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'percentage-calculator': dynamic(() => import('@/components/tools/modules/PercentageCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'jpg-to-pdf': dynamic(() => import('@/components/tools/modules/JpgToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'online-timer': dynamic(() => import('@/components/tools/modules/OnlineTimer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'plagiarism-checker': dynamic(() => import('@/components/tools/modules/PlagiarismChecker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'age-calculator': dynamic(() => import('@/components/tools/modules/AgeCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'heic-to-jpg': dynamic(() => import('@/components/tools/modules/HeicToJpg'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-jpg': dynamic(() => import('@/components/tools/modules/PdfToJpg'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-ppt': dynamic(() => import('@/components/tools/modules/PdfToPpt'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'fancy-text-generator': dynamic(() => import('@/components/tools/modules/FancyTextGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'stopwatch': dynamic(() => import('@/components/tools/modules/Stopwatch'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'reddit-video-downloader': dynamic(() => import('@/components/tools/modules/RedditVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'background-remover': dynamic(() => import('@/components/tools/modules/BackgroundRemover'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'webp-to-jpg': dynamic(() => import('@/components/tools/modules/WebpToJpg'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'wheel-of-names': dynamic(() => import('@/components/tools/modules/WheelOfNames'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'object-remover': dynamic(() => import('@/components/tools/modules/ObjectRemover'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ppt-to-pdf': dynamic(() => import('@/components/tools/modules/PptToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'temporary-email-generator': dynamic(() => import('@/components/tools/modules/TemporaryEmailGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'screen-recorder-extension': dynamic(() => import('@/components/tools/modules/ScreenRecorderExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'to-do-list': dynamic(() => import('@/components/tools/modules/ToDoList'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'excel-to-pdf': dynamic(() => import('@/components/tools/modules/ExcelToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'emi-calculator': dynamic(() => import('@/components/tools/modules/EmiCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'character-counter': dynamic(() => import('@/components/tools/modules/CharacterCounter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'video-to-text-transcription': dynamic(() => import('@/components/tools/modules/VideoToTextTranscription'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'word-counter': dynamic(() => import('@/components/tools/modules/WordCounter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'crop-image': dynamic(() => import('@/components/tools/modules/CropImage'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'social-media-post-maker': dynamic(() => import('@/components/tools/modules/SocialMediaPostMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'mkv-to-mp4': dynamic(() => import('@/components/tools/modules/MkvToMp4'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'text-to-speech-tts': dynamic(() => import('@/components/tools/modules/TextToSpeechTts'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-paraphrasing-tool': dynamic(() => import('@/components/tools/modules/AiParaphrasingTool'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'random-number-generator': dynamic(() => import('@/components/tools/modules/RandomNumberGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'url-shortener': dynamic(() => import('@/components/tools/modules/UrlShortener'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'text-summarizer': dynamic(() => import('@/components/tools/modules/TextSummarizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-excel': dynamic(() => import('@/components/tools/modules/PdfToExcel'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'unlock-pdf': dynamic(() => import('@/components/tools/modules/UnlockPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'image-enhancer': dynamic(() => import('@/components/tools/modules/ImageEnhancer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'sip-calculator': dynamic(() => import('@/components/tools/modules/SipCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'bmi-calculator': dynamic(() => import('@/components/tools/modules/BmiCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pinterest-image-downloader': dynamic(() => import('@/components/tools/modules/PinterestImageDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'audio-to-text-transcription': dynamic(() => import('@/components/tools/modules/AudioToTextTranscription'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'soundcloud-downloader': dynamic(() => import('@/components/tools/modules/SoundcloudDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'meme-generator': dynamic(() => import('@/components/tools/modules/MemeGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'mov-to-mp4': dynamic(() => import('@/components/tools/modules/MovToMp4'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'gst-calculator': dynamic(() => import('@/components/tools/modules/GstCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'image-resizer': dynamic(() => import('@/components/tools/modules/ImageResizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'diff-checker': dynamic(() => import('@/components/tools/modules/DiffChecker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'webm-to-mp4': dynamic(() => import('@/components/tools/modules/WebmToMp4'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ip-address-lookup': dynamic(() => import('@/components/tools/modules/IpAddressLookup'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'brand-name-generator': dynamic(() => import('@/components/tools/modules/BrandNameGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-content-humanizer': dynamic(() => import('@/components/tools/modules/AiContentHumanizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'photo-retoucher': dynamic(() => import('@/components/tools/modules/PhotoRetoucher'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-splitter': dynamic(() => import('@/components/tools/modules/PdfSplitter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'twitch-clip-downloader': dynamic(() => import('@/components/tools/modules/TwitchClipDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'color-picker-extension': dynamic(() => import('@/components/tools/modules/ColorPickerExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'font-generator': dynamic(() => import('@/components/tools/modules/FontGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'salary-calculator': dynamic(() => import('@/components/tools/modules/SalaryCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'audio-cutter': dynamic(() => import('@/components/tools/modules/AudioCutter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pomodoro-timer': dynamic(() => import('@/components/tools/modules/PomodoroTimer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-video-summarizer': dynamic(() => import('@/components/tools/modules/AiVideoSummarizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'youtube-transcript-generator': dynamic(() => import('@/components/tools/modules/YoutubeTranscriptGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-audio-enhancer': dynamic(() => import('@/components/tools/modules/AiAudioEnhancer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'epub-to-pdf': dynamic(() => import('@/components/tools/modules/EpubToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'color-picker': dynamic(() => import('@/components/tools/modules/ColorPicker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-voice-cloning': dynamic(() => import('@/components/tools/modules/AiVoiceCloning'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-essay-writer': dynamic(() => import('@/components/tools/modules/AiEssayWriter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'protect-pdf': dynamic(() => import('@/components/tools/modules/ProtectPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'invoice-generator': dynamic(() => import('@/components/tools/modules/InvoiceGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'business-card-maker': dynamic(() => import('@/components/tools/modules/BusinessCardMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'regex-tester': dynamic(() => import('@/components/tools/modules/RegexTester'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-avatar-generator': dynamic(() => import('@/components/tools/modules/AiAvatarGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'dice-roller': dynamic(() => import('@/components/tools/modules/DiceRoller'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'profit-margin-calculator': dynamic(() => import('@/components/tools/modules/ProfitMarginCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'credit-card-generator': dynamic(() => import('@/components/tools/modules/CreditCardGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'speech-to-text': dynamic(() => import('@/components/tools/modules/SpeechToText'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'vimeo-video-downloader': dynamic(() => import('@/components/tools/modules/VimeoVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-epub': dynamic(() => import('@/components/tools/modules/PdfToEpub'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'coin-flipper': dynamic(() => import('@/components/tools/modules/CoinFlipper'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'image-colorizer': dynamic(() => import('@/components/tools/modules/ImageColorizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'exif-data-remover': dynamic(() => import('@/components/tools/modules/ExifDataRemover'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'avi-to-mp4': dynamic(() => import('@/components/tools/modules/AviToMp4'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'video-compressor': dynamic(() => import('@/components/tools/modules/VideoCompressor'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-face-swap': dynamic(() => import('@/components/tools/modules/AiFaceSwap'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'xml-sitemap-generator': dynamic(() => import('@/components/tools/modules/XmlSitemapGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'meeting-minutes-generator': dynamic(() => import('@/components/tools/modules/MeetingMinutesGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-cover-letter-generator': dynamic(() => import('@/components/tools/modules/AiCoverLetterGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-excel-formula-generator': dynamic(() => import('@/components/tools/modules/AiExcelFormulaGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-product-description-generator': dynamic(() => import('@/components/tools/modules/AiProductDescriptionGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-story-generator': dynamic(() => import('@/components/tools/modules/AiStoryGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-presentation-generator': dynamic(() => import('@/components/tools/modules/AiPresentationGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'json-to-csv': dynamic(() => import('@/components/tools/modules/JsonToCsv'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'watermark-pdf': dynamic(() => import('@/components/tools/modules/WatermarkPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-page-delete': dynamic(() => import('@/components/tools/modules/PdfPageDelete'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'png-to-svg': dynamic(() => import('@/components/tools/modules/PngToSvg'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'email-signature-generator': dynamic(() => import('@/components/tools/modules/EmailSignatureGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-music-generator': dynamic(() => import('@/components/tools/modules/AiMusicGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'lorem-ipsum-generator': dynamic(() => import('@/components/tools/modules/LoremIpsumGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'margin-calculator': dynamic(() => import('@/components/tools/modules/MarginCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'morse-code-translator': dynamic(() => import('@/components/tools/modules/MorseCodeTranslator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'cursive-text-generator': dynamic(() => import('@/components/tools/modules/CursiveTextGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'roi-calculator': dynamic(() => import('@/components/tools/modules/RoiCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'vat-calculator': dynamic(() => import('@/components/tools/modules/VatCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'bilibili-video-downloader': dynamic(() => import('@/components/tools/modules/BilibiliVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'password-strength-checker': dynamic(() => import('@/components/tools/modules/PasswordStrengthChecker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'js-minifier': dynamic(() => import('@/components/tools/modules/JsMinifier'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'base64-encode-decode': dynamic(() => import('@/components/tools/modules/Base64EncodeDecode'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'text-to-handwriting': dynamic(() => import('@/components/tools/modules/TextToHandwriting'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'receipt-generator': dynamic(() => import('@/components/tools/modules/ReceiptGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-thumbnail-maker': dynamic(() => import('@/components/tools/modules/AiThumbnailMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'secure-note-sharer': dynamic(() => import('@/components/tools/modules/SecureNoteSharer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'video-to-gif': dynamic(() => import('@/components/tools/modules/VideoToGif'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'image-to-base64': dynamic(() => import('@/components/tools/modules/ImageToBase64'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'subtitle-translator': dynamic(() => import('@/components/tools/modules/SubtitleTranslator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'iban-validator': dynamic(() => import('@/components/tools/modules/IbanValidator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-flowchart-maker': dynamic(() => import('@/components/tools/modules/AiFlowchartMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-code-explainer': dynamic(() => import('@/components/tools/modules/AiCodeExplainer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-sql-generator': dynamic(() => import('@/components/tools/modules/AiSqlGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-recipe-generator': dynamic(() => import('@/components/tools/modules/AiRecipeGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-domain-name-generator': dynamic(() => import('@/components/tools/modules/AiDomainNameGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-mind-map-generator': dynamic(() => import('@/components/tools/modules/AiMindMapGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'csv-to-json': dynamic(() => import('@/components/tools/modules/CsvToJson'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'rotate-pdf': dynamic(() => import('@/components/tools/modules/RotatePdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'extract-images-from-pdf': dynamic(() => import('@/components/tools/modules/ExtractImagesFromPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'sql-formatter': dynamic(() => import('@/components/tools/modules/SqlFormatter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'uuid-generator': dynamic(() => import('@/components/tools/modules/UuidGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'hex-to-rgb-converter': dynamic(() => import('@/components/tools/modules/HexToRgbConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'bmr-calculator': dynamic(() => import('@/components/tools/modules/BmrCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'meta-tag-generator': dynamic(() => import('@/components/tools/modules/MetaTagGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'text-to-binary': dynamic(() => import('@/components/tools/modules/TextToBinary'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'binary-to-text': dynamic(() => import('@/components/tools/modules/BinaryToText'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'break-even-calculator': dynamic(() => import('@/components/tools/modules/BreakEvenCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'conversion-rate-calculator': dynamic(() => import('@/components/tools/modules/ConversionRateCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'cpm-calculator': dynamic(() => import('@/components/tools/modules/CpmCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'roas-calculator': dynamic(() => import('@/components/tools/modules/RoasCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'podcast-transcription': dynamic(() => import('@/components/tools/modules/PodcastTranscription'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'css-minifier': dynamic(() => import('@/components/tools/modules/CssMinifier'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'markdown-to-html': dynamic(() => import('@/components/tools/modules/MarkdownToHtml'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'compare-pdf-files': dynamic(() => import('@/components/tools/modules/ComparePdfFiles'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'favicon-generator': dynamic(() => import('@/components/tools/modules/FaviconGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'case-converter': dynamic(() => import('@/components/tools/modules/CaseConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'keyword-density-checker': dynamic(() => import('@/components/tools/modules/KeywordDensityChecker'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'base64-to-image': dynamic(() => import('@/components/tools/modules/Base64ToImage'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'flip-image': dynamic(() => import('@/components/tools/modules/FlipImage'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'md5-hash-generator': dynamic(() => import('@/components/tools/modules/Md5HashGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'html-minifier': dynamic(() => import('@/components/tools/modules/HtmlMinifier'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'barcode-generator': dynamic(() => import('@/components/tools/modules/BarcodeGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-regex-generator': dynamic(() => import('@/components/tools/modules/AiRegexGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-business-idea-generator': dynamic(() => import('@/components/tools/modules/AiBusinessIdeaGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-slogan-generator': dynamic(() => import('@/components/tools/modules/AiSloganGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-poem-generator': dynamic(() => import('@/components/tools/modules/AiPoemGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pgp-key-generator': dynamic(() => import('@/components/tools/modules/PgpKeyGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'add-page-numbers-to-pdf': dynamic(() => import('@/components/tools/modules/AddPageNumbersToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'html-to-markdown': dynamic(() => import('@/components/tools/modules/HtmlToMarkdown'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'reverse-text-generator': dynamic(() => import('@/components/tools/modules/ReverseTextGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'zalgo-text-generator': dynamic(() => import('@/components/tools/modules/ZalgoTextGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'invisible-text-generator': dynamic(() => import('@/components/tools/modules/InvisibleTextGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ltv-calculator': dynamic(() => import('@/components/tools/modules/LtvCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'cac-calculator': dynamic(() => import('@/components/tools/modules/CacCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'burn-rate-calculator': dynamic(() => import('@/components/tools/modules/BurnRateCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'net-promoter-score-calculator': dynamic(() => import('@/components/tools/modules/NetPromoterScoreCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'xml-to-csv': dynamic(() => import('@/components/tools/modules/XmlToCsv'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-metadata-editor': dynamic(() => import('@/components/tools/modules/PdfMetadataEditor'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'svg-editor': dynamic(() => import('@/components/tools/modules/SvgEditor'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'robots-txt-generator': dynamic(() => import('@/components/tools/modules/RobotsTxtGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'saas-pricing-calculator': dynamic(() => import('@/components/tools/modules/SaasPricingCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'employee-turnover-calculator': dynamic(() => import('@/components/tools/modules/EmployeeTurnoverCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'mac-address-generator': dynamic(() => import('@/components/tools/modules/MacAddressGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ip-anonymizer': dynamic(() => import('@/components/tools/modules/IpAnonymizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'xml-to-json': dynamic(() => import('@/components/tools/modules/XmlToJson'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'braille-translator': dynamic(() => import('@/components/tools/modules/BrailleTranslator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pan-card-resizer': dynamic(() => import('@/components/tools/modules/PanCardResizer'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-code-generator': dynamic(() => import('@/components/tools/modules/AiCodeGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'subtitle-generator': dynamic(() => import('@/components/tools/modules/SubtitleGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'svg-to-png-converter': dynamic(() => import('@/components/tools/modules/SvgToPngConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'unit-converter': dynamic(() => import('@/components/tools/modules/UnitConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-blog-title-generator': dynamic(() => import('@/components/tools/modules/AiBlogTitleGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'video-watermark-adder': dynamic(() => import('@/components/tools/modules/VideoWatermarkAdder'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-hashtag-generator': dynamic(() => import('@/components/tools/modules/AiHashtagGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'prompt-library-generator': dynamic(() => import('@/components/tools/modules/PromptLibraryGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-chat-hub': dynamic(() => import('@/components/tools/modules/AiChatHub'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'gst-invoice-generator': dynamic(() => import('@/components/tools/modules/GstInvoiceGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'itr-filing-helper': dynamic(() => import('@/components/tools/modules/ItrFilingHelper'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ai-changelog-generator': dynamic(() => import('@/components/tools/modules/AiChangelogGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'browser-extension': dynamic(() => import('@/components/tools/modules/BrowserExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
 };
 
-const GenericImageProcessor = dynamic(() => import('@/components/tools/modules/GenericImageProcessor'), { ssr: false, loading: () => <SkeletonLoader /> });
-const GenericPDFProcessor = dynamic(() => import('@/components/tools/modules/GenericPDFProcessor'), { ssr: false, loading: () => <SkeletonLoader /> });
-const UniversalTransformer = dynamic(() => import('@/components/tools/modules/UniversalTransformer'), { ssr: false, loading: () => <SkeletonLoader /> });
+const ComingSoonTool = dynamic(() => import('@/components/tools/modules/ComingSoonTool'), { ssr: false, loading: () => <SkeletonLoader /> });
 
 export function DynamicModuleWrapper({ slug, category }: { slug: string, category: string }) {
-  let DynamicModule = MODULE_REGISTRY[slug];
+  const DynamicModule = MODULE_REGISTRY[slug];
   
   if (!DynamicModule) {
-    if (category === 'Image') {
-      DynamicModule = GenericImageProcessor;
-    } else if (category === 'PDF') {
-      DynamicModule = GenericPDFProcessor;
-    } else {
-      DynamicModule = UniversalTransformer;
-    }
+    // Generate a readable tool name from slug (e.g., "youtube-downloader" -> "Youtube Downloader")
+    const toolName = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return <ComingSoonTool toolName={toolName} />;
   }
 
   return <DynamicModule />;

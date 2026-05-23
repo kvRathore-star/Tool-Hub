@@ -1,0 +1,140 @@
+"use client";
+
+import React, { useState } from 'react';
+
+export default function ResumeBuilder() {
+  const [personal, setPersonal] = useState({ name: '', title: '', email: '', phone: '', summary: '' });
+  const [experience, setExperience] = useState([{ company: '', role: '', duration: '', description: '' }]);
+  const [education, setEducation] = useState([{ institution: '', degree: '', year: '' }]);
+
+  const addExperience = () => setExperience([...experience, { company: '', role: '', duration: '', description: '' }]);
+  const addEducation = () => setEducation([...education, { institution: '', degree: '', year: '' }]);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <div className="space-y-8 animate-in fade-in duration-500 max-w-7xl mx-auto">
+      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm no-print">
+        <strong>Client-Side Resume Builder:</strong> Fill out your details and print/save to PDF. No data is saved on our servers.
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        {/* Editor (Left) */}
+        <div className="space-y-6 no-print">
+          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+            <h3 className="text-xl font-bold text-white mb-4">Personal Info</h3>
+            <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Full Name" onChange={(e) => setPersonal({...personal, name: e.target.value})} />
+            <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Professional Title" onChange={(e) => setPersonal({...personal, title: e.target.value})} />
+            <div className="grid grid-cols-2 gap-4">
+              <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Email" onChange={(e) => setPersonal({...personal, email: e.target.value})} />
+              <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Phone" onChange={(e) => setPersonal({...personal, phone: e.target.value})} />
+            </div>
+            <textarea className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white h-24" placeholder="Professional Summary" onChange={(e) => setPersonal({...personal, summary: e.target.value})} />
+          </div>
+
+          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-white">Experience</h3>
+              <button onClick={addExperience} className="text-sm text-blue-400 hover:text-blue-300 px-3 py-1 bg-blue-400/10 rounded-lg">+ Add</button>
+            </div>
+            {experience.map((exp, i) => (
+              <div key={i} className="space-y-2 p-4 border border-zinc-800 rounded-xl bg-black/50">
+                <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Role" onChange={(e) => { const newExp = [...experience]; newExp[i].role = e.target.value; setExperience(newExp); }} />
+                <div className="grid grid-cols-2 gap-4">
+                  <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Company" onChange={(e) => { const newExp = [...experience]; newExp[i].company = e.target.value; setExperience(newExp); }} />
+                  <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Duration (e.g. 2020-2023)" onChange={(e) => { const newExp = [...experience]; newExp[i].duration = e.target.value; setExperience(newExp); }} />
+                </div>
+                <textarea className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white h-20" placeholder="Description of duties" onChange={(e) => { const newExp = [...experience]; newExp[i].description = e.target.value; setExperience(newExp); }} />
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-white">Education</h3>
+              <button onClick={addEducation} className="text-sm text-blue-400 hover:text-blue-300 px-3 py-1 bg-blue-400/10 rounded-lg">+ Add</button>
+            </div>
+            {education.map((edu, i) => (
+              <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-zinc-800 rounded-xl bg-black/50">
+                <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white md:col-span-1" placeholder="Institution" onChange={(e) => { const newEdu = [...education]; newEdu[i].institution = e.target.value; setEducation(newEdu); }} />
+                <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white md:col-span-1" placeholder="Degree" onChange={(e) => { const newEdu = [...education]; newEdu[i].degree = e.target.value; setEducation(newEdu); }} />
+                <input className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white md:col-span-1" placeholder="Year" onChange={(e) => { const newEdu = [...education]; newEdu[i].year = e.target.value; setEducation(newEdu); }} />
+              </div>
+            ))}
+          </div>
+          
+          <button 
+            onClick={handlePrint}
+            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95"
+          >
+            Download as PDF
+          </button>
+        </div>
+
+        {/* Live Preview (Right) */}
+        <div className="bg-white text-black p-10 min-h-[1056px] w-full max-w-[816px] shadow-2xl mx-auto printable-area print:shadow-none print:m-0 print:p-0">
+          <div className="border-b-2 border-zinc-800 pb-6 mb-6">
+            <h1 className="text-4xl font-black text-zinc-900 mb-1">{personal.name || 'Your Name'}</h1>
+            <h2 className="text-xl text-zinc-600 font-medium mb-3">{personal.title || 'Professional Title'}</h2>
+            <div className="text-sm text-zinc-500 flex gap-4">
+              <span>{personal.email || 'email@example.com'}</span>
+              <span>•</span>
+              <span>{personal.phone || '(555) 123-4567'}</span>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-lg font-bold text-zinc-900 uppercase tracking-wider mb-2 border-b border-zinc-300 pb-1">Summary</h3>
+            <p className="text-zinc-700 text-sm leading-relaxed">{personal.summary || 'A brief professional summary highlighting your key skills and achievements.'}</p>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-lg font-bold text-zinc-900 uppercase tracking-wider mb-4 border-b border-zinc-300 pb-1">Experience</h3>
+            <div className="space-y-6">
+              {experience.map((exp, i) => (
+                <div key={i}>
+                  <div className="flex justify-between items-baseline mb-1">
+                    <h4 className="font-bold text-zinc-900">{exp.role || 'Job Title'}</h4>
+                    <span className="text-sm text-zinc-500 font-medium">{exp.duration || '2020 - Present'}</span>
+                  </div>
+                  <div className="text-sm text-blue-600 font-medium mb-2">{exp.company || 'Company Name'}</div>
+                  <p className="text-zinc-700 text-sm leading-relaxed whitespace-pre-wrap">{exp.description || '• Describe your responsibilities and achievements\n• Use bullet points for readability'}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-zinc-900 uppercase tracking-wider mb-4 border-b border-zinc-300 pb-1">Education</h3>
+            <div className="space-y-4">
+              {education.map((edu, i) => (
+                <div key={i} className="flex justify-between items-baseline">
+                  <div>
+                    <h4 className="font-bold text-zinc-900">{edu.degree || 'Degree / Certificate'}</h4>
+                    <div className="text-sm text-zinc-600">{edu.institution || 'University / Institution'}</div>
+                  </div>
+                  <span className="text-sm text-zinc-500">{edu.year || '2020'}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      {/* CSS for printing */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @media print {
+          body * { visibility: hidden; }
+          .printable-area, .printable-area * { visibility: visible; }
+          .printable-area { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; box-shadow: none; }
+          .no-print { display: none !important; }
+          @page { margin: 0; }
+        }
+      `}} />
+    </div>
+  );
+}

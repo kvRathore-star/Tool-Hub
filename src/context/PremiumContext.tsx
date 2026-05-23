@@ -25,7 +25,9 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
   const verifyLicense = async (token: string) => {
     try {
-      const claims = jose.decodeJwt(token);
+      // Securely verify signature instead of just decoding
+      const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET || 'toolhub_fallback_secret_v1');
+      const { payload: claims } = await jose.jwtVerify(token, secret);
       
       if (claims && claims.tier === 'pro') {
         const isExpired = claims.exp && claims.exp < Date.now() / 1000;

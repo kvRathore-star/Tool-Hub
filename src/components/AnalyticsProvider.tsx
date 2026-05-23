@@ -19,8 +19,12 @@ export function AnalyticsProvider() {
       // Strictly NO IP, NO cookies, NO geographical trackers
     };
 
-    // In a real scenario, this would fetch() to a cookieless endpoint like Plausible or a Cloudflare Worker
-    console.debug('[Telemetry] Anonymized zero-knowledge page view logged:', payload);
+    // Dispatch to a real API endpoint instead of console log
+    fetch('/api/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(err => console.error('Failed to log telemetry', err));
   }, [pathname, searchParams]);
 
   return null;

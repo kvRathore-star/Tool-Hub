@@ -1,6 +1,6 @@
 import React from 'react';
-import Head from 'next/head';
 import { GlobalErrorBoundary } from '../GlobalErrorBoundary';
+import { TurnstileLock } from '../TurnstileGate';
 
 interface ToolLayoutProps {
   title: string;
@@ -29,18 +29,12 @@ export function ToolLayout({ title, description, category, children, faqs = [] }
 
   return (
     <>
-      <Head>
-        {/* Dynamic SEO tags */}
-        <title>{title} | Premium Utility Engine</title>
-        <meta name="description" content={description} />
-        {faqSchema && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-          />
-        )}
-      </Head>
-      
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <div className="min-h-screen bg-black text-zinc-100 selection:bg-blue-500/30 font-sans antialiased overflow-x-hidden relative">
         {/* Background glow effects */}
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px] pointer-events-none" />
@@ -50,7 +44,7 @@ export function ToolLayout({ title, description, category, children, faqs = [] }
           
           {/* Glassmorphic SEO Breadcrumbs */}
           <nav className="inline-flex items-center space-x-2 backdrop-blur-md bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs font-medium text-zinc-400 mb-12 shadow-2xl" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-blue-400 transition-colors">ToolHub Core</a>
+            <a href="/" className="hover:text-blue-400 transition-colors">ToolHub</a>
             <span className="text-zinc-600">/</span>
             <a href={`/${category}`} className="hover:text-blue-400 transition-colors">{displayCategory}</a>
             <span className="text-zinc-600">/</span>
@@ -84,7 +78,12 @@ export function ToolLayout({ title, description, category, children, faqs = [] }
             
             <div className="relative z-10">
               <GlobalErrorBoundary>
-                {children}
+                <TurnstileLock 
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} 
+                  onVerify={() => console.log('Turnstile verified')}
+                >
+                  {children}
+                </TurnstileLock>
               </GlobalErrorBoundary>
             </div>
           </section>

@@ -187,14 +187,6 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: "jsPDF / Canvas API"
   },
   {
-    id: "23",
-    name: "Word to PDF",
-    slug: "word-to-pdf",
-    category: "PDF",
-    description: "Convert Word docs to PDF",
-    dependencies: "LibreOffice API"
-  },
-  {
     id: "24",
     name: "Online Timer",
     slug: "online-timer",
@@ -459,14 +451,6 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: "OpenAI API / HuggingFace"
   },
   {
-    id: "57",
-    name: "Passport Photo Maker",
-    slug: "passport-photo-maker",
-    category: "Image",
-    description: "India specs: Aadhaar, PAN, VISA, Passport",
-    dependencies: "OpenCV / Canvas API"
-  },
-  {
     id: "58",
     name: "PDF to Excel",
     slug: "pdf-to-excel",
@@ -603,14 +587,6 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: "FFmpeg"
   },
   {
-    id: "75",
-    name: "AI Object Remover",
-    slug: "ai-object-remover",
-    category: "Image",
-    description: "Remove unwanted objects from photos",
-    dependencies: "Lama Cleaner"
-  },
-  {
     id: "76",
     name: "IP Address Lookup",
     slug: "ip-address-lookup",
@@ -649,14 +625,6 @@ export const toolsRegistry: ToolMetadata[] = [
     category: "PDF",
     description: "Extract pages from PDF",
     dependencies: "pdf-lib"
-  },
-  {
-    id: "81",
-    name: "Image Upscaler (AI)",
-    slug: "image-upscaler-ai",
-    category: "Image",
-    description: "2×/4×/8× upscaling using Real-ESRGAN",
-    dependencies: "Real-ESRGAN / OpenCV"
   },
   {
     id: "82",
@@ -707,14 +675,6 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: "Web Audio API / Vanilla JS"
   },
   {
-    id: "88",
-    name: "Random Password Generator",
-    slug: "random-password-generator",
-    category: "Utility",
-    description: "Strong password creator",
-    dependencies: "Web Crypto API"
-  },
-  {
     id: "89",
     name: "AI Video Summarizer",
     slug: "ai-video-summarizer",
@@ -748,7 +708,7 @@ export const toolsRegistry: ToolMetadata[] = [
   },
   {
     id: "93",
-    name: "Color Picker",
+    name: "Color Picker Web",
     slug: "color-picker",
     category: "Design",
     description: "Extract colors from images or screen",
@@ -1642,6 +1602,175 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: "browser-image-compression"
   }
 
+,
+  {
+    id: "210",
+    name: "Live Transcription",
+    slug: "live-transcription",
+    category: "Transcription",
+    description: "Real-time mic-to-text using Web Speech API",
+    dependencies: "Web Speech API"
+  },
+  {
+    id: "211",
+    name: "Image Bulk Converter",
+    slug: "image-bulk-converter",
+    category: "Image",
+    description: "Convert 100s of images at once + ZIP download",
+    dependencies: "browser-image-compression / jszip"
+  },
+  {
+    id: "212",
+    name: "eSign PDF",
+    slug: "esign-pdf",
+    category: "PDF",
+    description: "Legally sign PDF documents online",
+    dependencies: "pdf-lib / fabric"
+  },
+  {
+    id: "213",
+    name: "PDF OCR (Scanned Docs)",
+    slug: "pdf-ocr",
+    category: "PDF",
+    description: "Extract text from scanned PDFs",
+    dependencies: "tesseract.js"
+  },
+  {
+    id: "214",
+    name: "PDF Form Filler",
+    slug: "pdf-form-filler",
+    category: "PDF",
+    description: "Fill & sign PDF forms online",
+    dependencies: "pdf-lib"
+  },
+  {
+    id: "215",
+    name: "Multi-Model AI Chat",
+    slug: "multi-model-ai-chat",
+    category: "AI",
+    description: "Claude + GPT-4o + Gemini in one interface",
+    dependencies: "AI APIs"
+  },
+  {
+    id: "216",
+    name: "AI Document Chat (RAG)",
+    slug: "ai-document-chat",
+    category: "AI",
+    description: "Upload PDF/doc and ask questions",
+    dependencies: "CF Vectorize"
+  },
+  {
+    id: "217",
+    name: "AI Video Subtitler",
+    slug: "ai-video-subtitler",
+    category: "Video",
+    description: "Auto-generate burned-in subtitles on video",
+    dependencies: "Whisper API"
+  },
+  {
+    name: 'AI Code Generator',
+    slug: 'ai-code-generator',
+    description: 'Generate code in 50+ languages.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Subtitle Generator',
+    slug: 'subtitle-generator',
+    description: 'Generate SRT files from video.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'SVG to PNG Converter',
+    slug: 'svg-to-png-converter',
+    description: 'Convert vector SVG to raster PNG.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Unit Converter',
+    slug: 'unit-converter',
+    description: 'Universal unit conversion tool.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'AI Blog Title Generator',
+    slug: 'ai-blog-title-generator',
+    description: 'Generate viral blog titles.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Video Watermark Adder',
+    slug: 'video-watermark-adder',
+    description: 'Add logo or text watermark to video.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'AI Hashtag Generator',
+    slug: 'ai-hashtag-generator',
+    description: 'Generate viral hashtags for social media.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Prompt Library & Generator',
+    slug: 'prompt-library-generator',
+    description: 'Browse and generate AI prompts.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'AI Chat Hub',
+    slug: 'ai-chat-hub',
+    description: 'Centralized dashboard for all AI models.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'GST Invoice Generator',
+    slug: 'gst-invoice-generator',
+    description: 'Generate valid GST invoices for India.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'ITR Filing Helper',
+    slug: 'itr-filing-helper',
+    description: 'Helper for India Income Tax Returns.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'AI Changelog Generator',
+    slug: 'ai-changelog-generator',
+    description: 'Generate release notes from commits.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Browser Extension',
+    slug: 'browser-extension',
+    description: 'All-in-one sidebar AI assistant.',
+    category: '',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
 ];
 
 export const getToolBySlug = (slug: string) => toolsRegistry.find(t => t.slug === slug);
