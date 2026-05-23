@@ -1671,7 +1671,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'AI Code Generator',
     slug: 'ai-code-generator',
     description: 'Generate code in 50+ languages.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1679,7 +1679,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'Subtitle Generator',
     slug: 'subtitle-generator',
     description: 'Generate SRT files from video.',
-    category: '',
+    category: 'Video',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1687,7 +1687,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'SVG to PNG Converter',
     slug: 'svg-to-png-converter',
     description: 'Convert vector SVG to raster PNG.',
-    category: '',
+    category: 'Converter',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1695,7 +1695,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'Unit Converter',
     slug: 'unit-converter',
     description: 'Universal unit conversion tool.',
-    category: '',
+    category: 'Utility',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1703,7 +1703,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'AI Blog Title Generator',
     slug: 'ai-blog-title-generator',
     description: 'Generate viral blog titles.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1711,7 +1711,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'Video Watermark Adder',
     slug: 'video-watermark-adder',
     description: 'Add logo or text watermark to video.',
-    category: '',
+    category: 'Video',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1719,7 +1719,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'AI Hashtag Generator',
     slug: 'ai-hashtag-generator',
     description: 'Generate viral hashtags for social media.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1727,7 +1727,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'Prompt Library & Generator',
     slug: 'prompt-library-generator',
     description: 'Browse and generate AI prompts.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1735,7 +1735,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'AI Chat Hub',
     slug: 'ai-chat-hub',
     description: 'Centralized dashboard for all AI models.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1743,7 +1743,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'GST Invoice Generator',
     slug: 'gst-invoice-generator',
     description: 'Generate valid GST invoices for India.',
-    category: '',
+    category: 'indian-utilities',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1751,7 +1751,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'ITR Filing Helper',
     slug: 'itr-filing-helper',
     description: 'Helper for India Income Tax Returns.',
-    category: '',
+    category: 'indian-utilities',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1759,7 +1759,7 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'AI Changelog Generator',
     slug: 'ai-changelog-generator',
     description: 'Generate release notes from commits.',
-    category: '',
+    category: 'AI',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
@@ -1767,9 +1767,33 @@ export const toolsRegistry: ToolMetadata[] = [
     name: 'Browser Extension',
     slug: 'browser-extension',
     description: 'All-in-one sidebar AI assistant.',
-    category: '',
+    category: 'Extension',
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
+  },
+  {
+    name: 'MP3 Compressor',
+    slug: 'mp3-compressor',
+    description: 'Reduce MP3 size with bitrate control',
+    category: 'Utility',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'FFmpeg WASM'
+  },
+  {
+    name: 'GIF to MP4 Converter',
+    slug: 'gif-to-mp4',
+    description: 'Convert GIF animations to MP4 videos',
+    category: 'Converter',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'FFmpeg WASM'
+  },
+  {
+    name: 'Video Trimmer',
+    slug: 'video-trimmer',
+    description: 'Trim and cut video clips locally',
+    category: 'Video',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'FFmpeg WASM'
   },
 ];
 

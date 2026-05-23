@@ -49,23 +49,23 @@ export default function QrCodeGenerator() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Controls */}
         <div className="space-y-6">
-          <div className="p-6 border border-white/10 bg-black rounded-2xl shadow-xl space-y-6">
+          <div className="p-6 border border-zinc-200 dark:border-white/10 bg-white dark:bg-black rounded-2xl shadow-xl space-y-6">
             
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                 URL or Text to encode
               </label>
               <textarea 
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Enter URL, email, or text..."
-                className="w-full bg-zinc-900 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-blue-500 outline-none resize-none h-32"
+                className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-xl p-4 text-zinc-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-none h-32"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                   QR Color
                 </label>
                 <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export default function QrCodeGenerator() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                   Background
                 </label>
                 <div className="flex items-center gap-3">
@@ -96,7 +96,7 @@ export default function QrCodeGenerator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                 Error Correction Level
               </label>
               <div className="grid grid-cols-4 gap-2">
@@ -104,7 +104,7 @@ export default function QrCodeGenerator() {
                   <button
                     key={level}
                     onClick={() => setErrorCorrection(level)}
-                    className={`py-2 rounded-lg font-medium transition-colors ${errorCorrection === level ? 'bg-blue-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'}`}
+                    className={`py-2 rounded-lg font-medium transition-colors ${errorCorrection === level ? 'bg-blue-600 text-white' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-700'}`}
                   >
                     {level}
                   </button>
@@ -122,7 +122,7 @@ export default function QrCodeGenerator() {
         </div>
 
         {/* Preview Area */}
-        <div className="bg-zinc-900/50 border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center min-h-[400px]">
+        <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center min-h-[400px]">
           {dataUrl ? (
             <div className="flex flex-col items-center animate-in zoom-in-95 duration-300">
               <div className="p-4 bg-white rounded-2xl shadow-2xl mb-8">
@@ -139,7 +139,7 @@ export default function QrCodeGenerator() {
             </div>
           ) : (
             <div className="text-center">
-              <div className="w-32 h-32 border-4 border-dashed border-zinc-700 rounded-xl mx-auto mb-4 flex items-center justify-center">
+              <div className="w-32 h-32 border-4 border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl mx-auto mb-4 flex items-center justify-center">
                 <span className="text-zinc-600">No Data</span>
               </div>
               <p className="text-zinc-500">Enter text to generate QR code</p>

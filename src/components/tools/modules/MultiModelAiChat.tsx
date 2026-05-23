@@ -53,7 +53,7 @@ export default function MultiModelAiChat() {
         <select 
           value={selectedModel}
           onChange={(e) => setSelectedModel(e.target.value)}
-          className="bg-black border border-purple-500/30 text-purple-300 text-sm rounded-lg px-3 py-1.5 outline-none font-bold"
+          className="bg-white dark:bg-black border border-purple-500/30 text-purple-300 text-sm rounded-lg px-3 py-1.5 outline-none font-bold"
         >
           {models.map(m => (
             <option key={m.id} value={m.id}>{m.name} ({m.provider})</option>
@@ -61,7 +61,7 @@ export default function MultiModelAiChat() {
         </select>
       </div>
 
-      <div className="flex-1 bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col relative">
+      <div className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col relative">
         {/* Chat History */}
         <div className="flex-1 p-6 overflow-y-auto space-y-6" ref={scrollRef}>
           {messages.map((msg, idx) => (
@@ -69,7 +69,7 @@ export default function MultiModelAiChat() {
               <div className={`max-w-[80%] rounded-2xl p-4 ${
                 msg.role === 'user' 
                   ? 'bg-blue-600 text-white rounded-br-sm' 
-                  : 'bg-zinc-800 border border-white/5 text-zinc-200 rounded-bl-sm shadow-lg'
+                  : 'bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-white/5 text-zinc-800 dark:text-zinc-200 rounded-bl-sm shadow-lg'
               }`}>
                 {msg.role === 'ai' && (
                   <div className="text-xs text-purple-400 font-bold mb-1 opacity-80 uppercase tracking-wider">
@@ -85,7 +85,7 @@ export default function MultiModelAiChat() {
           
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-zinc-800 border border-white/5 text-zinc-200 rounded-2xl rounded-bl-sm p-4 shadow-lg flex items-center space-x-2">
+              <div className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-white/5 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-bl-sm p-4 shadow-lg flex items-center space-x-2">
                 <div className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                 <div className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                 <div className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -95,8 +95,8 @@ export default function MultiModelAiChat() {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-black/40 border-t border-white/5">
-          <div className="relative flex items-center bg-zinc-900 border border-white/10 rounded-2xl shadow-inner focus-within:border-purple-500/50 focus-within:ring-1 focus-within:ring-purple-500/50 transition-all">
+        <div className="p-4 bg-black/40 border-t border-zinc-200 dark:border-white/5">
+          <div className="relative flex items-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl shadow-inner focus-within:border-purple-500/50 focus-within:ring-1 focus-within:ring-purple-500/50 transition-all">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -107,7 +107,7 @@ export default function MultiModelAiChat() {
                 }
               }}
               placeholder={`Message ${models.find(m => m.id === selectedModel)?.name}...`}
-              className="flex-1 bg-transparent p-4 outline-none text-zinc-200 resize-none max-h-32 min-h-[56px] leading-relaxed"
+              className="flex-1 bg-transparent p-4 outline-none text-zinc-800 dark:text-zinc-200 resize-none max-h-32 min-h-[56px] leading-relaxed"
               rows={1}
             />
             <div className="pr-4 shrink-0">

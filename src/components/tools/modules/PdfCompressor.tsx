@@ -74,23 +74,23 @@ export default function PdfCompressor() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100 truncate max-w-xs">{pdfFile.name}</h3>
-          <p className="text-zinc-400 text-sm">Original Size: {(pdfFile.size / 1024).toFixed(2)} KB</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100 truncate max-w-xs">{pdfFile.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">Original Size: {(pdfFile.size / 1024).toFixed(2)} KB</p>
         </div>
         <button 
           onClick={() => setPdfFile(null)}
-          className="text-sm text-zinc-400 hover:text-white"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white"
         >
           Change PDF
         </button>
       </div>
 
-      <div className="p-6 border border-white/10 bg-black rounded-2xl shadow-xl">
-        <h4 className="text-zinc-300 font-medium mb-4">Compression Strategy</h4>
-        <div className="bg-zinc-900 border border-white/5 p-4 rounded-xl mb-6">
-          <p className="text-sm text-zinc-400">
+      <div className="p-6 border border-zinc-200 dark:border-white/10 bg-white dark:bg-black rounded-2xl shadow-xl">
+        <h4 className="text-zinc-700 dark:text-zinc-300 font-medium mb-4">Compression Strategy</h4>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 p-4 rounded-xl mb-6">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             Client-side compression optimizes the internal PDF structure and strips hidden metadata. It is highly effective for text-heavy documents but may not significantly reduce files containing large scanned images.
           </p>
         </div>
@@ -109,11 +109,11 @@ export default function PdfCompressor() {
           <div className="w-full">
             <h4 className="text-lg font-bold text-emerald-400 mb-2">Optimization Complete!</h4>
             <div className="flex justify-between items-center text-sm border-b border-emerald-500/20 pb-2 mb-2">
-              <span className="text-zinc-400">New Size:</span>
-              <strong className="text-white">{(outputSize / 1024).toFixed(2)} KB</strong>
+              <span className="text-zinc-600 dark:text-zinc-400">New Size:</span>
+              <strong className="text-zinc-900 dark:text-white">{(outputSize / 1024).toFixed(2)} KB</strong>
             </div>
             <div className="flex justify-between items-center text-sm">
-              <span className="text-zinc-400">Data Saved:</span>
+              <span className="text-zinc-600 dark:text-zinc-400">Data Saved:</span>
               <strong className={savingsPercent > 0 ? "text-emerald-400" : "text-amber-400"}>
                 {savingsPercent}%
               </strong>

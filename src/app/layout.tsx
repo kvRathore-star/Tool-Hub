@@ -5,6 +5,9 @@ import { Suspense } from "react";
 import { DebugSanityRunner } from "@/components/DebugSanityRunner";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { PremiumProvider } from "@/context/PremiumContext";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -51,71 +54,47 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col bg-zinc-50 font-mono text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-        {/* Header */}
-        <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-            <a
-              href="/"
-              className="text-lg font-bold tracking-tight"
-            >
-              ToolHub
-            </a>
-            <nav className="flex items-center gap-4 text-sm text-zinc-500">
-              <a href="/" className="hover:text-zinc-900 dark:hover:text-zinc-100">
-                Tools
-              </a>
-              <a href="#about" className="hover:text-zinc-900 dark:hover:text-zinc-100">
-                About
-              </a>
-            </nav>
-          </div>
-        </header>
+      <body className="min-h-full flex flex-col bg-zinc-50 font-mono text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 transition-colors duration-300">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Header />
 
-        <main className="flex-1">
-          <PremiumProvider>
-            {children}
-          </PremiumProvider>
-        </main>
-        
-        <Suspense fallback={null}>
-          <AnalyticsProvider />
-          <DebugSanityRunner />
-        </Suspense>
+          <main className="flex-1">
+            <PremiumProvider>
+              {children}
+            </PremiumProvider>
+          </main>
+          
+          <Suspense fallback={null}>
+            <AnalyticsProvider />
+            <DebugSanityRunner />
+          </Suspense>
 
-        <Toaster 
-          position="bottom-center"
-          toastOptions={{
-            style: {
-              background: '#18181b', // zinc-900
-              color: '#fff',
-              border: '1px solid #27272a',
-              borderRadius: '12px',
-            },
-            success: {
-              iconTheme: {
-                primary: '#10b981',
-                secondary: '#fff',
+          <Toaster 
+            position="bottom-center"
+            toastOptions={{
+              style: {
+                background: '#18181b', // zinc-900
+                color: '#fff',
+                border: '1px solid #27272a',
+                borderRadius: '12px',
               },
-            },
-            error: {
-              iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
+              success: {
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#fff',
+                },
               },
-            },
-          }}
-        />
+              error: {
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
 
-        {/* Footer */}
-        <footer className="border-t border-zinc-200 py-8 dark:border-zinc-800">
-          <div className="mx-auto max-w-6xl px-4 text-center text-sm text-zinc-400 sm:px-6">
-            <p>
-              ToolHub &mdash; All processing happens in your browser.
-              No tracking. No ads. No BS.
-            </p>
-          </div>
-        </footer>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

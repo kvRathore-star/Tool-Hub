@@ -88,19 +88,19 @@ export default function UnitConverter() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       
-      <div className="flex justify-center space-x-2 bg-zinc-900/50 p-2 rounded-2xl border border-white/5 overflow-x-auto">
+      <div className="flex justify-center space-x-2 bg-zinc-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-zinc-200 dark:border-white/5 overflow-x-auto">
         {(Object.keys(unitTypes) as Array<keyof typeof unitTypes>).map(cat => (
           <button
             key={cat}
             onClick={() => handleCategoryChange(cat)}
-            className={`px-6 py-3 rounded-xl font-bold transition-all ${category === cat ? 'bg-blue-600 text-white shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+            className={`px-6 py-3 rounded-xl font-bold transition-all ${category === cat ? 'bg-blue-600 text-white shadow-lg' : 'text-zinc-600 dark:text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      <div className="bg-zinc-900 border border-white/10 rounded-3xl p-8 shadow-2xl">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 shadow-2xl">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
           
           <div className="col-span-2 space-y-4">
@@ -108,13 +108,13 @@ export default function UnitConverter() {
               type="number"
               value={fromValue}
               onChange={(e) => setFromValue(e.target.value)}
-              className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-6 text-3xl font-bold text-white outline-none focus:border-blue-500"
+              className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-6 text-3xl font-bold text-zinc-900 dark:text-white outline-none focus:border-blue-500"
               placeholder="0"
             />
             <select 
               value={fromUnit}
               onChange={(e) => setFromUnit(e.target.value)}
-              className="w-full bg-zinc-800 border-none rounded-xl px-4 py-3 text-white outline-none capitalize cursor-pointer font-medium"
+              className="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none capitalize cursor-pointer font-medium"
             >
               {Object.keys(unitTypes[category].units).map(u => (
                 <option key={u} value={u}>{u}</option>
@@ -141,13 +141,13 @@ export default function UnitConverter() {
               type="text"
               value={toValue || ''}
               readOnly
-              className="w-full bg-black/50 border border-zinc-800/50 rounded-xl px-4 py-6 text-3xl font-bold text-emerald-400 outline-none"
+              className="w-full bg-zinc-50/50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800/50 rounded-xl px-4 py-6 text-3xl font-bold text-emerald-400 outline-none"
               placeholder="0"
             />
             <select 
               value={toUnit}
               onChange={(e) => setToUnit(e.target.value)}
-              className="w-full bg-zinc-800 border-none rounded-xl px-4 py-3 text-white outline-none capitalize cursor-pointer font-medium"
+              className="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none capitalize cursor-pointer font-medium"
             >
               {Object.keys(unitTypes[category].units).map(u => (
                 <option key={u} value={u}>{u}</option>
@@ -157,7 +157,7 @@ export default function UnitConverter() {
 
         </div>
         
-        <div className="mt-8 pt-6 border-t border-white/5 text-center text-sm text-zinc-500 font-medium">
+        <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-white/5 text-center text-sm text-zinc-500 font-medium">
           {fromValue || '0'} {fromUnit} = <span className="text-emerald-400">{toValue || '0'}</span> {toUnit}
         </div>
       </div>

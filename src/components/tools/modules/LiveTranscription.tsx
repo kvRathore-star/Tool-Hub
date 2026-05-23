@@ -141,7 +141,7 @@ export default function LiveTranscription() {
     return (
       <div className="bg-red-500/10 border border-red-500/20 p-8 rounded-2xl text-center">
         <h3 className="text-xl font-bold text-red-400 mb-2">Browser Not Supported</h3>
-        <p className="text-zinc-400">Live Transcription requires the Web Speech API, which is not supported in your current browser. Please try using Google Chrome, Microsoft Edge, or Safari.</p>
+        <p className="text-zinc-600 dark:text-zinc-400">Live Transcription requires the Web Speech API, which is not supported in your current browser. Please try using Google Chrome, Microsoft Edge, or Safari.</p>
       </div>
     );
   }
@@ -155,7 +155,7 @@ export default function LiveTranscription() {
         <select 
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="bg-black border border-blue-500/30 text-blue-300 text-sm rounded-lg px-3 py-1.5 outline-none"
+          className="bg-white dark:bg-black border border-blue-500/30 text-blue-300 text-sm rounded-lg px-3 py-1.5 outline-none"
         >
           <option value="en-US">English (US)</option>
           <option value="en-IN">English (India)</option>
@@ -165,8 +165,8 @@ export default function LiveTranscription() {
         </select>
       </div>
 
-      <div className="flex flex-col h-[500px] bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl relative">
-        <div className="bg-black/40 px-6 py-4 border-b border-white/5 flex flex-wrap gap-4 items-center justify-between">
+      <div className="flex flex-col h-[500px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl relative">
+        <div className="bg-black/40 px-6 py-4 border-b border-zinc-200 dark:border-white/5 flex flex-wrap gap-4 items-center justify-between">
           <button 
             onClick={toggleRecording}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg ${
@@ -189,13 +189,13 @@ export default function LiveTranscription() {
           </button>
           
           <div className="flex gap-2">
-            <button onClick={clearAll} disabled={!transcript && !interimTranscript} className="text-sm text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-30">
+            <button onClick={clearAll} disabled={!transcript && !interimTranscript} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-30">
               Clear
             </button>
-            <button onClick={copyToClipboard} disabled={!transcript} className="p-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg disabled:opacity-50 transition-colors" title="Copy">
+            <button onClick={copyToClipboard} disabled={!transcript} className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg disabled:opacity-50 transition-colors" title="Copy">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
             </button>
-            <button onClick={downloadText} disabled={!transcript} className="p-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg disabled:opacity-50 transition-colors" title="Download text file">
+            <button onClick={downloadText} disabled={!transcript} className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg disabled:opacity-50 transition-colors" title="Download text file">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
             </button>
           </div>
@@ -203,7 +203,7 @@ export default function LiveTranscription() {
         
         <div 
           ref={scrollRef}
-          className="flex-1 p-6 overflow-y-auto scroll-smooth font-sans text-lg leading-relaxed text-zinc-300"
+          className="flex-1 p-6 overflow-y-auto scroll-smooth font-sans text-lg leading-relaxed text-zinc-700 dark:text-zinc-300"
         >
           {transcript === '' && interimTranscript === '' && !isRecording && (
             <div className="h-full flex flex-col items-center justify-center text-zinc-600">

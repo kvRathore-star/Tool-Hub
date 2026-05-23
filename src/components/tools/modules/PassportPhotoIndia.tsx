@@ -93,16 +93,16 @@ export default function PassportPhotoIndia() {
   return (
     <div className="space-y-8 animate-in fade-in zoom-in duration-500">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-bold text-zinc-100">Crop Your Photo</h3>
+        <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Crop Your Photo</h3>
         <button 
           onClick={() => setImage(null)}
-          className="text-sm text-zinc-400 hover:text-white"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white"
         >
           Upload Different Photo
         </button>
       </div>
 
-      <div className="rounded-xl overflow-hidden border-2 border-white/10 bg-black/50">
+      <div className="rounded-xl overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-zinc-50/50 dark:bg-black/50">
         <Cropper
           src={image}
           style={{ height: 400, width: "100%" }}
@@ -132,12 +132,12 @@ export default function PassportPhotoIndia() {
           </div>
           <div className="flex-1 text-center sm:text-left">
             <h4 className="text-lg font-bold text-emerald-400 mb-2">Success! Ready for Upload</h4>
-            <p className="text-zinc-300 text-sm mb-4">
+            <p className="text-zinc-700 dark:text-zinc-300 text-sm mb-4">
               Your photo is perfectly sized at 3.5x4.5 cm with a solid white background.
             </p>
-            <div className="inline-flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-lg text-sm text-zinc-300 mb-6">
+            <div className="inline-flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-lg text-sm text-zinc-700 dark:text-zinc-300 mb-6">
               <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-              Final Size: <strong className="text-white">{outputSize ? (outputSize / 1024).toFixed(2) : 0} KB</strong> (Limit: 50 KB)
+              Final Size: <strong className="text-zinc-900 dark:text-white">{outputSize ? (outputSize / 1024).toFixed(2) : 0} KB</strong> (Limit: 50 KB)
             </div>
             <div>
               <button 

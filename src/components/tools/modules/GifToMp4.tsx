@@ -72,29 +72,29 @@ export default function GifToMp4() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100">{file.name}</h3>
-          <p className="text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{file.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
         </div>
         <button 
           onClick={() => { setFile(null); setOutputUrl(null); }}
-          className="text-sm text-zinc-400 hover:text-white px-3 py-1.5 bg-zinc-800 rounded-lg"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg"
         >
           Change GIF
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-black border border-white/10 p-6 rounded-2xl shadow-xl flex items-center justify-center min-h-[300px]">
+        <div className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex items-center justify-center min-h-[300px]">
           <img src={URL.createObjectURL(file)} alt="Original GIF" className="max-h-[300px] object-contain rounded-lg" />
         </div>
 
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
-            <h4 className="text-white font-medium">Ready to convert</h4>
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
+            <h4 className="text-zinc-900 dark:text-white font-medium">Ready to convert</h4>
             
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
               MP4 videos are significantly smaller than animated GIFs and load much faster on websites. This process runs locally on your device.
             </p>
 

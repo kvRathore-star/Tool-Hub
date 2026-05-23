@@ -100,9 +100,9 @@ export default function ScreenRecorder() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <div className="bg-zinc-900 border border-white/10 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center space-y-8 text-center min-h-[300px]">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center space-y-8 text-center min-h-[300px]">
           
-          <div className="w-24 h-24 bg-black border-4 border-zinc-800 rounded-full flex items-center justify-center relative shadow-2xl">
+          <div className="w-24 h-24 bg-white dark:bg-black border-4 border-zinc-200 dark:border-zinc-800 rounded-full flex items-center justify-center relative shadow-2xl">
             {isRecording ? (
               <div className="w-12 h-12 bg-red-500 rounded-lg animate-pulse" />
             ) : (
@@ -126,7 +126,7 @@ export default function ScreenRecorder() {
               <div className="flex gap-4">
                 <button 
                   onClick={togglePause}
-                  className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-4 rounded-xl transition-colors"
+                  className="flex-1 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-700 text-zinc-900 dark:text-white font-bold py-4 rounded-xl transition-colors"
                 >
                   {isPaused ? "Resume" : "Pause"}
                 </button>
@@ -143,12 +143,12 @@ export default function ScreenRecorder() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-black border border-white/10 rounded-2xl p-6 h-full flex flex-col">
-            <h4 className="text-white font-medium mb-4">Preview & Download</h4>
+          <div className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 rounded-2xl p-6 h-full flex flex-col">
+            <h4 className="text-zinc-900 dark:text-white font-medium mb-4">Preview & Download</h4>
             
             {videoUrl ? (
               <div className="flex flex-col flex-1">
-                <video src={videoUrl} controls className="w-full rounded-lg bg-zinc-900 flex-1 object-contain min-h-[200px]" />
+                <video src={videoUrl} controls className="w-full rounded-lg bg-white dark:bg-zinc-900 flex-1 object-contain min-h-[200px]" />
                 <button 
                   onClick={() => downloadOrShare(videoUrl, `screen-recording-${new Date().getTime()}.webm`)}
                   className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl shadow-lg mt-6 transition-all active:scale-95"
@@ -157,7 +157,7 @@ export default function ScreenRecorder() {
                 </button>
               </div>
             ) : (
-              <div className="flex-1 flex items-center justify-center border-2 border-dashed border-zinc-800 rounded-xl text-zinc-500 p-8 text-center">
+              <div className="flex-1 flex items-center justify-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-500 p-8 text-center">
                 Your recorded video will appear here when you stop recording.
               </div>
             )}

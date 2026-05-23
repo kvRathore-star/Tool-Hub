@@ -67,36 +67,36 @@ export default function Dashboard() {
   }, [searchQuery, categories]);
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 selection:bg-blue-500/30 font-sans antialiased">
+    <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/30 font-sans antialiased">
       {/* Hero Search Section */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
         <div className="absolute top-[-20%] left-[20%] w-[60%] h-[60%] rounded-full bg-blue-900/20 blur-[120px] pointer-events-none" />
         
-        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-zinc-500 mb-6 drop-shadow-sm">
+        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-zinc-950 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-200 dark:to-zinc-500 mb-6 drop-shadow-sm">
           The Ultralux Engine
         </h1>
-        <p className="text-xl text-zinc-400 max-w-2xl mb-12">
+        <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mb-12">
           100% Client-Side. Zero Data Retention. Search 200+ edge-optimized utilities instantly.
         </p>
-
+ 
         {/* High-Performance Search Bar */}
         <div className="w-full max-w-3xl relative group">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl transition-all duration-500 group-hover:opacity-100 opacity-50" />
-          <div className="relative bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center p-2 shadow-2xl transition-all focus-within:border-white/30 focus-within:bg-zinc-900/80">
+          <div className="relative bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-2xl flex items-center p-2 shadow-2xl transition-all focus-within:border-zinc-350 dark:focus-within:border-white/30 focus-within:bg-white dark:focus-within:bg-zinc-900/80">
             <svg className="w-6 h-6 text-zinc-500 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
               type="text"
               placeholder="What do you need to do? (e.g. 'reduce KB size', 'passport photo')"
-              className="w-full bg-transparent border-none text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-0 px-4 py-4 text-lg"
+              className="w-full bg-transparent border-none text-zinc-900 dark:text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-0 px-4 py-4 text-lg"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
-                className="p-2 text-zinc-500 hover:text-zinc-300 mr-2"
+                className="p-2 text-zinc-500 hover:text-zinc-750 dark:hover:text-zinc-300 mr-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
@@ -104,28 +104,28 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
-
+ 
       {/* Grid Layouts */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-32">
         {filteredCategories.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-2xl text-zinc-500">No matching tools found for "{searchQuery}"</p>
-            <button onClick={() => setSearchQuery('')} className="mt-4 text-blue-400 hover:text-blue-300 underline underline-offset-4">Clear search</button>
+            <button onClick={() => setSearchQuery('')} className="mt-4 text-blue-450 hover:text-blue-350 underline underline-offset-4">Clear search</button>
           </div>
         ) : (
           <div className="space-y-16">
             {filteredCategories.map((category) => (
               <div key={category.id} className="relative">
                 {/* Section Title */}
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 mb-8 flex items-center gap-3">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-8 flex items-center gap-3">
                   {category.title}
                   {category.highlight && (
-                    <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400 ring-1 ring-inset ring-emerald-500/20">
+                    <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 ring-1 ring-inset ring-emerald-500/20">
                       High Demand
                     </span>
                   )}
                 </h2>
-
+ 
                 {/* Tool Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {category.tools.map((tool) => (
@@ -136,14 +136,14 @@ export default function Dashboard() {
                     >
                       <div className={`h-full rounded-2xl border p-6 transition-all duration-300 backdrop-blur-md relative overflow-hidden
                         ${category.highlight 
-                          ? 'bg-gradient-to-b from-blue-900/10 to-transparent border-blue-500/30 hover:border-blue-400/60 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)]' 
-                          : 'bg-zinc-900/30 border-white/5 hover:bg-zinc-900/60 hover:border-white/20'
+                          ? 'bg-gradient-to-b from-blue-500/5 to-transparent dark:from-blue-900/10 dark:to-transparent border-blue-200 dark:border-blue-500/30 hover:border-blue-400/60 shadow-[0_0_15px_rgba(59,130,246,0.05)] dark:shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] dark:hover:shadow-[0_0_25px_rgba(59,130,246,0.2)]' 
+                          : 'bg-white dark:bg-zinc-900/30 border-zinc-200 dark:border-white/5 hover:bg-zinc-50 dark:hover:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-white/20'
                         }`}
                       >
                         {/* Hover Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-zinc-500/[0.02] dark:from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                         
-                        <h3 className="text-lg font-semibold text-zinc-100 mb-2 group-hover:text-blue-400 transition-colors">
+                        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2 group-hover:text-blue-400 transition-colors">
                           {tool.name}
                         </h3>
                         <p className="text-sm text-zinc-500 line-clamp-2">

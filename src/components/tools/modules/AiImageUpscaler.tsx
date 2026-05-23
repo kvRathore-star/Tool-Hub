@@ -58,42 +58,42 @@ export default function AiImageUpscaler() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100">{file.name}</h3>
-          <p className="text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{file.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
         </div>
         <button 
           onClick={() => { setFile(null); setOutputUrl(null); }}
-          className="text-sm text-zinc-400 hover:text-white px-3 py-1.5 bg-zinc-800 rounded-lg"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg"
         >
           Change Image
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center min-h-[300px]">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center min-h-[300px]">
           <img src={URL.createObjectURL(file)} className="max-h-[300px] object-contain rounded-lg" alt="Original" />
           <p className="text-zinc-500 text-sm mt-4">Original Image Preview</p>
         </div>
 
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
-            <h4 className="text-white font-medium">Upscale Settings</h4>
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
+            <h4 className="text-zinc-900 dark:text-white font-medium">Upscale Settings</h4>
             
             <div className="grid grid-cols-3 gap-3">
               {[2, 4, 8].map(s => (
                 <button
                   key={s}
                   onClick={() => setScale(s)}
-                  className={`py-3 rounded-xl font-bold text-sm transition-colors border ${scale === s ? 'bg-purple-600 border-purple-500 text-white' : 'bg-black border-white/10 text-zinc-400 hover:bg-zinc-800'}`}
+                  className={`py-3 rounded-xl font-bold text-sm transition-colors border ${scale === s ? 'bg-purple-600 border-purple-500 text-white' : 'bg-white dark:bg-black border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-800'}`}
                 >
                   {s}x Scale
                 </button>
               ))}
             </div>
 
-            <div className="bg-black/50 p-4 rounded-lg text-xs text-zinc-400 border border-white/5">
+            <div className="bg-zinc-50/50 dark:bg-black/50 p-4 rounded-lg text-xs text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-white/5">
               <span className="text-purple-400 font-bold block mb-1">Real-ESRGAN Model</span>
               Optimized for anime, illustrations, and general photography.
             </div>

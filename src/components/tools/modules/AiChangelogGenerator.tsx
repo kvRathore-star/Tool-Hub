@@ -30,10 +30,10 @@ export default function AiChangelogGenerator() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-white font-medium">Git Commits / PR Titles</h4>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+          <h4 className="text-zinc-900 dark:text-white font-medium">Git Commits / PR Titles</h4>
           <textarea 
-            className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-3 text-white h-48 outline-none focus:border-emerald-500 font-mono text-sm"
+            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-3 text-zinc-900 dark:text-white h-48 outline-none focus:border-emerald-500 font-mono text-sm"
             placeholder="Paste your git log or commit messages here..."
             value={commits}
             onChange={e => setCommits(e.target.value)}
@@ -47,21 +47,21 @@ export default function AiChangelogGenerator() {
           </button>
         </div>
 
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl flex flex-col">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col">
           <div className="flex justify-between items-center mb-4">
-            <h4 className="text-white font-medium">Markdown Output</h4>
+            <h4 className="text-zinc-900 dark:text-white font-medium">Markdown Output</h4>
             <button 
               onClick={() => {
                 navigator.clipboard.writeText(output);
                 toast.success('Copied to clipboard');
               }}
-              className="text-xs text-zinc-400 hover:text-white"
+              className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white"
             >
               Copy
             </button>
           </div>
           <textarea 
-            className="flex-1 w-full bg-black border border-emerald-500/30 rounded-lg px-4 py-3 text-emerald-400 font-mono text-sm outline-none resize-none min-h-[250px]"
+            className="flex-1 w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-4 py-3 text-emerald-400 font-mono text-sm outline-none resize-none min-h-[250px]"
             readOnly
             value={output}
             placeholder="Markdown release notes will appear here..."

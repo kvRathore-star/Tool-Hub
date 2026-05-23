@@ -19,7 +19,7 @@ export default function AiChatHub() {
         <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500">
           The Ultimate AI Hub
         </h2>
-        <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+        <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
           Access all the world's most powerful AI models from a single interface. No need for multiple $20/mo subscriptions.
         </p>
       </div>
@@ -29,7 +29,7 @@ export default function AiChatHub() {
           <div 
             key={model.name}
             onClick={() => router.push(`/ai/${model.slug}`)}
-            className="group cursor-pointer relative bg-zinc-900 border border-white/10 rounded-3xl p-8 overflow-hidden hover:border-white/20 transition-all duration-300"
+            className="group cursor-pointer relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 overflow-hidden hover:border-white/20 transition-all duration-300"
           >
             <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${model.color} rounded-full blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity`} />
             
@@ -38,8 +38,8 @@ export default function AiChatHub() {
                 {model.logo}
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">{model.name}</h3>
-                <p className="text-zinc-400">{model.desc}</p>
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">{model.name}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400">{model.desc}</p>
               </div>
             </div>
           </div>

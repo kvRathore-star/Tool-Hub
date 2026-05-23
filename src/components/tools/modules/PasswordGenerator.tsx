@@ -70,7 +70,7 @@ export default function PasswordGenerator() {
         <strong>100% Client-Side:</strong> Passwords are generated securely in your browser using the Web Crypto API. They are never sent to a server.
       </div>
 
-      <div className="bg-zinc-900 border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-blue-500/10 blur-[100px] pointer-events-none" />
 
@@ -78,7 +78,7 @@ export default function PasswordGenerator() {
           
           {/* Password Display */}
           <div>
-            <div className="flex items-center bg-black border border-white/10 rounded-2xl p-4 overflow-hidden group">
+            <div className="flex items-center bg-white dark:bg-black border border-zinc-200 dark:border-white/10 rounded-2xl p-4 overflow-hidden group">
               <input 
                 type="text" 
                 value={password}
@@ -88,7 +88,7 @@ export default function PasswordGenerator() {
               <div className="flex gap-2">
                 <button 
                   onClick={generatePassword}
-                  className="p-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl transition-colors"
+                  className="p-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-xl transition-colors"
                   title="Generate New"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
@@ -106,14 +106,14 @@ export default function PasswordGenerator() {
             {/* Strength indicator */}
             <div className="mt-4 flex flex-col gap-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-zinc-400">Password Strength:</span>
+                <span className="text-zinc-600 dark:text-zinc-400">Password Strength:</span>
                 <span className={`font-bold ${strength.color.replace('bg-', 'text-')}`}>{strength.label}</span>
               </div>
               <div className="flex gap-1 h-1.5">
                 {[1, 2, 3, 4, 5].map(i => (
                   <div 
                     key={i} 
-                    className={`flex-1 rounded-full ${i <= (strength.label === 'Weak' ? 2 : strength.label === 'Medium' ? 3 : 5) ? strength.color : 'bg-zinc-800'}`}
+                    className={`flex-1 rounded-full ${i <= (strength.label === 'Weak' ? 2 : strength.label === 'Medium' ? 3 : 5) ? strength.color : 'bg-zinc-100 dark:bg-zinc-800'}`}
                   />
                 ))}
               </div>
@@ -128,7 +128,7 @@ export default function PasswordGenerator() {
             {/* Length Slider */}
             <div>
               <div className="flex justify-between mb-4">
-                <label className="text-sm font-medium text-zinc-300">Password Length</label>
+                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Password Length</label>
                 <span className="text-blue-400 font-bold text-lg">{length}</span>
               </div>
               <input 
@@ -137,50 +137,50 @@ export default function PasswordGenerator() {
                 max="64" 
                 value={length}
                 onChange={(e) => setLength(Number(e.target.value))}
-                className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
 
             {/* Checkboxes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label className="flex items-center gap-3 p-4 bg-black border border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
+              <label className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-zinc-200 dark:border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
                 <input 
                   type="checkbox" 
                   checked={includeUppercase} 
                   onChange={(e) => setIncludeUppercase(e.target.checked)}
-                  className="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
+                  className="w-5 h-5 rounded border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
                 />
-                <span className="text-zinc-300 select-none flex-1">Uppercase (A-Z)</span>
+                <span className="text-zinc-700 dark:text-zinc-300 select-none flex-1">Uppercase (A-Z)</span>
               </label>
 
-              <label className="flex items-center gap-3 p-4 bg-black border border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
+              <label className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-zinc-200 dark:border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
                 <input 
                   type="checkbox" 
                   checked={includeLowercase} 
                   onChange={(e) => setIncludeLowercase(e.target.checked)}
-                  className="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
+                  className="w-5 h-5 rounded border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
                 />
-                <span className="text-zinc-300 select-none flex-1">Lowercase (a-z)</span>
+                <span className="text-zinc-700 dark:text-zinc-300 select-none flex-1">Lowercase (a-z)</span>
               </label>
 
-              <label className="flex items-center gap-3 p-4 bg-black border border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
+              <label className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-zinc-200 dark:border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
                 <input 
                   type="checkbox" 
                   checked={includeNumbers} 
                   onChange={(e) => setIncludeNumbers(e.target.checked)}
-                  className="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
+                  className="w-5 h-5 rounded border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
                 />
-                <span className="text-zinc-300 select-none flex-1">Numbers (0-9)</span>
+                <span className="text-zinc-700 dark:text-zinc-300 select-none flex-1">Numbers (0-9)</span>
               </label>
 
-              <label className="flex items-center gap-3 p-4 bg-black border border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
+              <label className="flex items-center gap-3 p-4 bg-white dark:bg-black border border-zinc-200 dark:border-white/5 rounded-xl cursor-pointer hover:bg-zinc-900 transition-colors">
                 <input 
                   type="checkbox" 
                   checked={includeSymbols} 
                   onChange={(e) => setIncludeSymbols(e.target.checked)}
-                  className="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
+                  className="w-5 h-5 rounded border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-blue-600 focus:ring-blue-500 focus:ring-offset-zinc-900"
                 />
-                <span className="text-zinc-300 select-none flex-1">Symbols (!@#$)</span>
+                <span className="text-zinc-700 dark:text-zinc-300 select-none flex-1">Symbols (!@#$)</span>
               </label>
             </div>
           </div>

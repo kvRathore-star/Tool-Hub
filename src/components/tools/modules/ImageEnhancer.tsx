@@ -18,10 +18,10 @@ export default function ImageEnhancer() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-white font-medium">Input</h4>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
           <textarea 
-            className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white h-32 outline-none focus:border-blue-500"
+            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
             placeholder="Enter input here..."
             value={input}
             onChange={e => setInput(e.target.value)}
@@ -34,10 +34,10 @@ export default function ImageEnhancer() {
           </button>
         </div>
 
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-white font-medium">Output</h4>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
           <textarea 
-            className="w-full bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
+            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
             readOnly
             value={output}
             placeholder="Output will appear here..."

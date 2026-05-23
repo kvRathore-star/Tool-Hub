@@ -121,10 +121,10 @@ export default function PdfFormFiller() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100">{pdfFile.name}</h3>
-          <p className="text-zinc-400 text-sm">{fields.length} form fields detected</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{pdfFile.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">{fields.length} form fields detected</p>
         </div>
         <button 
           onClick={() => { setPdfFile(null); setFields([]); }}
@@ -135,8 +135,8 @@ export default function PdfFormFiller() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl max-h-[600px] overflow-y-auto space-y-4">
-          <h4 className="text-white font-medium sticky top-0 bg-zinc-900 pb-2 z-10 border-b border-white/10">Fill Fields</h4>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl max-h-[600px] overflow-y-auto space-y-4">
+          <h4 className="text-zinc-900 dark:text-white font-medium sticky top-0 bg-white dark:bg-zinc-900 pb-2 z-10 border-b border-zinc-200 dark:border-white/10">Fill Fields</h4>
           
           {fields.length === 0 ? (
             <div className="text-zinc-500 py-8 text-center">
@@ -146,11 +146,11 @@ export default function PdfFormFiller() {
           ) : (
             fields.map((field) => (
               <div key={field.name} className="space-y-1">
-                <label className="text-xs text-zinc-400 truncate block" title={field.name}>{field.name}</label>
+                <label className="text-xs text-zinc-600 dark:text-zinc-400 truncate block" title={field.name}>{field.name}</label>
                 
                 {field.type.includes('CheckBox') ? (
                   <select 
-                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none focus:border-blue-500"
+                    className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white outline-none focus:border-blue-500"
                     value={field.value}
                     onChange={(e) => handleFieldChange(field.name, e.target.value)}
                   >
@@ -160,7 +160,7 @@ export default function PdfFormFiller() {
                 ) : (
                   <input 
                     type="text" 
-                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none focus:border-blue-500"
+                    className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white outline-none focus:border-blue-500"
                     placeholder={`Enter ${field.name}`}
                     value={field.value}
                     onChange={(e) => handleFieldChange(field.name, e.target.value)}
@@ -172,7 +172,7 @@ export default function PdfFormFiller() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl">
             <button 
               onClick={generateFilledPdf}
               disabled={isProcessing || fields.length === 0}

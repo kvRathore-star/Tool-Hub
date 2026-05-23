@@ -74,48 +74,48 @@ export default function VideoTrimmer() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100">{file.name}</h3>
-          <p className="text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{file.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
         </div>
         <button 
           onClick={() => { setFile(null); setOutputUrl(null); }}
-          className="text-sm text-zinc-400 hover:text-white px-3 py-1.5 bg-zinc-800 rounded-lg"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg"
         >
           Change Video
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-black border border-white/10 p-4 rounded-2xl shadow-xl flex items-center justify-center min-h-[300px]">
+        <div className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 p-4 rounded-2xl shadow-xl flex items-center justify-center min-h-[300px]">
           <video src={URL.createObjectURL(file)} controls className="w-full max-h-[350px] rounded-lg" />
         </div>
 
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
-            <h4 className="text-white font-medium">Trim Settings</h4>
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
+            <h4 className="text-zinc-900 dark:text-white font-medium">Trim Settings</h4>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-zinc-400 mb-2">Start Time (HH:MM:SS)</label>
+                <label className="block text-sm text-zinc-600 dark:text-zinc-400 mb-2">Start Time (HH:MM:SS)</label>
                 <input 
                   type="text" 
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   placeholder="00:00:00"
-                  className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none font-mono"
+                  className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white outline-none font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-zinc-400 mb-2">Duration (Seconds)</label>
+                <label className="block text-sm text-zinc-600 dark:text-zinc-400 mb-2">Duration (Seconds)</label>
                 <input 
                   type="number" 
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                   placeholder="10"
-                  className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none font-mono"
+                  className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white outline-none font-mono"
                 />
               </div>
             </div>

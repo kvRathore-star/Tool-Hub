@@ -78,14 +78,14 @@ export default function ImageCompressor() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-zinc-900/50 p-4 rounded-xl border border-white/5">
+      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
-          <h3 className="font-bold text-zinc-100 truncate max-w-xs">{imageFile.name}</h3>
-          <p className="text-zinc-400 text-sm">Original Size: {(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+          <h3 className="font-bold text-zinc-900 dark:text-zinc-100 truncate max-w-xs">{imageFile.name}</h3>
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">Original Size: {(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
         </div>
         <button 
           onClick={() => { setImageFile(null); setPreviewUrl(null); }}
-          className="text-sm text-zinc-400 hover:text-white"
+          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white"
         >
           Change Photo
         </button>
@@ -93,20 +93,20 @@ export default function ImageCompressor() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Preview Area */}
-        <div className="bg-black border border-white/10 rounded-2xl p-4 flex items-center justify-center min-h-[300px]">
+        <div className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 rounded-2xl p-4 flex items-center justify-center min-h-[300px]">
           <img src={outputUrl || previewUrl} alt="Preview" className="max-h-[400px] object-contain rounded-lg" />
         </div>
 
         {/* Controls */}
         <div className="space-y-6">
-          <div className="p-6 border border-white/10 bg-black rounded-2xl shadow-xl">
-            <h4 className="text-zinc-300 font-medium mb-6">Compression Quality</h4>
+          <div className="p-6 border border-zinc-200 dark:border-white/10 bg-white dark:bg-black rounded-2xl shadow-xl">
+            <h4 className="text-zinc-700 dark:text-zinc-300 font-medium mb-6">Compression Quality</h4>
             
             <div className="space-y-4">
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-400">Low Size</span>
+                <span className="text-zinc-600 dark:text-zinc-400">Low Size</span>
                 <span className="text-blue-400 font-bold">{Math.round(quality * 100)}%</span>
-                <span className="text-zinc-400">High Quality</span>
+                <span className="text-zinc-600 dark:text-zinc-400">High Quality</span>
               </div>
               <input 
                 type="range" 
@@ -115,7 +115,7 @@ export default function ImageCompressor() {
                 step="0.1"
                 value={quality}
                 onChange={(e) => setQuality(Number(e.target.value))}
-                className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
             
@@ -133,11 +133,11 @@ export default function ImageCompressor() {
               <div>
                 <h4 className="text-lg font-bold text-emerald-400 mb-1">Compression Complete!</h4>
                 <div className="flex justify-between items-center mt-2 text-sm">
-                  <span className="text-zinc-400">New Size:</span>
-                  <strong className="text-white">{(outputFile.size / 1024).toFixed(2)} KB</strong>
+                  <span className="text-zinc-600 dark:text-zinc-400">New Size:</span>
+                  <strong className="text-zinc-900 dark:text-white">{(outputFile.size / 1024).toFixed(2)} KB</strong>
                 </div>
                 <div className="flex justify-between items-center mt-1 text-sm">
-                  <span className="text-zinc-400">Data Saved:</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">Data Saved:</span>
                   <strong className="text-emerald-400">{savingsPercent}%</strong>
                 </div>
               </div>
