@@ -80,7 +80,6 @@ export function ToolLayout({ title, description, category, children, faqs = [] }
               <GlobalErrorBoundary>
                 <TurnstileLock 
                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} 
-                  onVerify={() => console.log('Turnstile verified')}
                 >
                   {children}
                 </TurnstileLock>

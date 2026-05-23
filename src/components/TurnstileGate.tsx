@@ -5,7 +5,7 @@ import Script from "next/script";
 
 export interface TurnstileGateProps {
   siteKey: string;
-  onVerify: (token: string) => void;
+  onVerify?: (token: string) => void;
   children: ReactNode;
   className?: string;
 }
@@ -27,7 +27,9 @@ export function TurnstileGate({
   const handleTurnstileCallback = useCallback(
     (token: string) => {
       setToken(token);
-      onVerify(token);
+      if (onVerify) {
+        onVerify(token);
+      }
     },
     [onVerify]
   );
@@ -72,7 +74,9 @@ export function TurnstileLock({
   const handleVerify = useCallback(
     (token: string) => {
       setVerified(true);
-      onVerify(token);
+      if (onVerify) {
+        onVerify(token);
+      }
     },
     [onVerify]
   );
