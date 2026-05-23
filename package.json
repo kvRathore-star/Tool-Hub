@@ -3,18 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build && node scripts/generate-sitemap.js",
     "dev": "next dev",
+    "build": "next build && node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "eslint",
-    "wasm:optimize": "bash scripts/optimize-wasm.sh",
-    "cf:build": "next build && npx @opennextjs/cloudflare build",
-    "cf:deploy": "npm run cf:build && npx wrangler pages deploy .opennext/",
-    "cf:dev": "npx wrangler pages dev .opennext/",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "wasm:optimize": "bash scripts/optimize-wasm.sh"
   },
   "dependencies": {
     "@capacitor/android": "^6.2.1",

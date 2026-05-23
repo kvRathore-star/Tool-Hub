@@ -13,9 +13,9 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
+  output: 'export',
   poweredByHeader: false,
   turbopack: {},
 };
 
 export default withPWA(nextConfig);
-import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());
