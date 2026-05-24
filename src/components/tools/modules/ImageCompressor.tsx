@@ -33,15 +33,13 @@ export default function ImageCompressor() {
     
     setIsProcessing(true);
     try {
-      // Calculate max size MB dynamically based on original and quality factor to simulate generic compression
       const originalMB = imageFile.size / (1024 * 1024);
       let targetMB = originalMB * quality;
-      // Ensure target is somewhat meaningful
       if (targetMB > originalMB) targetMB = originalMB;
 
       const options = {
         maxSizeMB: targetMB,
-        maxWidthOrHeight: 4096, // Keep large resolutions but compress quality
+        maxWidthOrHeight: 4096,
         useWebWorker: typeof window !== 'undefined' && typeof window.Worker !== 'undefined',
         initialQuality: quality,
       };
@@ -62,8 +60,8 @@ export default function ImageCompressor() {
   if (!imageFile || !previewUrl) {
     return (
       <div className="space-y-6">
-        <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-          <strong>Smart Compression:</strong> Reduce the file size of your JPG, PNG, or WEBP images with adjustable quality settings.
+        <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] p-4 rounded-xl text-[var(--text-secondary)] text-sm font-medium">
+          <strong>Smart Compression:</strong> Reduce the file size of your JPG, PNG, or WEBP images with adjustable quality settings. 100% private.
         </div>
         <FileUploader 
           accept="image/jpeg,image/png,image/webp" 
@@ -78,35 +76,35 @@ export default function ImageCompressor() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
+      <div className="flex justify-between items-center bg-[var(--bg-overlay)] p-4 rounded-xl border border-[var(--border-subtle)]">
         <div>
-          <h3 className="font-bold text-zinc-900 dark:text-zinc-100 truncate max-w-xs">{imageFile.name}</h3>
-          <p className="text-zinc-600 dark:text-zinc-400 text-sm">Original Size: {(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+          <h3 className="font-bold text-[var(--text-primary)] truncate max-w-xs">{imageFile.name}</h3>
+          <p className="text-[var(--text-secondary)] text-sm">Original Size: {(imageFile.size / (1024 * 1024)).toFixed(2)} MB</p>
         </div>
         <button 
           onClick={() => { setImageFile(null); setPreviewUrl(null); }}
-          className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:text-white"
+          className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors px-3 py-1.5 rounded-lg hover:bg-[var(--bg-surface)]"
         >
           Change Photo
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Preview Area */}
-        <div className="bg-white dark:bg-black border border-zinc-200 dark:border-white/10 rounded-2xl p-4 flex items-center justify-center min-h-[300px]">
-          <img src={outputUrl || previewUrl} alt="Preview" className="max-h-[400px] object-contain rounded-lg" />
+        <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-2xl p-4 flex items-center justify-center min-h-[300px]">
+          <img src={outputUrl || previewUrl} alt="Preview" className="max-h-[400px] object-contain rounded-lg shadow-[var(--shadow-md)]" />
         </div>
 
         {/* Controls */}
         <div className="space-y-6">
-          <div className="p-6 border border-zinc-200 dark:border-white/10 bg-white dark:bg-black rounded-2xl shadow-xl">
-            <h4 className="text-zinc-700 dark:text-zinc-300 font-medium mb-6">Compression Quality</h4>
+          <div className="p-6 border border-[var(--border-subtle)] bg-[var(--bg-elevated)] rounded-2xl shadow-[var(--shadow-md)]">
+            <h4 className="text-[var(--text-primary)] font-medium mb-6">Compression Quality</h4>
             
             <div className="space-y-4">
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-600 dark:text-zinc-400">Low Size</span>
-                <span className="text-blue-400 font-bold">{Math.round(quality * 100)}%</span>
-                <span className="text-zinc-600 dark:text-zinc-400">High Quality</span>
+                <span className="text-[var(--text-secondary)]">Low Size</span>
+                <span className="text-[var(--accent)] font-bold">{Math.round(quality * 100)}%</span>
+                <span className="text-[var(--text-secondary)]">High Quality</span>
               </div>
               <input 
                 type="range" 
@@ -115,16 +113,16 @@ export default function ImageCompressor() {
                 step="0.1"
                 value={quality}
                 onChange={(e) => setQuality(Number(e.target.value))}
-                className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-[var(--bg-surface)] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
               />
             </div>
             
             <button 
               onClick={processImage}
               disabled={isProcessing}
-              className="mt-8 w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50"
+              className="mt-8 w-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium py-3 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50"
             >
-              {isProcessing ? "Compressing..." : "Apply Compression"}
+              {isProcessing ? "Compressing..." : "Apply Compression →"}
             </button>
           </div>
 
@@ -132,13 +130,13 @@ export default function ImageCompressor() {
             <div className="p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex flex-col gap-4 animate-in slide-in-from-bottom-4">
               <div>
                 <h4 className="text-lg font-bold text-emerald-400 mb-1">Compression Complete!</h4>
-                <div className="flex justify-between items-center mt-2 text-sm">
-                  <span className="text-zinc-600 dark:text-zinc-400">New Size:</span>
-                  <strong className="text-zinc-900 dark:text-white">{(outputFile.size / 1024).toFixed(2)} KB</strong>
+                <div className="flex justify-between items-center mt-2 text-sm border-b border-emerald-500/20 pb-2">
+                  <span className="text-[var(--text-secondary)]">New Size:</span>
+                  <strong className="text-[var(--text-primary)] font-mono">{(outputFile.size / 1024).toFixed(2)} KB</strong>
                 </div>
-                <div className="flex justify-between items-center mt-1 text-sm">
-                  <span className="text-zinc-600 dark:text-zinc-400">Data Saved:</span>
-                  <strong className="text-emerald-400">{savingsPercent}%</strong>
+                <div className="flex justify-between items-center mt-2 text-sm">
+                  <span className="text-[var(--text-secondary)]">Data Saved:</span>
+                  <strong className="text-emerald-400 font-mono">{savingsPercent}%</strong>
                 </div>
               </div>
               

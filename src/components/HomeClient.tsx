@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Command, ArrowRight, ShieldCheck, Zap, Server, ChevronRight, Play } from 'lucide-react';
+import { Command, ArrowRight, ShieldCheck, Zap, Server, ChevronRight, Play, Image as ImageIcon, FileText, Type, Mic, Video, Cpu, ArrowLeftRight } from 'lucide-react';
 import { toolsRegistry } from '@/registry/tools';
 import { Button } from '@/components/ui/button';
 
@@ -219,30 +219,63 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {popularTools.map((tool) => (
-            <Link 
-              key={tool.id} 
-              href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
-              className="group block"
-            >
-              <div className="h-full p-6 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[var(--border-default)] transition-all duration-200">
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] px-2 py-1 rounded">
-                    {tool.category}
-                  </span>
-                  <div className="w-8 h-8 rounded-full bg-[var(--bg-overlay)] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors" />
+          {popularTools.map((tool) => {
+            const isImage = tool.category.includes('Image');
+            const isPdf = tool.category.includes('PDF');
+            const isText = tool.category.includes('Text');
+            const isAudio = tool.category.includes('Audio');
+            const isVideo = tool.category.includes('Video');
+            const isAI = tool.category.includes('AI');
+            const isIndia = tool.category.includes('India');
+            
+            let borderColor = 'border-l-transparent';
+            let iconColor = 'text-[var(--text-muted)]';
+            let bgTint = 'bg-[var(--bg-overlay)]';
+            
+            if (isImage) { borderColor = 'border-l-purple-500'; iconColor = 'text-purple-500'; bgTint = 'bg-purple-500/10'; }
+            else if (isPdf) { borderColor = 'border-l-amber-500'; iconColor = 'text-amber-500'; bgTint = 'bg-amber-500/10'; }
+            else if (isText) { borderColor = 'border-l-teal-500'; iconColor = 'text-teal-500'; bgTint = 'bg-teal-500/10'; }
+            else if (isAudio) { borderColor = 'border-l-pink-500'; iconColor = 'text-pink-500'; bgTint = 'bg-pink-500/10'; }
+            else if (isVideo) { borderColor = 'border-l-blue-500'; iconColor = 'text-blue-500'; bgTint = 'bg-blue-500/10'; }
+            else if (isAI) { borderColor = 'border-l-indigo-500'; iconColor = 'text-indigo-500'; bgTint = 'bg-indigo-500/10'; }
+            else if (isIndia) { borderColor = 'border-l-[#FF6B35]'; iconColor = 'text-[#FF6B35]'; bgTint = 'bg-[#FF6B35]/10'; }
+            else { borderColor = 'border-l-orange-500'; iconColor = 'text-orange-500'; bgTint = 'bg-orange-500/10'; }
+
+            return (
+              <Link 
+                key={tool.id} 
+                href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
+                className="group block h-full"
+              >
+                <div className={`h-full p-5 bg-[var(--bg-elevated)] border-y border-r border-l-2 border-y-[var(--border-subtle)] border-r-[var(--border-subtle)] ${borderColor} rounded-[var(--radius-xl)] hover:border-y-[var(--border-default)] hover:border-r-[var(--border-default)] transition-all duration-200 shadow-sm hover:shadow-[var(--shadow-md)] hover:-translate-y-1`}>
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-8 h-8 rounded-full ${bgTint} flex items-center justify-center`}>
+                      {isImage ? <ImageIcon className={`w-4 h-4 ${iconColor}`} /> :
+                       isPdf ? <FileText className={`w-4 h-4 ${iconColor}`} /> :
+                       isText ? <Type className={`w-4 h-4 ${iconColor}`} /> :
+                       isAudio ? <Mic className={`w-4 h-4 ${iconColor}`} /> :
+                       isVideo ? <Video className={`w-4 h-4 ${iconColor}`} /> :
+                       isAI ? <Cpu className={`w-4 h-4 ${iconColor}`} /> :
+                       <ArrowLeftRight className={`w-4 h-4 ${iconColor}`} />}
+                    </div>
+                    <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] border border-[var(--border-subtle)] px-2 py-0.5 rounded">
+                      {tool.category}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors flex items-center gap-2">
+                    {tool.name}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all text-[var(--accent)]" />
+                  </h3>
+                  <p className="text-sm text-[var(--text-secondary)] line-clamp-2 mb-4">
+                    {tool.description}
+                  </p>
+                  <div className="h-1.5 w-full bg-[var(--bg-overlay)] rounded-full overflow-hidden">
+                    <div className={`h-full ${bgTint.replace('/10', '')} opacity-50`} style={{ width: `${Math.floor(Math.random() * 60) + 20}%` }} />
                   </div>
                 </div>
-                <h3 className="text-lg font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors">
-                  {tool.name}
-                </h3>
-                <p className="text-sm text-[var(--text-secondary)] line-clamp-2">
-                  {tool.description}
-                </p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
