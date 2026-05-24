@@ -7,7 +7,10 @@
     "build": "next build && node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "eslint",
-    "wasm:optimize": "bash scripts/optimize-wasm.sh"
+    "wasm:optimize": "bash scripts/optimize-wasm.sh",
+    "cf:deploy": "npm run build && npx wrangler pages deploy out/",
+    "cf:dev": "npx wrangler pages dev out/",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@capacitor/android": "^6.2.1",

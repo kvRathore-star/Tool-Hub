@@ -21,6 +21,22 @@ const FEATURES = [
 
 export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
   const [activeTab, setActiveTab] = useState("compress");
+  const [showIndia, setShowIndia] = useState(isIndia);
+
+  React.useEffect(() => {
+    if (isIndia) {
+      setShowIndia(true);
+    } else {
+      const cookies = document.cookie.split(';');
+      const countryCookie = cookies.find(c => c.trim().startsWith('user-country='));
+      const country = countryCookie ? countryCookie.split('=')[1] : null;
+      
+      const isIndiaTZ = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Kolkata';
+      if (country === 'IN' || isIndiaTZ) {
+        setShowIndia(true);
+      }
+    }
+  }, [isIndia]);
 
   // Sample tools for grid
   const popularTools = useMemo(() => {
@@ -174,7 +190,7 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
       </section>
 
       {/* Conditional India Utilities Section */}
-      {isIndia && (
+      {showIndia && (
         <section className="relative pt-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
           {/* Saffron Top Gradient */}
           <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FF6B35]/50 to-transparent" />

@@ -1,18 +1,20 @@
-import React from "react";
-import { cookies } from "next/headers";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { ShieldCheck, Check, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const metadata = {
-  title: "Pricing | ToolHub",
-  description: "Simple, transparent pricing for individuals and teams.",
-};
+export default function PricingPage() {
+  const [isIndia, setIsIndia] = useState(false);
 
-export default async function PricingPage() {
-  // Read the IP Country cookie set by Middleware
-  const cookieStore = await cookies();
-  const userCountry = cookieStore.get("user-country")?.value || "US";
-  const isIndia = userCountry === "IN";
+  useEffect(() => {
+    const cookies = document.cookie.split(';');
+    const countryCookie = cookies.find(c => c.trim().startsWith('user-country='));
+    const country = countryCookie ? countryCookie.split('=')[1] : null;
+    
+    const isIndiaTZ = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Kolkata';
+    setIsIndia(country === 'IN' || isIndiaTZ);
+  }, []);
 
   // Dynamic pricing based on geography
   const currencySymbol = isIndia ? "₹" : "$";

@@ -13,6 +13,7 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
+  output: "export",
   poweredByHeader: false,
   turbopack: {},
 };
