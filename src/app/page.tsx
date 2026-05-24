@@ -1,230 +1,215 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { toolsRegistry } from '@/registry/tools';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Search, Sparkles, Zap, Shield, Cpu, Clock, ChevronRight } from 'lucide-react';
+import { Command, ArrowRight, ShieldCheck, Zap, Server, ChevronRight, Play } from 'lucide-react';
+import { toolsRegistry } from '@/registry/tools';
+import { Button } from '@/components/ui/button';
 
-const SYNONYM_DICT: Record<string, string[]> = {
-  "compress": ["reduce", "shrink", "smaller", "kb size"],
-  "crop": ["trim", "cut", "resize"],
-  "pdf": ["document", "doc"],
-  "image": ["photo", "pic", "picture", "jpg", "png"],
-  "aadhaar": ["aadhar", "uidai", "id card"],
-  "pan": ["pancard", "nsdl", "tax id"],
-  "passport": ["visa photo", "travel photo"],
-};
-
-const FEATURES = [
-  { icon: Shield, title: "100% Private", desc: "Files never leave your device" },
-  { icon: Zap, title: "Lightning Fast", desc: "Instant local processing" },
-  { icon: Cpu, title: "Edge Powered", desc: "Runs directly in browser" },
-  { icon: Clock, title: "Zero Wait", desc: "No queues or upload times" }
+const STATS = [
+  { label: "Operations processed", value: "10M+" },
+  { label: "Files stored on server", value: "0" },
+  { label: "Browser-based tools", value: "200+" },
 ];
 
-export default function Dashboard() {
-  const [searchQuery, setSearchQuery] = useState('');
+const FEATURES = [
+  { icon: ShieldCheck, title: "100% Private", desc: "Files never leave your device." },
+  { icon: Zap, title: "Lightning Fast", desc: "Zero upload times. Instant processing." },
+  { icon: Server, title: "Edge Powered", desc: "Runs directly on your browser's CPU." },
+];
 
-  const categories = useMemo(() => {
-    const allCategories = Array.from(new Set(toolsRegistry.map(t => t.category).filter(Boolean)));
-    
-    const grouped = allCategories.map(cat => ({
-      id: cat.toLowerCase().replace(/\s+/g, '-'),
-      title: cat === 'indian-utilities' ? 'Indian Gov Utilities' : `${cat} Utilities`,
-      tools: toolsRegistry.filter(t => t.category === cat),
-      highlight: ['indian-utilities', 'AI', 'PDF', 'Image'].includes(cat),
-    }));
+export default function Home() {
+  const [activeTab, setActiveTab] = useState("compress");
 
-    grouped.sort((a, b) => {
-      if (a.highlight && !b.highlight) return -1;
-      if (!a.highlight && b.highlight) return 1;
-      if (a.id === 'indian-utilities') return -1;
-      if (b.id === 'indian-utilities') return 1;
-      return a.title.localeCompare(b.title);
-    });
-    
-    return grouped;
+  // Sample tools for grid
+  const popularTools = useMemo(() => {
+    return toolsRegistry.slice(0, 6);
   }, []);
 
-  const filteredCategories = useMemo(() => {
-    if (!searchQuery.trim()) return categories;
-
-    const query = searchQuery.toLowerCase().trim();
-    const searchTerms = [query];
-    
-    Object.entries(SYNONYM_DICT).forEach(([key, synonyms]) => {
-      if (key.includes(query) || synonyms.some(s => s.includes(query) || query.includes(s))) {
-        searchTerms.push(key, ...synonyms);
-      }
-    });
-
-    return categories.map(cat => ({
-      ...cat,
-      tools: cat.tools.filter(tool => {
-        const searchableText = `${tool.name} ${tool.description} ${tool.category}`.toLowerCase();
-        return searchTerms.some(term => searchableText.includes(term));
-      })
-    })).filter(cat => cat.tools.length > 0);
-
-  }, [searchQuery, categories]);
-
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/30 overflow-hidden font-sans">
+    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] overflow-hidden">
       
-      {/* Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 dark:bg-blue-900/20 blur-[120px] pointer-events-none" />
-      <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-violet-600/10 dark:bg-violet-900/20 blur-[120px] pointer-events-none" />
+      {/* Background Glow */}
+      <div className="absolute top-[-20%] left-[20%] w-[60%] h-[50%] rounded-full bg-[var(--accent)]/10 blur-[120px] pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-8"
-        >
-          <Sparkles className="w-4 h-4 text-blue-500" />
-          <span>Introducing ToolHub V2.0</span>
-        </motion.div>
+      <section className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left: Copy */}
+          <div className="flex flex-col items-start text-left z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-secondary)] mb-8"
+            >
+              <Command className="w-3.5 h-3.5" />
+              <span>ToolHub V2.0 / Edge Compute</span>
+            </motion.div>
 
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-6xl sm:text-8xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-500 mb-8"
-        >
-          The Ultimate <br className="hidden sm:block" />
-          <span className="bg-gradient-to-r from-blue-600 to-violet-600 text-transparent bg-clip-text">Workspace</span>
-        </motion.h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="font-[family-name:var(--font-serif)] text-6xl sm:text-7xl lg:text-[84px] leading-[0.95] tracking-tight mb-8"
+            >
+              Do more.<br />
+              <span className="text-[var(--text-muted)]">Wait less.</span>
+            </motion.h1>
 
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-xl sm:text-2xl text-zinc-600 dark:text-zinc-400 max-w-3xl mb-12"
-        >
-          200+ offline-first utilities. Everything processed locally in your browser. Zero tracking. Zero wait times.
-        </motion.p>
- 
-        {/* Search Bar */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="w-full max-w-3xl relative group z-10"
-        >
-          <div className="absolute inset-[-2px] bg-gradient-to-r from-blue-500 to-violet-500 rounded-2xl blur-lg transition-all duration-500 opacity-20 group-hover:opacity-40" />
-          <div className="relative bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-2xl flex items-center p-2 shadow-2xl transition-all focus-within:ring-2 ring-blue-500/50">
-            <Search className="w-6 h-6 text-zinc-400 ml-4" />
-            <input
-              type="text"
-              placeholder="What do you need to do? (e.g., compress pdf, resize image)"
-              className="w-full bg-transparent border-none text-zinc-900 dark:text-zinc-100 placeholder-zinc-500 focus:outline-none px-4 py-5 text-lg"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="p-2 text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors mr-2"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-        </motion.div>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-md mb-10 leading-relaxed font-[family-name:var(--font-sans)]"
+            >
+              Compress PDFs, edit images, and run AI models directly in your browser. Uncompromising privacy meets instant execution.
+            </motion.p>
 
-        {/* Feature Highlights */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mt-16 text-left"
-        >
-          {FEATURES.map((feat, i) => (
-            <div key={i} className="flex flex-col items-center sm:items-start text-center sm:text-left gap-2">
-              <div className="p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900 text-blue-600 dark:text-blue-400 inline-flex">
-                <feat.icon className="w-5 h-5" />
-              </div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{feat.title}</h3>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">{feat.desc}</p>
-            </div>
-          ))}
-        </motion.div>
-      </section>
- 
-      {/* Grid Layouts */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-32 relative z-10">
-        {filteredCategories.length === 0 ? (
-          <div className="text-center py-20 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm rounded-3xl border border-zinc-200 dark:border-zinc-800">
-            <p className="text-2xl text-zinc-500">No tools found for "{searchQuery}"</p>
-            <button onClick={() => setSearchQuery('')} className="mt-4 text-blue-500 hover:text-blue-600 font-medium">Clear search</button>
-          </div>
-        ) : (
-          <div className="space-y-24">
-            {filteredCategories.map((category, idx) => (
-              <motion.div 
-                key={category.id} 
-                className="relative"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                {/* Section Title */}
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 flex items-center gap-3">
-                    {category.title}
-                    {category.highlight && (
-                      <span className="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 ring-1 ring-inset ring-blue-500/20">
-                        Popular
-                      </span>
-                    )}
-                  </h2>
-                  <Link href={`/${category.id}`} className="hidden sm:flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
-                    View all <ChevronRight className="w-4 h-4" />
-                  </Link>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center gap-4"
+            >
+              <Button size="lg" className="w-full sm:w-auto" asChild>
+                <Link href="/tools">
+                  Explore 200+ Tools
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto group" asChild>
+                <button onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
+                  Press <kbd className="mx-2 font-mono text-[11px] bg-[var(--bg-overlay)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)] group-hover:bg-[var(--bg-elevated)] transition-colors">⌘K</kbd> to search
+                </button>
+              </Button>
+            </motion.div>
+
+            {/* Stats Row */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex gap-8 mt-16 pt-8 border-t border-[var(--border-subtle)] w-full"
+            >
+              {STATS.map((stat, i) => (
+                <div key={i} className="flex flex-col">
+                  <span className="font-mono text-xl text-[var(--text-primary)] font-semibold">{stat.value}</span>
+                  <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">{stat.label}</span>
                 </div>
- 
-                {/* Tool Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {category.tools.map((tool) => (
-                    <Link 
-                      href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`} 
-                      key={tool.id}
-                      className="group block h-full"
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right: Live Widget Preview */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
+            className="relative lg:h-[600px] w-full flex items-center justify-center z-10"
+          >
+            {/* Abstract UI Window */}
+            <div className="w-full max-w-[500px] aspect-[4/5] bg-[var(--bg-elevated)] rounded-[var(--radius-2xl)] border border-[var(--border-subtle)] shadow-[var(--shadow-lg)] overflow-hidden flex flex-col relative">
+              {/* Window Header */}
+              <div className="h-12 border-b border-[var(--border-subtle)] flex items-center px-4 gap-2 bg-[var(--bg-overlay)]">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
+              </div>
+              
+              {/* Mock App Content */}
+              <div className="flex-1 p-6 flex flex-col">
+                <div className="flex gap-4 mb-8">
+                  {['compress', 'resize', 'convert'].map(tab => (
+                    <button 
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`text-sm font-medium capitalize pb-2 border-b-2 transition-colors ${activeTab === tab ? 'border-[var(--accent)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
                     >
-                      <div className="relative h-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-blue-500/30 overflow-hidden">
-                        
-                        {/* Shimmer Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.03] to-violet-500/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                              <span className="text-xl">🚀</span>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-zinc-300 dark:text-zinc-700 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
-                          </div>
-                          
-                          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {tool.name}
-                          </h3>
-                          <p className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2">
-                            {tool.description}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
+                      {tab}
+                    </button>
                   ))}
                 </div>
-              </motion.div>
+
+                <div className="flex-1 border-2 border-dashed border-[var(--border-subtle)] rounded-[var(--radius-xl)] bg-[var(--bg-overlay)] flex flex-col items-center justify-center gap-4 transition-colors hover:border-[var(--accent-hover)] hover:bg-[var(--accent-soft)] cursor-pointer">
+                  <div className="w-16 h-16 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center">
+                    <Play className="w-6 h-6 text-[var(--text-secondary)] ml-1" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-[var(--text-primary)]">Drop image here</p>
+                    <p className="text-xs text-[var(--text-muted)] mt-1">or click to browse</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-between items-center bg-[var(--bg-overlay)] p-3 rounded-[var(--radius-lg)] border border-[var(--border-subtle)]">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">Output Size</span>
+                    <span className="text-sm font-mono text-[var(--success)]">-74% smaller</span>
+                  </div>
+                  <Button size="sm">Export</Button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="border-y border-[var(--border-subtle)] bg-[var(--bg-overlay)]">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border-subtle)]">
+            {FEATURES.map((feat, i) => (
+              <div key={i} className="py-12 px-8 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-[var(--radius-lg)] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center mb-6 text-[var(--text-primary)]">
+                  <feat.icon className="w-5 h-5" />
+                </div>
+                <h3 className="text-[18px] font-medium text-[var(--text-primary)] mb-3">{feat.title}</h3>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{feat.desc}</p>
+              </div>
             ))}
           </div>
-        )}
+        </div>
       </section>
+
+      {/* Popular Tools */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+        <div className="flex items-center justify-between mb-12">
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl text-[var(--text-primary)]">Popular Utilities</h2>
+          <Link href="/tools" className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center transition-colors">
+            View directory <ChevronRight className="w-4 h-4 ml-1" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {popularTools.map((tool) => (
+            <Link 
+              key={tool.id} 
+              href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
+              className="group block"
+            >
+              <div className="h-full p-6 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[var(--border-default)] transition-all duration-200">
+                <div className="flex items-start justify-between mb-4">
+                  <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] px-2 py-1 rounded">
+                    {tool.category}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-[var(--bg-overlay)] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors">
+                  {tool.name}
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)] line-clamp-2">
+                  {tool.description}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
     </div>
   );
 }

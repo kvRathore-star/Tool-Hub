@@ -2,5 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "toolhub-production",
   "compatibility_date": "2024-03-20",
-  "pages_build_output_dir": "out"
+  "pages_build_output_dir": "out",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "toolhub-db",
+      "database_id": "toolhub-db-id"
+    }
+  ]
 }

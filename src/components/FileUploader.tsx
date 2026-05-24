@@ -230,7 +230,7 @@ export function FileUploader({
       <div className="flex gap-2">
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           size="sm"
           onClick={() => inputRef.current?.click()}
         >
@@ -238,7 +238,7 @@ export function FileUploader({
         </Button>
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           size="sm"
           onClick={() => setShowUrlInput(!showUrlInput)}
         >
@@ -292,8 +292,7 @@ export function FileUploader({
               </div>
               <Button
                 type="button"
-                variant="ghost"
-                size="icon"
+                variant="icon"
                 onClick={() => removeFile(f.id)}
                 aria-label={`Remove ${f.file.name}`}
               >
