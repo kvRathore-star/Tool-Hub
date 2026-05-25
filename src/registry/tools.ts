@@ -12,6 +12,30 @@ export interface ToolMetadata {
 
 const rawToolsRegistry: ToolMetadata[] = [
   {
+    id: "add-text-1",
+    name: "Add Text to Photo",
+    description: "Overlay custom text onto your images using the HTML5 Canvas API entirely in your browser.",
+    category: "Image Tools",
+    slug: "add-text-to-photo",
+    dependencies: "Canvas API",
+  },
+  {
+    id: "batch-edit-1",
+    name: "Batch Image Editor",
+    description: "Resize and watermark dozens of images instantly in your browser.",
+    category: "Image Tools",
+    slug: "batch-image-editor",
+    dependencies: "Canvas API, jszip",
+  },
+  {
+    id: "brand-kit-1",
+    name: "Brand Kit",
+    description: "Save your brand colors and fonts locally to easily copy them when needed.",
+    category: "Developer Tools",
+    slug: "brand-kit",
+    dependencies: "localStorage",
+  },
+  {
     id: "gif-comp-1",
     name: "GIF Compressor",
     description: "Reduce GIF file sizes instantly without losing too much visual quality.",
