@@ -12,6 +12,38 @@ export interface ToolMetadata {
 
 const rawToolsRegistry: ToolMetadata[] = [
   {
+    id: "vid-mp3-1",
+    name: "Video to MP3 Converter",
+    description: "Extract high-quality audio tracks directly from your video files.",
+    category: "Video Tools",
+    slug: "video-to-mp3",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "mp3-ogg-1",
+    name: "MP3 to OGG Converter",
+    description: "Convert MP3 audio files into web-friendly OGG format.",
+    category: "Audio Tools",
+    slug: "mp3-to-ogg",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "wav-comp-1",
+    name: "WAV Compressor",
+    description: "Compress heavy WAV files by downmixing to mono and reducing the sample rate.",
+    category: "Audio Tools",
+    slug: "wav-compressor",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "vid-crop-1",
+    name: "Crop Video",
+    description: "Crop the visual area of your MP4 video entirely in the browser.",
+    category: "Video Tools",
+    slug: "crop-video",
+    dependencies: "ffmpeg",
+  },
+  {
     id: "dev-json-xml-1",
     name: "JSON to XML",
     description: "Instantly convert JSON objects to XML format.",
