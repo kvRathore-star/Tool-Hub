@@ -25,7 +25,6 @@
     "@emnapi/runtime": "1.10.0",
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.1",
-    "@marsidev/react-turnstile": "^1.5.2",
     "@opennextjs/cloudflare": "^1.19.11",
     "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-dialog": "^1.1.15",

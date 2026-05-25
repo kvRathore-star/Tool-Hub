@@ -2,7 +2,6 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { Turnstile } from '@marsidev/react-turnstile';
 
 interface FileUploaderProps {
   accept?: string;
@@ -21,14 +20,9 @@ export function FileUploader({
 }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isVerified, setIsVerified] = useState(false);
 
-  const processFile = useCallback((file: File) => {
-    if (!isVerified) {
-      toast.error("Please complete the security verification first.", { icon: '🔒' });
-      return;
-    }
-
+  const processFile = useCallback((file: File | undefined) => {
+    if (!file) return;
     setError(null);
     
     // Validate size
@@ -73,7 +67,7 @@ export function FileUploader({
       toast.error("Failed to read file from disk.");
     };
     reader.readAsDataURL(file);
-  }, [isVerified, maxSizeMB, accept, onFileSelect]);
+  }, [maxSizeMB, accept, onFileSelect]);
 
   const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -143,14 +137,6 @@ export function FileUploader({
           </p>
         </div>
 
-        {/* Invisible Turnstile Integration */}
-        <div className="hidden">
-          <Turnstile 
-            siteKey="1x00000000000000000000AA" // Mock pass key
-            onSuccess={() => setIsVerified(true)}
-            onError={() => setIsVerified(false)}
-          />
-        </div>
       </div>
       
       {error && (
