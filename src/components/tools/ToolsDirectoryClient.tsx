@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { toolsRegistry } from "@/registry/tools";
 import { Search, ChevronRight, Image as ImageIcon, FileText, Type, Mic, Video, Cpu, ArrowLeftRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ToolsDirectoryClient() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams?.get("category");
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
@@ -14,6 +18,13 @@ export function ToolsDirectoryClient() {
     const cats = Array.from(new Set(toolsRegistry.map(t => t.category).filter(Boolean)));
     return ["All", ...cats.sort()];
   }, []);
+
+  useEffect(() => {
+    if (categoryParam) {
+      const match = categories.find(c => c.toLowerCase() === categoryParam.toLowerCase());
+      if (match) setActiveCategory(match);
+    }
+  }, [categoryParam, categories]);
 
   const filteredTools = useMemo(() => {
     return toolsRegistry.filter(tool => {

@@ -18,7 +18,7 @@ const MEGAMENU_COLUMNS = [
       { name: "HEIC→JPG", href: "/image/heic-to-jpg" },
     ],
     allCount: 21,
-    allHref: "/tools/image"
+    allHref: "/tools?category=Image"
   },
   {
     title: "📄 PDF",
@@ -30,7 +30,7 @@ const MEGAMENU_COLUMNS = [
       { name: "to Excel", href: "/pdf/pdf-to-excel" },
     ],
     allCount: 16,
-    allHref: "/tools/pdf"
+    allHref: "/tools?category=PDF"
   },
   {
     title: "✍ Text",
@@ -42,7 +42,7 @@ const MEGAMENU_COLUMNS = [
       { name: "Translate", href: "/text/ai-translator" },
     ],
     allCount: 15,
-    allHref: "/tools/text"
+    allHref: "/tools?category=Text"
   },
   {
     title: "🎵 Audio",
@@ -54,7 +54,7 @@ const MEGAMENU_COLUMNS = [
       { name: "Noise Rmv", href: "/audio/audio-noise-reduction" },
     ],
     allCount: 8,
-    allHref: "/tools/audio"
+    allHref: "/tools?category=Audio"
   },
   {
     title: "🤖 AI Tools",
@@ -66,7 +66,7 @@ const MEGAMENU_COLUMNS = [
       { name: "Video Summarize", href: "/video/ai-video-summarizer" },
     ],
     allCount: 12,
-    allHref: "/tools/ai"
+    allHref: "/tools?category=AI"
   },
   {
     title: "📹 Video",
@@ -77,7 +77,7 @@ const MEGAMENU_COLUMNS = [
       { name: "Subtitle", href: "/video/subtitle-generator" },
     ],
     allCount: 11,
-    allHref: "/tools/video"
+    allHref: "/tools?category=Video"
   },
   {
     title: "🔄 Convert",
@@ -88,7 +88,7 @@ const MEGAMENU_COLUMNS = [
       { name: "SoundCloud", href: "/downloader/soundcloud-downloader" },
     ],
     allCount: 22,
-    allHref: "/tools/convert"
+    allHref: "/tools?category=Converter"
   }
 ];
 
@@ -276,10 +276,10 @@ export function Header() {
                           <span className="text-lg">🇮🇳</span> India Utilities
                         </h4>
                         <div className="grid grid-cols-2 gap-y-2 gap-x-4">
-                          <Link href="/tools/india/passport" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Passport Photo Maker</Link>
-                          <Link href="/tools/india/aadhaar" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Aadhaar Crop & Mask</Link>
-                          <Link href="/tools/india/pan" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>PAN Card Resizer</Link>
-                          <Link href="/tools/india/gst" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>GST Invoice Gen</Link>
+                          <Link href="/indian-utilities/passport-photo-india" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Passport Photo Maker</Link>
+                          <Link href="/indian-utilities/aadhaar-wallet-cropper" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Aadhaar Crop & Mask</Link>
+                          <Link href="/indian-utilities/pan-card-resizer" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>PAN Card Resizer</Link>
+                          <Link href="/indian-utilities/gst-invoice-generator" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>GST Invoice Gen</Link>
                         </div>
                       </motion.div>
                     </div>

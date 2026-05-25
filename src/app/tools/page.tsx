@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { ToolsDirectoryClient } from "@/components/tools/ToolsDirectoryClient";
 
 export const metadata = {
@@ -7,5 +8,9 @@ export const metadata = {
 };
 
 export default function ToolsPage() {
-  return <ToolsDirectoryClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[var(--bg-base)]" />}>
+      <ToolsDirectoryClient />
+    </Suspense>
+  );
 }

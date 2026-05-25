@@ -45,14 +45,14 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.1em]">Tools</h4>
             <ul className="flex flex-col gap-3 text-sm">
-              <li><Link href="/tools/image" className="hover:text-[var(--accent)] transition-colors">Image Tools</Link></li>
-              <li><Link href="/tools/pdf" className="hover:text-[var(--accent)] transition-colors">PDF Tools</Link></li>
-              <li><Link href="/ai-hub" className="hover:text-[var(--accent)] transition-colors">AI Tools</Link></li>
-              <li><Link href="/tools/video" className="hover:text-[var(--accent)] transition-colors">Video Tools</Link></li>
-              <li><Link href="/tools/audio" className="hover:text-[var(--accent)] transition-colors">Audio Tools</Link></li>
-              <li><Link href="/tools/converter" className="hover:text-[var(--accent)] transition-colors">Converters</Link></li>
-              <li><Link href="/tools/downloader" className="hover:text-[var(--accent)] transition-colors">Downloaders</Link></li>
-              <li><Link href="/tools/india" className="hover:text-[var(--india)] transition-colors">India Utilities 🇮🇳</Link></li>
+              <li><Link href="/tools?category=Image" className="hover:text-[var(--accent)] transition-colors">Image Tools</Link></li>
+              <li><Link href="/tools?category=PDF" className="hover:text-[var(--accent)] transition-colors">PDF Tools</Link></li>
+              <li><Link href="/tools?category=AI" className="hover:text-[var(--accent)] transition-colors">AI Tools</Link></li>
+              <li><Link href="/tools?category=Video" className="hover:text-[var(--accent)] transition-colors">Video Tools</Link></li>
+              <li><Link href="/tools?category=Audio" className="hover:text-[var(--accent)] transition-colors">Audio Tools</Link></li>
+              <li><Link href="/tools?category=Converter" className="hover:text-[var(--accent)] transition-colors">Converters</Link></li>
+              <li><Link href="/tools?category=Downloader" className="hover:text-[var(--accent)] transition-colors">Downloaders</Link></li>
+              <li><Link href="/tools?category=indian-utilities" className="hover:text-[var(--india)] transition-colors">India Utilities 🇮🇳</Link></li>
             </ul>
           </div>
 
