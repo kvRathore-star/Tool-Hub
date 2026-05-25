@@ -16,7 +16,8 @@ const SECTIONS = [
   { id: "data-collection", title: "3. Information We Collect" },
   { id: "cookies", title: "4. Cookies and Session Memory" },
   { id: "third-party", title: "5. Third-Party Integrations" },
-  { id: "security", title: "6. Security Architecture" }
+  { id: "security", title: "6. Security Architecture" },
+  { id: "dpdp", title: "7. Data Protection (India DPDP Act)" }
 ];
 
 export default function PrivacyPolicyPage() {
@@ -175,8 +176,23 @@ export default function PrivacyPolicyPage() {
               </p>
             </section>
 
+            <section id="dpdp" className="scroll-mt-32">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-3">7. Data Protection (India DPDP Act 2023)</h3>
+              <div className="bg-[var(--bg-surface)] p-6 rounded-xl border border-[var(--border-subtle)] space-y-4">
+                <p>ToolHub complies with India's Digital Personal Data Protection Act, 2023.</p>
+                <ul className="list-disc list-inside space-y-2 text-sm">
+                  <li><strong>Data Fiduciary:</strong> ToolHub Inc.</li>
+                  <li><strong>Grievance Officer:</strong> Reachable at privacy@toolhub.app</li>
+                  <li><strong>Data we collect:</strong> Usage analytics (anonymised), account email (if logged in).</li>
+                  <li><strong>Your rights:</strong> Right to access, correct, and erase your personal data.</li>
+                  <li><strong>Retention:</strong> Analytics data retained for 90 days. Account data retained until deletion.</li>
+                  <li><strong>Contact:</strong> For data requests, email privacy@toolhub.app within 72 hours response SLA.</li>
+                </ul>
+              </div>
+            </section>
+
             {/* Scroll back to top button */}
-            <div className="flex justify-center border-t border-[var(--border-subtle)] pt-8">
+            <div className="flex justify-center border-t border-[var(--border-subtle)] pt-8 mt-12">
               <button 
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="flex items-center gap-2 text-xs font-semibold text-[var(--text-muted)] hover:text-white transition-colors"

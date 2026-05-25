@@ -7,6 +7,12 @@ import { toolsRegistry } from "@/registry/tools";
 import { Search, ChevronRight, Image as ImageIcon, FileText, Type, Mic, Video, Cpu, ArrowLeftRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
+  'indian-utilities': 'India 🇮🇳',
+  'e-commerce': 'E-Commerce',
+  'ai': 'AI Tools',
+};
+
 export function ToolsDirectoryClient() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams?.get("category");
@@ -68,19 +74,22 @@ export function ToolsDirectoryClient() {
             <h3 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2 px-3">
               Categories
             </h3>
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`text-left px-3 py-2 text-sm rounded-[var(--radius-md)] transition-colors border-l-2 ${
-                  activeCategory === category
-                    ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--accent)] font-medium"
-                    : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)]"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+            {categories.map(category => {
+              const displayName = CATEGORY_DISPLAY_NAMES[category.toLowerCase()] || category;
+              return (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`text-left px-3 py-2 text-sm rounded-[var(--radius-md)] transition-colors border-l-2 ${
+                    activeCategory === category
+                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--accent)] font-medium"
+                      : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)]"
+                  }`}
+                >
+                  {displayName}
+                </button>
+              );
+            })}
           </div>
         </aside>
 

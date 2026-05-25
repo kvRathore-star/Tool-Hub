@@ -143,8 +143,17 @@ export default function CreditCardGenerator() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
-      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+    <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
+      <div className="bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 p-4 rounded-r-xl">
+        <div className="flex items-start gap-3">
+          <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            <strong>⚠️ For developer testing only.</strong> These are mathematically valid (Luhn algorithm) but not real card numbers. Using these for any real transaction is fraud.
+          </p>
+        </div>
+      </div>
+      
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-8">
         <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
           <CreditCard className="w-5 h-5 text-indigo-500" />
           Luhn Card Generator & Validator

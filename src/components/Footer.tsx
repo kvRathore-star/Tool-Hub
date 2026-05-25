@@ -30,12 +30,14 @@ export function Footer() {
             <p className="text-sm leading-relaxed mb-6">
               Every tool you need. Nothing you don't. The internet's fastest utility command center.
             </p>
+            {/* TODO: Add back when social profiles exist
             <div className="flex items-center gap-4 mb-6">
-              <Link href="https://twitter.com" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><TwitterLogo weight="fill" className="w-5 h-5" /></Link>
-              <Link href="https://github.com" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><GithubLogo weight="fill" className="w-5 h-5" /></Link>
-              <Link href="https://linkedin.com" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><LinkedinLogo weight="fill" className="w-5 h-5" /></Link>
-              <Link href="https://youtube.com" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><YoutubeLogo weight="fill" className="w-5 h-5" /></Link>
+              <Link href="https://twitter.com/toolhub_app" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><TwitterLogo weight="fill" className="w-5 h-5" /></Link>
+              <Link href="https://github.com/toolhub-app" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><GithubLogo weight="fill" className="w-5 h-5" /></Link>
+              <Link href="https://linkedin.com/company/toolhub" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><LinkedinLogo weight="fill" className="w-5 h-5" /></Link>
+              <Link href="https://youtube.com/@toolhub" className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"><YoutubeLogo weight="fill" className="w-5 h-5" /></Link>
             </div>
+            */}
             <div className="text-xs font-mono text-[var(--text-muted)] bg-[var(--bg-overlay)] px-3 py-1.5 rounded-full border border-[var(--border-subtle)]">
               Made with ❤️ in India 🇮🇳
             </div>

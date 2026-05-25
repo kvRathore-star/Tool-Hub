@@ -19,14 +19,15 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
   if (!toolMetadata) return { title: 'Not Found' };
 
   return {
-    title: `${toolMetadata.name} - Free Online Tool | ToolHub`,
+    title: `${toolMetadata.name} — Free Online Tool`,
     description: `Use the free online ${toolMetadata.name} tool. ${toolMetadata.description}. 100% secure, fast, and processed entirely on your device.`,
     keywords: `${toolMetadata.name.toLowerCase()}, free online ${toolMetadata.name.toLowerCase()}, ${toolMetadata.category.toLowerCase()} tool`,
     openGraph: {
       title: `${toolMetadata.name} - Free Online Tool`,
       description: toolMetadata.description,
       type: 'website',
-    }
+    },
+    robots: params.tool === 'credit-card-generator' ? { index: false, follow: false } : undefined,
   };
 }
 

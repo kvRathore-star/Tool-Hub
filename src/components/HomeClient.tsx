@@ -40,7 +40,16 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
 
   // Sample tools for grid
   const popularTools = useMemo(() => {
-    return toolsRegistry.slice(0, 6);
+    const featuredSlugs = ['pdf-compressor', 'image-compressor', 'ai-background-generator', 'qr-code-generator', 'gst-calculator', 'word-counter'];
+    const tools = featuredSlugs.map(slug => toolsRegistry.find(t => t.slug === slug)).filter(Boolean) as typeof toolsRegistry;
+    
+    // Fallback to top 6 if some are missing
+    if (tools.length < 6) {
+      const remaining = 6 - tools.length;
+      const additional = toolsRegistry.filter(t => !featuredSlugs.includes(t.slug)).slice(0, remaining);
+      return [...tools, ...additional];
+    }
+    return tools;
   }, []);
 
   return (

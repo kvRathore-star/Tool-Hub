@@ -228,11 +228,11 @@ const rawToolsRegistry: ToolMetadata[] = [
     dependencies: "Vanilla JS"
   },
   {
-    id: "3",
+    id: "yt-dl-1",
     name: "YouTube Downloader",
+    description: "Download YouTube videos as MP4 or extract audio as MP3. Paste URL and save instantly.",
+    category: "Downloader Tools",
     slug: "youtube-downloader",
-    category: "Downloader",
-    description: "High traffic video/audio extraction",
     dependencies: "yt-dlp"
   },
   {
@@ -348,11 +348,11 @@ const rawToolsRegistry: ToolMetadata[] = [
     dependencies: "FFmpeg"
   },
   {
-    id: "18",
+    id: "pdf-comp-1",
     name: "PDF Compressor",
+    description: "Reduce PDF file size by up to 90% — free, instant, entirely in your browser. No upload, no signup.",
+    category: "PDF Tools",
     slug: "pdf-compressor",
-    category: "PDF",
-    description: "High-traffic revenue driver",
     dependencies: "Ghostscript / PDF-lib"
   },
   {
