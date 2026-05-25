@@ -16,6 +16,7 @@ export function ToolPageSEOContent({ tool }: ToolPageSEOContentProps) {
     .slice(0, 3);
 
   const displayCategory = tool.category.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  const faqs = generateToolFAQs(tool);
 
   // Custom step guide based on category
   const steps = [
@@ -93,23 +94,53 @@ export function ToolPageSEOContent({ tool }: ToolPageSEOContentProps) {
         </section>
       )}
 
-      {/* JSON-LD Schema */}
+      {/* Frequently Asked Questions */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5 pb-2">
+          <HelpCircle className="w-5 h-5 text-[var(--accent)]" />
+          <span>Frequently Asked Questions</span>
+        </h2>
+        <div className="grid grid-cols-1 gap-4">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-xl p-6">
+              <h3 className="font-semibold text-[var(--text-primary)] mb-2">{faq.question}</h3>
+              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": tool.name,
-            "description": tool.description,
-            "applicationCategory": "WebApplication",
-            "operatingSystem": "Web Browser",
-            "offers": {
-              "@type": "Offer",
-              "price": "0.00",
-              "priceCurrency": "USD"
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": tool.name,
+              "description": tool.description,
+              "applicationCategory": "WebApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0.00",
+                "priceCurrency": "USD"
+              }
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": faq.answer
+                }
+              }))
             }
-          })
+          ])
         }}
       />
     </div>

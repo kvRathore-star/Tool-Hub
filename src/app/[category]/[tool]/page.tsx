@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { toolsRegistry, getToolByCategoryAndSlug } from "@/registry/tools";
 import { ToolLayout } from "@/components/tools/ToolLayout";
 import { DynamicModuleWrapper } from "@/components/tools/modules/DynamicModuleWrapper";
+import { ToolPageSEOContent } from "@/components/tools/ToolPageSEOContent";
 import { ToolErrorBoundary } from "@/components/ToolErrorBoundary";
 import { MemoryWatchdog } from "@/hooks/useMemoryWatchdog";
 
@@ -39,26 +40,8 @@ export default async function ToolPage(props: { params: Promise<{ category: stri
     notFound();
   }
 
-  const schemaOrg = {
-    "@context": "https://schema.org",
-    "@type": ["SoftwareApplication", "WebApplication"],
-    "name": toolMetadata.name,
-    "description": toolMetadata.description,
-    "applicationCategory": "BrowserApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
-      />
       <ToolLayout
         title={toolMetadata.name}
         description={toolMetadata.description}
@@ -69,6 +52,7 @@ export default async function ToolPage(props: { params: Promise<{ category: stri
         <ToolErrorBoundary>
           <DynamicModuleWrapper slug={toolMetadata.slug} category={toolMetadata.category} />
         </ToolErrorBoundary>
+        <ToolPageSEOContent tool={toolMetadata} />
       </ToolLayout>
     </>
   );

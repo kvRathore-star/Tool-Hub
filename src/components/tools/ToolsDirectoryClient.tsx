@@ -120,18 +120,17 @@ export function ToolsDirectoryClient() {
                 const isAI = tool.category.includes('AI');
                 const isIndia = tool.category.includes('India');
                 
-                let borderColor = 'border-l-transparent';
+                let gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-orange-500/5';
                 let iconColor = 'text-[var(--text-muted)]';
                 let bgTint = 'bg-[var(--bg-overlay)]';
                 
-                if (isImage) { borderColor = 'border-l-purple-500'; iconColor = 'text-purple-500'; bgTint = 'bg-purple-500/10'; }
-                else if (isPdf) { borderColor = 'border-l-amber-500'; iconColor = 'text-amber-500'; bgTint = 'bg-amber-500/10'; }
-                else if (isText) { borderColor = 'border-l-teal-500'; iconColor = 'text-teal-500'; bgTint = 'bg-teal-500/10'; }
-                else if (isAudio) { borderColor = 'border-l-pink-500'; iconColor = 'text-pink-500'; bgTint = 'bg-pink-500/10'; }
-                else if (isVideo) { borderColor = 'border-l-blue-500'; iconColor = 'text-blue-500'; bgTint = 'bg-blue-500/10'; }
-                else if (isAI) { borderColor = 'border-l-indigo-500'; iconColor = 'text-indigo-500'; bgTint = 'bg-indigo-500/10'; }
-                else if (isIndia) { borderColor = 'border-l-[#FF6B35]'; iconColor = 'text-[#FF6B35]'; bgTint = 'bg-[#FF6B35]/10'; }
-                else { borderColor = 'border-l-orange-500'; iconColor = 'text-orange-500'; bgTint = 'bg-orange-500/10'; }
+                if (isImage) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-purple-500/5'; iconColor = 'text-purple-500'; bgTint = 'bg-purple-500/10'; }
+                else if (isPdf) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-amber-500/5'; iconColor = 'text-amber-500'; bgTint = 'bg-amber-500/10'; }
+                else if (isText) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-teal-500/5'; iconColor = 'text-teal-500'; bgTint = 'bg-teal-500/10'; }
+                else if (isAudio) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-pink-500/5'; iconColor = 'text-pink-500'; bgTint = 'bg-pink-500/10'; }
+                else if (isVideo) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-blue-500/5'; iconColor = 'text-blue-500'; bgTint = 'bg-blue-500/10'; }
+                else if (isAI) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-indigo-500/5'; iconColor = 'text-indigo-500'; bgTint = 'bg-indigo-500/10'; }
+                else if (isIndia) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-[#FF6B35]/5'; iconColor = 'text-[#FF6B35]'; bgTint = 'bg-[#FF6B35]/10'; }
 
                 return (
                   <Link 
@@ -139,7 +138,7 @@ export function ToolsDirectoryClient() {
                     href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
                     className="group block h-full"
                   >
-                    <div className={`h-full p-5 bg-[var(--bg-elevated)] border-y border-r border-l-2 border-y-[var(--border-subtle)] border-r-[var(--border-subtle)] ${borderColor} rounded-[var(--radius-xl)] hover:border-y-[var(--border-default)] hover:border-r-[var(--border-default)] transition-all duration-200 shadow-sm hover:shadow-[var(--shadow-md)] hover:-translate-y-1`}>
+                    <div className={`h-full p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-all duration-300 shadow-sm hover:shadow-[var(--shadow-md)] hover:border-[var(--border-default)] hover:-translate-y-1 ${gradientHover}`}>
                       <div className="flex items-start justify-between mb-4">
                         <div className={`w-8 h-8 rounded-full ${bgTint} flex items-center justify-center`}>
                           {isImage ? <ImageIcon className={`w-4 h-4 ${iconColor}`} /> :
