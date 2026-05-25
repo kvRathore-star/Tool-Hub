@@ -30,8 +30,10 @@ export function ToolLayout({ title, description, category, slug, children, faqs 
 
   const tool = getToolByCategoryAndSlug(category, slug);
   const isPro = tool?.isPro || false;
-  // Default to locked if isPro is true, until verified as Pro
-  const isLocked = isPro && userPlan !== "pro";
+  
+  // TEMPORARILY DISABLED: Pro paywall is disabled until main domain and payment APIs are ready.
+  // Original logic: const isLocked = isPro && userPlan !== "pro";
+  const isLocked = false;
   const displayCategory = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   // Use custom FAQs if provided, otherwise auto-generate them
