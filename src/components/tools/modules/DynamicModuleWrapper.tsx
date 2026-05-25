@@ -21,7 +21,11 @@ const MODULE_REGISTRY: Record<string, any> = {
     ssr: false, 
     loading: () => <SkeletonLoader /> 
   }),
-  'aadhaar-wallet-cropper': dynamic(() => import('@/components/tools/modules/AadhaarMasker'), { 
+  'aadhaar-wallet-cropper': dynamic(() => import('@/components/tools/modules/AadhaarWalletCropper'), { 
+    ssr: false,
+    loading: () => <SkeletonLoader /> 
+  }),
+  'aadhaar-card-masker': dynamic(() => import('@/components/tools/modules/AadhaarMasker'), { 
     ssr: false,
     loading: () => <SkeletonLoader /> 
   }),
@@ -296,9 +300,18 @@ const MODULE_REGISTRY: Record<string, any> = {
   'itr-filing-helper': dynamic(() => import('@/components/tools/modules/ItrFilingHelper'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'ai-changelog-generator': dynamic(() => import('@/components/tools/modules/AiChangelogGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'browser-extension': dynamic(() => import('@/components/tools/modules/BrowserExtension'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pan-verification': dynamic(() => import('@/components/tools/modules/PanVerification'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'ifsc-code-lookup': dynamic(() => import('@/components/tools/modules/IfscLookup'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'voter-id-form-helper': dynamic(() => import('@/components/tools/modules/VoterIdHelper'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'india-pincode-finder': dynamic(() => import('@/components/tools/modules/PincodeFinder'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'hindi-regional-font-generator': dynamic(() => import('@/components/tools/modules/RegionalFontGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'indian-age-calculator': dynamic(() => import('@/components/tools/modules/IndianAgeCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'cgpa-to-percentage-converter': dynamic(() => import('@/components/tools/modules/CgpaToPercentage'), { ssr: false, loading: () => <SkeletonLoader /> }),
 };
 
 const ComingSoonTool = dynamic(() => import('@/components/tools/modules/ComingSoonTool'), { ssr: false, loading: () => <SkeletonLoader /> });
+
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export function DynamicModuleWrapper({ slug, category }: { slug: string, category: string }) {
   const DynamicModule = MODULE_REGISTRY[slug];
@@ -306,8 +319,16 @@ export function DynamicModuleWrapper({ slug, category }: { slug: string, categor
   if (!DynamicModule) {
     // Generate a readable tool name from slug (e.g., "youtube-downloader" -> "Youtube Downloader")
     const toolName = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    return <ComingSoonTool toolName={toolName} />;
+    return (
+      <ErrorBoundary>
+        <ComingSoonTool toolName={toolName} />
+      </ErrorBoundary>
+    );
   }
 
-  return <DynamicModule />;
+  return (
+    <ErrorBoundary>
+      <DynamicModule />
+    </ErrorBoundary>
+  );
 }

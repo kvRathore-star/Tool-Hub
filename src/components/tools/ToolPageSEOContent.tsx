@@ -93,6 +93,25 @@ export function ToolPageSEOContent({ tool }: ToolPageSEOContentProps) {
         </section>
       )}
 
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": tool.name,
+            "description": tool.description,
+            "applicationCategory": "WebApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0.00",
+              "priceCurrency": "USD"
+            }
+          })
+        }}
+      />
     </div>
   );
 }

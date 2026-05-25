@@ -1796,6 +1796,70 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'FFmpeg WASM'
   },
+  {
+    name: 'Aadhaar Card Masker',
+    slug: 'aadhaar-card-masker',
+    description: 'Mask the first 8 digits of your Aadhaar card for secure sharing.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'Canvas API'
+  },
+  {
+    name: 'PAN Card Verification',
+    slug: 'pan-verification',
+    description: 'Verify PAN format and extract taxpayer category locally.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'IFSC Code Lookup',
+    slug: 'ifsc-code-lookup',
+    description: 'Lookup bank branch details, address, and contact using IFSC.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'IFSC API'
+  },
+  {
+    name: 'Voter ID Form Helper',
+    slug: 'voter-id-form-helper',
+    description: 'Get document checklists and guidance for Form 6/7/8 registration.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'India Pincode Finder',
+    slug: 'india-pincode-finder',
+    description: 'Search pincodes and post office branches across India.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'Postal API'
+  },
+  {
+    name: 'Hindi / Regional Font Generator',
+    slug: 'hindi-regional-font-generator',
+    description: 'Generate stylish unicode fonts for Hindi, Tamil, Telugu, and other regional scripts.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'Indian Age Calculator',
+    slug: 'indian-age-calculator',
+    description: 'Calculate exact age as per DOB in DD/MM/YYYY format with eligibility check.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
+  {
+    name: 'CGPA to Percentage Converter',
+    slug: 'cgpa-to-percentage-converter',
+    description: 'Convert CGPA to percentage based on CBSE, MU, and university formulas.',
+    category: 'indian-utilities',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'None'
+  },
 ];
 
 const proSlugs = [
