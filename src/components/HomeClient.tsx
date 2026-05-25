@@ -16,7 +16,7 @@ const STATS = [
 const FEATURES = [
   { icon: ShieldCheck, title: "100% Private", desc: "Files never leave your device." },
   { icon: Zap, title: "Lightning Fast", desc: "Zero upload times. Instant processing." },
-  { icon: Server, title: "Edge Powered", desc: "Runs directly on your browser's CPU." },
+  { icon: Server, title: "Edge Powered", desc: "Runs instantly and securely on your device." },
 ];
 
 export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {

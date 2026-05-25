@@ -11,10 +11,10 @@ const MEGAMENU_COLUMNS = [
   {
     title: "🖼 Image",
     tools: [
-      { name: "Compress", href: "/image/compress" },
-      { name: "Resize", href: "/image/resize" },
+      { name: "Compress", href: "/image/image-compressor" },
+      { name: "Resize", href: "/image/image-resizer" },
       { name: "BG Remove", href: "/image/background-remover" },
-      { name: "Upscale", href: "/image/upscale" },
+      { name: "Upscale", href: "/image/ai-image-upscaler" },
       { name: "HEIC→JPG", href: "/image/heic-to-jpg" },
     ],
     allCount: 21,
@@ -23,11 +23,11 @@ const MEGAMENU_COLUMNS = [
   {
     title: "📄 PDF",
     tools: [
-      { name: "Compress", href: "/pdf/compress" },
-      { name: "Merge", href: "/pdf/merge" },
-      { name: "Split", href: "/pdf/split" },
-      { name: "to Word", href: "/pdf/to-word" },
-      { name: "to Excel", href: "/pdf/to-excel" },
+      { name: "Compress", href: "/pdf/pdf-compressor" },
+      { name: "Merge", href: "/pdf/pdf-merger" },
+      { name: "Split", href: "/pdf/pdf-splitter" },
+      { name: "to Word", href: "/pdf/pdf-to-word" },
+      { name: "to Excel", href: "/pdf/pdf-to-excel" },
     ],
     allCount: 16,
     allHref: "/tools/pdf"
@@ -35,11 +35,11 @@ const MEGAMENU_COLUMNS = [
   {
     title: "✍ Text",
     tools: [
-      { name: "AI Write", href: "/text/ai-write" },
-      { name: "Grammar", href: "/text/grammar" },
-      { name: "Paraphrase", href: "/text/paraphrase" },
-      { name: "Summarize", href: "/text/summarize" },
-      { name: "Translate", href: "/text/translate" },
+      { name: "AI Write", href: "/text/ai-writing-assistant" },
+      { name: "Grammar", href: "/extension/grammar-checker-extension" },
+      { name: "Paraphrase", href: "/text/ai-paraphrasing-tool" },
+      { name: "Summarize", href: "/text/text-summarizer" },
+      { name: "Translate", href: "/text/ai-translator" },
     ],
     allCount: 15,
     allHref: "/tools/text"
@@ -47,11 +47,11 @@ const MEGAMENU_COLUMNS = [
   {
     title: "🎵 Audio",
     tools: [
-      { name: "Transcribe", href: "/audio/transcribe" },
-      { name: "Convert", href: "/audio/convert" },
-      { name: "Cut/Trim", href: "/audio/trim" },
-      { name: "TTS", href: "/audio/tts" },
-      { name: "Noise Rmv", href: "/audio/noise-remove" },
+      { name: "Transcribe", href: "/transcription/video-to-text-transcription" },
+      { name: "Convert", href: "/audio/mp3-converter" },
+      { name: "Cut/Trim", href: "/audio/audio-cutter" },
+      { name: "TTS", href: "/audio/text-to-speech-tts" },
+      { name: "Noise Rmv", href: "/audio/audio-noise-reduction" },
     ],
     allCount: 8,
     allHref: "/tools/audio"
@@ -59,11 +59,11 @@ const MEGAMENU_COLUMNS = [
   {
     title: "🤖 AI Tools",
     tools: [
-      { name: "AI Chat Hub", href: "/ai-hub" },
-      { name: "Image Gen", href: "/ai/image-gen" },
-      { name: "PDF Chat", href: "/ai/pdf-chat" },
-      { name: "Code Gen", href: "/ai/code-gen" },
-      { name: "Doc Summarize", href: "/ai/doc-summarize" },
+      { name: "AI Chat Hub", href: "/ai/ai-chat-hub" },
+      { name: "Image Gen", href: "/image/ai-image-generator" },
+      { name: "PDF Chat", href: "/ai/ai-document-chat" },
+      { name: "Code Gen", href: "/ai/ai-code-generator" },
+      { name: "Video Summarize", href: "/video/ai-video-summarizer" },
     ],
     allCount: 12,
     allHref: "/tools/ai"
@@ -71,10 +71,10 @@ const MEGAMENU_COLUMNS = [
   {
     title: "📹 Video",
     tools: [
-      { name: "Compress", href: "/video/compress" },
-      { name: "to GIF", href: "/video/to-gif" },
-      { name: "Trim", href: "/video/trim" },
-      { name: "Subtitle", href: "/video/subtitle" },
+      { name: "Compress", href: "/video/video-compressor" },
+      { name: "to GIF", href: "/video/video-to-gif" },
+      { name: "Trim", href: "/video/video-trimmer" },
+      { name: "Subtitle", href: "/video/subtitle-generator" },
     ],
     allCount: 11,
     allHref: "/tools/video"
@@ -82,10 +82,10 @@ const MEGAMENU_COLUMNS = [
   {
     title: "🔄 Convert",
     tools: [
-      { name: "MP4→MP3", href: "/convert/mp4-to-mp3" },
-      { name: "YT DL", href: "/convert/yt-dl" },
-      { name: "TikTok", href: "/convert/tiktok" },
-      { name: "QR Code", href: "/convert/qr" },
+      { name: "MP4→MP3", href: "/converter/mp4-to-mp3" },
+      { name: "YT DL", href: "/downloader/youtube-downloader" },
+      { name: "TikTok", href: "/downloader/tiktok-video-downloader" },
+      { name: "SoundCloud", href: "/downloader/soundcloud-downloader" },
     ],
     allCount: 22,
     allHref: "/tools/convert"
@@ -173,10 +173,10 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.22, ease: [0, 0, 0.2, 1] }}
-                    className="absolute left-0 top-[100%] mt-4 w-[1000px] bg-[#111113] border border-[var(--border-subtle)] rounded-b-[var(--radius-xl)] shadow-[var(--shadow-lg)] overflow-hidden z-[1000]"
+                    className="absolute left-0 top-[100%] mt-4 w-[1000px] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-b-[var(--radius-xl)] shadow-[var(--shadow-lg)] overflow-hidden z-[1000]"
                   >
                     {/* Inline Search Bar */}
-                    <div className="p-4 border-b border-[var(--border-subtle)] bg-[#18181B] flex items-center justify-between">
+                    <div className="p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-overlay)] flex items-center justify-between">
                       <div className="flex items-center gap-2 flex-1">
                         <Search className="w-4 h-4 text-[var(--text-muted)]" />
                         <input 

@@ -7,9 +7,10 @@ export interface ToolMetadata {
   category: string;
   description: string;
   dependencies: string;
+  isPro?: boolean;
 }
 
-export const toolsRegistry: ToolMetadata[] = [
+const rawToolsRegistry: ToolMetadata[] = [
   {
     id: "1",
     name: "TikTok Video Downloader",
@@ -108,10 +109,10 @@ export const toolsRegistry: ToolMetadata[] = [
   },
   {
     id: "13",
-    name: "Spotify MP3 Downloader",
-    slug: "spotify-mp3-downloader",
+    name: "SoundCloud Downloader",
+    slug: "soundcloud-downloader",
     category: "Downloader",
-    description: "Download Spotify tracks",
+    description: "Download SoundCloud tracks",
     dependencies: "API / yt-dlp"
   },
   {
@@ -1796,6 +1797,27 @@ export const toolsRegistry: ToolMetadata[] = [
     dependencies: 'FFmpeg WASM'
   },
 ];
+
+const proSlugs = [
+  "tiktok-video-downloader", "youtube-downloader", "instagram-video-downloader",
+  "facebook-video-downloader", "twitter-video-downloader", "soundcloud-downloader",
+  "ai-translator", "pdf-to-word", "ai-image-generator", "logo-maker", "mp4-to-mp3",
+  "pdf-compressor", "word-to-pdf", "ai-writing-assistant", "jpg-to-pdf",
+  "plagiarism-checker", "pdf-to-jpg", "pdf-to-ppt", "background-remover",
+  "object-remover", "ppt-to-pdf", "pdf-merger", "excel-to-pdf", "video-to-text-transcription",
+  "social-media-post-maker", "svg-editor", "business-card-maker", "pdf-to-excel",
+  "unlock-pdf", "protect-pdf", "epub-to-pdf", "pdf-to-epub", "compare-pdf-files",
+  "extract-images-from-pdf", "email-signature-generator", "color-picker",
+  "ai-thumbnail-maker", "mp3-compressor", "gif-to-mp4", "video-trimmer",
+  "video-watermark-adder", "ai-blog-title-generator", "ai-hashtag-generator",
+  "prompt-library-generator", "ai-chat-hub", "ai-changelog-generator",
+  "saas-pricing-calculator", "employee-turnover-calculator"
+];
+
+export const toolsRegistry: ToolMetadata[] = rawToolsRegistry.map(tool => ({
+  ...tool,
+  isPro: proSlugs.includes(tool.slug)
+}));
 
 export const getToolBySlug = (slug: string) => toolsRegistry.find(t => t.slug === slug);
 export const getToolsByCategory = (category: string) => toolsRegistry.filter(t => t.category === category);

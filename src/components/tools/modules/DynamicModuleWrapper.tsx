@@ -108,7 +108,6 @@ const MODULE_REGISTRY: Record<string, any> = {
   'ai-image-generator': dynamic(() => import('@/components/tools/modules/AiImageGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'speed-test': dynamic(() => import('@/components/tools/modules/SpeedTest'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'twitter-video-downloader': dynamic(() => import('@/components/tools/modules/TwitterVideoDownloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
-  'spotify-mp3-downloader': dynamic(() => import('@/components/tools/modules/SpotifyMp3Downloader'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'compress-image-to-50kb': dynamic(() => import('@/components/tools/modules/CompressImageTo50kb'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'currency-converter': dynamic(() => import('@/components/tools/modules/CurrencyConverter'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'logo-maker': dynamic(() => import('@/components/tools/modules/LogoMaker'), { ssr: false, loading: () => <SkeletonLoader /> }),

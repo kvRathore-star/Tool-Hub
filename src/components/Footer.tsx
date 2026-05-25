@@ -1,12 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Globe, Moon } from "lucide-react";
+import { Globe, Moon, Sun } from "lucide-react";
 import { GithubLogo, TwitterLogo, LinkedinLogo, YoutubeLogo } from "@phosphor-icons/react";
+import { useTheme } from "next-themes";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <footer className="bg-[var(--bg-elevated)] border-t border-[var(--border-subtle)] text-[var(--text-secondary)] py-16">
@@ -89,8 +96,19 @@ export function Footer() {
               <Globe className="w-3.5 h-3.5" /> EN
             </button>
             <span className="w-px h-4 bg-[var(--border-subtle)]" />
-            <button className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs">
-              <Moon className="w-3.5 h-3.5" /> Dark
+            <button 
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-xs cursor-pointer"
+            >
+              {mounted && theme === "dark" ? (
+                <>
+                  <Sun className="w-3.5 h-3.5" /> Light
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5" /> Dark
+                </>
+              )}
             </button>
           </div>
         </div>

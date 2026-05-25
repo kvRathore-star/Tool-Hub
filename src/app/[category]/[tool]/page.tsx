@@ -62,6 +62,7 @@ export default async function ToolPage(props: { params: Promise<{ category: stri
         title={toolMetadata.name}
         description={toolMetadata.description}
         category={params.category}
+        slug={toolMetadata.slug}
       >
         <MemoryWatchdog />
         <ToolErrorBoundary>
