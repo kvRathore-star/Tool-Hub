@@ -1,49 +1,300 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Download, Sparkles, RefreshCw, Type, Layout, Sliders, Layers, Image as ImageIcon } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
+import { toast } from 'react-hot-toast';
+
+interface AspectRatio {
+  id: string;
+  name: string;
+  w: number;
+  h: number;
+  displayW: number;
+  displayH: number;
+}
+
+const RATIOS: AspectRatio[] = [
+  { id: 'insta_square', name: 'Instagram Square (1:1)', w: 1080, h: 1080, displayW: 300, displayH: 300 },
+  { id: 'insta_story', name: 'Instagram Story (9:16)', w: 1080, h: 1920, displayW: 225, displayH: 400 },
+  { id: 'twitter_post', name: 'Twitter/FB Post (16:9)', w: 1200, h: 675, displayW: 350, displayH: 197 },
+  { id: 'linkedin_banner', name: 'LinkedIn Banner (4:1)', w: 1584, h: 396, displayW: 400, displayH: 100 }
+];
 
 export default function SocialMediaPostMaker() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const [selectedRatio, setSelectedRatio] = useState<AspectRatio>(RATIOS[0]);
+  const [text, setText] = useState('Build Something Beautiful');
+  const [fontFamily, setFontFamily] = useState('sans-serif');
+  const [fontSize, setFontSize] = useState(48);
+  const [textColor, setTextColor] = useState('#ffffff');
+  
+  const [bgColor1, setBgColor1] = useState('#6366f1');
+  const [bgColor2, setBgColor2] = useState('#4f46e5');
+  const [bgImage, setBgImage] = useState<string | null>(null);
+  const [textY, setTextY] = useState(50); // percentage
+
+  useEffect(() => {
+    drawPost();
+  }, [selectedRatio, text, fontFamily, fontSize, textColor, bgColor1, bgColor2, bgImage, textY]);
+
+  const drawPost = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clear
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Draw Background (Image or Gradient)
+    if (bgImage) {
+      const img = new Image();
+      img.onload = () => {
+        // Draw image cover-fit scale
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        
+        // Add dark overlay
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw Text after image loads
+        drawTextOnCanvas(ctx, canvas.width, canvas.height);
+      };
+      img.src = bgImage;
+    } else {
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, bgColor1);
+      gradient.addColorStop(1, bgColor2);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw decorative design elements
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.beginPath();
+      ctx.arc(0, 0, canvas.width * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+      
+      drawTextOnCanvas(ctx, canvas.width, canvas.height);
+    }
+  };
+
+  const drawTextOnCanvas = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+    ctx.save();
+    
+    // Text Alignment & Styling
+    ctx.fillStyle = textColor;
+    ctx.font = `bold ${fontSize}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Shadow
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+
+    const x = width / 2;
+    const y = height * (textY / 100);
+
+    // Multiline Text wrap calculation
+    const maxWidth = width * 0.85;
+    const words = text.split(' ');
+    let line = '';
+    const lines = [];
+
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        lines.push(line.trim());
+        line = words[n] + ' ';
+      } else {
+        line = testLine;
+      }
+    }
+    lines.push(line.trim());
+
+    // Draw lines
+    const lineHeight = fontSize * 1.25;
+    let currentY = y - ((lines.length - 1) * lineHeight) / 2;
+
+    lines.forEach(lineText => {
+      ctx.fillText(lineText, x, currentY);
+      currentY += lineHeight;
+    });
+
+    ctx.restore();
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setBgImage(reader.result as string);
+      toast.success("Background image loaded!");
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const downloadPNG = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dataUrl = canvas.toDataURL('image/png');
+    downloadOrShare(dataUrl, `social_post_${selectedRatio.id}.png`);
+    toast.success("Graphic downloaded!");
+  };
+
+  const clearImage = () => {
+    setBgImage(null);
+    toast.success("Background image cleared.");
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (SocialMediaPostMaker) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      
+      {/* Header */}
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Layout className="w-5 h-5 text-indigo-500" />
+          Social Media Graphic Designer
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Compose posts for Instagram, Twitter, and LinkedIn with templates, image backdrops, and overlays.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* Editor controls */}
+        <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6 max-h-[680px] overflow-y-auto pr-2">
+          
+          {/* Ratio choices */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5"><Layout className="w-3.5 h-3.5" /> Dimensions / Platform</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {RATIOS.map((ratio) => (
+                <button
+                  key={ratio.id}
+                  onClick={() => setSelectedRatio(ratio)}
+                  className={`px-3 py-2 text-xs font-bold rounded-xl border text-center transition-colors cursor-pointer ${selectedRatio.id === ratio.id ? 'border-indigo-500 bg-indigo-500/10 text-indigo-500' : 'border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-850 text-zinc-500'}`}
+                >
+                  {ratio.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Text controls */}
+          <div className="space-y-4 pt-4 border-t border-zinc-150 dark:border-zinc-800">
+            <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5"><Type className="w-3.5 h-3.5" /> Text Content</h4>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-zinc-500 uppercase">Text Overlay</label>
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-850 rounded-xl px-3 py-2 text-zinc-900 dark:text-white outline-none text-xs h-20 resize-none"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Font Size</label>
+                <input type="number" value={fontSize} onChange={e => setFontSize(Math.max(12, parseInt(e.target.value) || 24))} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-855 rounded-xl px-3 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-xs" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Font Family</label>
+                <select value={fontFamily} onChange={e => setFontFamily(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-855 rounded-xl px-2 py-2 text-zinc-900 dark:text-white outline-none text-xs">
+                  <option value="sans-serif">Sans-Serif</option>
+                  <option value="serif">Serif</option>
+                  <option value="Impact">Impact (Meme Style)</option>
+                  <option value="cursive">Elegant Cursive</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Text Color</label>
+                <input type="color" value={textColor} onChange={e => setTextColor(e.target.value)} className="w-full h-10 rounded-xl cursor-pointer" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Position Y (%)</label>
+                <input type="range" min="10" max="90" value={textY} onChange={e => setTextY(parseInt(e.target.value))} className="w-full accent-indigo-650 mt-2" />
+              </div>
+            </div>
+          </div>
+
+          {/* Background colors/image */}
+          <div className="space-y-4 pt-4 border-t border-zinc-150 dark:border-zinc-800">
+            <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5"><Layers className="w-3.5 h-3.5" /> Backdrop Settings</h4>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Grad Start</label>
+                <input type="color" value={bgColor1} onChange={e => setBgColor1(e.target.value)} className="w-full h-10 rounded-xl cursor-pointer" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-zinc-500 uppercase">Grad End</label>
+                <input type="color" value={bgColor2} onChange={e => setBgColor2(e.target.value)} className="w-full h-10 rounded-xl cursor-pointer" />
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+              <label className="text-[10px] font-bold text-zinc-500 uppercase flex items-center gap-1"><ImageIcon className="w-3.5 h-3.5" /> Upload Background Image</label>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageUpload} 
+                className="w-full text-xs text-zinc-450 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-855 rounded-xl px-4 py-2 cursor-pointer focus:border-zinc-350" 
+              />
+              {bgImage && (
+                <button onClick={clearImage} className="text-[10px] font-bold text-rose-500 hover:underline">Clear Image Backdrop</button>
+              )}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Preview Area */}
+        <div className="lg:col-span-7 flex flex-col justify-between bg-zinc-50 dark:bg-black/45 border border-zinc-205 dark:border-zinc-855 p-6 rounded-2xl min-h-[450px]">
+          <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-6">
+             <span className="text-xs font-bold text-zinc-400">DESIGN CANVAS</span>
+          </div>
+
+          <div className="flex-1 flex items-center justify-center">
+            {/* Draw according to aspect ratio */}
+            <div className="border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-2xl bg-white dark:bg-zinc-955 p-1">
+              <canvas 
+                ref={canvasRef} 
+                width={selectedRatio.w} 
+                height={selectedRatio.h} 
+                style={{ width: selectedRatio.displayW, height: selectedRatio.displayH }}
+                className="max-w-full"
+              />
+            </div>
+          </div>
+
+          {/* Export triggers */}
           <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
+            onClick={downloadPNG}
+            className="w-full mt-6 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-sm"
           >
-            Process
+            <Download className="w-4 h-4" />
+            Download Custom Design
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
       </div>
+
     </div>
   );
 }

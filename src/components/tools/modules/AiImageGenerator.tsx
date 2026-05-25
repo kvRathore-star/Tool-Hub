@@ -1,48 +1,208 @@
 "use client";
-
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { Download, Sparkles, Image as ImageIcon, Link2 } from 'lucide-react';
 
 export default function AiImageGenerator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [style, setStyle] = useState('Photorealistic');
+  const [aspectRatio, setAspectRatio] = useState('1:1');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const styles = [
+    { name: 'Photorealistic', suffix: 'highly detailed, photorealistic, 8k resolution, raw photo, realistic lighting' },
+    { name: 'Anime', suffix: 'anime style, vibrant colors, detailed illustration, studio ghibli vibe, sharp focus' },
+    { name: '3D Render', suffix: '3d render, octane render, pixar style, smooth shading, clay model, cute, raytracing' },
+    { name: 'Cyberpunk', suffix: 'cyberpunk style, neon lights, futuristic city background, highly detailed, sci-fi' },
+    { name: 'Fantasy', suffix: 'fantasy illustration, mythical, magical, highly detailed digital painting, artstation' },
+    { name: 'Pixel Art', suffix: '8-bit pixel art, retro gaming style, detailed, sprite, colorful' },
+    { name: 'Cinematic', suffix: 'cinematic still, dramatic lighting, depth of field, 35mm film, masterpiece' }
+  ];
+
+  const handleGenerate = () => {
+    if (!prompt.trim()) {
+      return toast.error('Please enter a description for your image!');
+    }
+
+    setIsGenerating(true);
+    setImageUrl('');
+
+    // Select style suffix
+    const selectedStyleObj = styles.find(s => s.name === style);
+    const suffix = selectedStyleObj ? selectedStyleObj.suffix : '';
+    const fullPrompt = `${prompt}, ${suffix}`;
+
+    // Map aspect ratio to width/height
+    let w = 1024;
+    let h = 1024;
+    if (aspectRatio === '16:9') {
+      w = 1024;
+      h = 576;
+    } else if (aspectRatio === '9:16') {
+      w = 576;
+      h = 1024;
+    }
+
+    const seed = Math.floor(Math.random() * 1000000);
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?width=${w}&height=${h}&nologo=true&seed=${seed}`;
+
+    // Force preloading of the image before displaying
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      setImageUrl(url);
+      setIsGenerating(false);
+      toast.success('Image generated successfully!');
+    };
+    img.onerror = () => {
+      setIsGenerating(false);
+      toast.error('Failed to generate image. Please try again.');
+    };
+  };
+
+  const handleDownload = async () => {
+    if (!imageUrl) return;
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `ai-image-${Date.now()}.png`;
+      link.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+      toast.error('Failed to download image. Try copying the link instead.');
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (!imageUrl) return;
+    navigator.clipboard.writeText(imageUrl);
+    toast.success('Link copied to clipboard!');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (AiImageGenerator) was auto-generated and is ready for business logic.
-      </div>
+    <div className="max-w-5xl mx-auto animate-in fade-in duration-500 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Left Control Panel */}
+        <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-5 flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+              <ImageIcon className="w-5 h-5 text-blue-500" />
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">AI Image Generator</h3>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Image Prompt</label>
+              <textarea
+                value={prompt}
+                onChange={e => setPrompt(e.target.value)}
+                placeholder="e.g. A futuristic city with flying cars at sunset, watercolor style..."
+                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-32 outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm resize-none"
+              />
+            </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Art Style</label>
+                <select
+                  value={style}
+                  onChange={e => setStyle(e.target.value)}
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm"
+                >
+                  {styles.map(s => (
+                    <option key={s.name} value={s.name}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Aspect Ratio</label>
+                <select
+                  value={aspectRatio}
+                  onChange={e => setAspectRatio(e.target.value)}
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm"
+                >
+                  <option value="1:1">1:1 (Square)</option>
+                  <option value="16:9">16:9 (Landscape)</option>
+                  <option value="9:16">9:16 (Portrait)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="mt-6 w-full py-4 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg hover:shadow-blue-500/20 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
           >
-            Process
+            {isGenerating ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Generating Artwork...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5" />
+                <span>Generate Image</span>
+              </>
+            )}
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Right Preview Panel */}
+        <div className="lg:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col min-h-[450px]">
+          <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3 mb-4">
+            <h4 className="font-semibold text-zinc-900 dark:text-white">Artwork Preview</h4>
+            {imageUrl && (
+              <div className="flex gap-2">
+                <button
+                  onClick={handleCopyLink}
+                  className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  title="Copy Direct Link"
+                >
+                  <Link2 className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleDownload}
+                  className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  title="Download Image"
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 flex flex-col items-center justify-center overflow-hidden rounded-xl bg-zinc-50 dark:bg-black/20 border border-zinc-100 dark:border-zinc-800/50">
+            {isGenerating ? (
+              <div className="flex flex-col items-center text-center p-8">
+                <div className="relative w-16 h-16 mb-4">
+                  <div className="absolute inset-0 rounded-full border-4 border-blue-500/20 animate-pulse"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
+                </div>
+                <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Processing latent diffusion nodes...</p>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">This typically takes 3 to 6 seconds.</p>
+              </div>
+            ) : imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={prompt}
+                className="max-w-full max-h-[480px] object-contain rounded-lg shadow-md animate-in zoom-in-95 duration-300"
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center p-8 text-center text-zinc-400">
+                <ImageIcon className="w-10 h-10 mb-3 text-zinc-300 dark:text-zinc-700 animate-bounce" />
+                <p className="text-sm font-medium">Your generated artwork will appear here.</p>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">Specify your prompt and options to render the model.</p>
+              </div>
+            )}
+          </div>
         </div>
+
       </div>
     </div>
   );

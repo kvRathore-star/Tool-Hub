@@ -1,47 +1,79 @@
 "use client";
 
 import React, { useState } from 'react';
+import { EyeOff, Copy, RefreshCw } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function IpAnonymizer() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [ip, setIp] = useState('192.168.1.125');
+  const [mask, setMask] = useState('24'); // /24 mask
+  const [anonymized, setAnonymized] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const anonymizeIp = () => {
+    if (!ip.trim()) {
+      toast.error('Please enter IP address');
+      return;
+    }
+
+    try {
+      const parts = ip.trim().split('.');
+      if (parts.length !== 4) {
+        toast.error('Invalid IPv4 format');
+        return;
+      }
+
+      if (mask === '24') {
+        // Zero out last octet
+        setAnonymized(`${parts[0]}.${parts[1]}.${parts[2]}.0`);
+      } else if (mask === '16') {
+        // Zero out last two octets
+        setAnonymized(`${parts[0]}.${parts[1]}.0.0`);
+      } else {
+        // Full hash anonymizer (standard GDPR mask method)
+        setAnonymized(`xxx.xxx.xxx.xxx`);
+      }
+      toast.success('IP Anonymized!');
+    } catch (err) {
+      toast.error('Failed to anonymize');
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (IpAnonymizer) was auto-generated and is ready for business logic.
+    <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-6 animate-in fade-in duration-500">
+      <div className="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+        <EyeOff className="w-5 h-5 text-indigo-500" />
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-white">GDPR IP Anonymizer</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs">
+        <div className="space-y-4 flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <label className="text-[10px] text-zinc-400 font-bold uppercase">IPv4 Address</label>
+              <input type="text" value={ip} onChange={e => setIp(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none text-zinc-900 dark:text-white" />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-[10px] text-zinc-400 font-bold uppercase">Anonymization Level</label>
+              <select value={mask} onChange={e => setMask(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-2.5 py-2 outline-none">
+                <option value="24">Mask last octet (GDPR /24 - standard)</option>
+                <option value="16">Mask last 2 octets (Aggressive /16)</option>
+                <option value="hash">Full hashing block replacement</option>
+              </select>
+            </div>
+          </div>
+
+          <button onClick={anonymizeIp} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
+            <RefreshCw className="w-4 h-4" /> Anonymize IP
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        <div className="bg-zinc-50 dark:bg-black/30 rounded-2xl p-6 border border-zinc-800 flex flex-col justify-center items-center min-h-[160px] space-y-3">
+          <span className="text-[10px] text-zinc-500 uppercase block">Anonymized Output</span>
+          <p className="text-3xl font-black text-emerald-400 font-mono tracking-wider">{anonymized ? anonymized : '--'}</p>
+          {anonymized && (
+            <button onClick={() => { navigator.clipboard.writeText(anonymized); toast.success('Copied!'); }} className="text-indigo-400 hover:underline">Copy Result</button>
+          )}
         </div>
       </div>
     </div>

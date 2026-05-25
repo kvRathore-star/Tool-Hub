@@ -1,49 +1,39 @@
 "use client";
-
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useAiProvider } from '@/hooks/useAiProvider';
+import AiSettings from '../AiSettings';
 
 export default function AiParaphrasingTool() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const { isConfigured, generateCompletion } = useAiProvider();
+  const [inputText, setInputText] = useState('');
+  const [outputText, setOutputText] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const handleGenerate = async () => {
+    if (!inputText.trim()) return toast.error('Enter text to paraphrase');
+    if (!isConfigured) return toast.error('Configure AI Provider');
+
+    setIsProcessing(true);
+    try {
+      const prompt = "You are an expert copywriter. Paraphrase the following text. Make it more engaging, fix any grammatical errors, and ensure it sounds completely human-written while retaining the original meaning.\n\nOriginal Text:\n" + inputText;
+      const response = await generateCompletion([{ role: 'user', content: prompt }], 0.7);
+      setOutputText(response);
+    } catch (e: any) {
+      toast.error(e.message || "Failed");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (AiParaphrasingTool) was auto-generated and is ready for business logic.
+    <div className="max-w-5xl mx-auto animate-in fade-in duration-500 space-y-6">
+      <AiSettings />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <textarea value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Paste text to paraphrase..." className="w-full h-96 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent outline-none" />
+        <textarea value={outputText} readOnly placeholder="Paraphrased text will appear here..." className="w-full h-96 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 outline-none" />
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
-        </div>
-
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
-      </div>
+      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl">{isProcessing ? 'Paraphrasing...' : 'Paraphrase Text'}</button>
     </div>
   );
 }

@@ -1,48 +1,69 @@
 "use client";
-
 import React, { useState } from 'react';
 
 export default function PercentageCalculator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [val1, setVal1] = useState('');
+  const [val2, setVal2] = useState('');
+  const [result1, setResult1] = useState<number | null>(null);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
-  };
+  const [val3, setVal3] = useState('');
+  const [val4, setVal4] = useState('');
+  const [result2, setResult2] = useState<number | null>(null);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (PercentageCalculator) was auto-generated and is ready for business logic.
-      </div>
-
+    <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+        
+        {/* Calc 1 */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-6">
+           <h2 className="text-xl font-bold text-zinc-900 dark:text-white">What is X% of Y?</h2>
+           <div className="flex items-center space-x-4">
+              <input 
+                type="number" value={val1} onChange={e => setVal1(e.target.value)}
+                placeholder="X" className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-indigo-500 rounded-xl px-4 py-3 outline-none"
+              />
+              <span className="font-bold text-zinc-500">% of</span>
+              <input 
+                type="number" value={val2} onChange={e => setVal2(e.target.value)}
+                placeholder="Y" className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-indigo-500 rounded-xl px-4 py-3 outline-none"
+              />
+           </div>
+           <button
+              onClick={() => setResult1((Number(val1) / 100) * Number(val2))}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all active:scale-95"
+            >
+              Calculate
+            </button>
+            {result1 !== null && (
+              <div className="text-center text-3xl font-black text-indigo-600 dark:text-indigo-400">{result1}</div>
+            )}
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Calc 2 */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-6">
+           <h2 className="text-xl font-bold text-zinc-900 dark:text-white">X is what % of Y?</h2>
+           <div className="flex items-center space-x-4">
+              <input 
+                type="number" value={val3} onChange={e => setVal3(e.target.value)}
+                placeholder="X" className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-3 outline-none"
+              />
+              <span className="font-bold text-zinc-500">is what % of</span>
+              <input 
+                type="number" value={val4} onChange={e => setVal4(e.target.value)}
+                placeholder="Y" className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-emerald-500 rounded-xl px-4 py-3 outline-none"
+              />
+           </div>
+           <button
+              onClick={() => setResult2((Number(val3) / Number(val4)) * 100)}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition-all active:scale-95"
+            >
+              Calculate
+            </button>
+            {result2 !== null && (
+              <div className="text-center text-3xl font-black text-emerald-600 dark:text-emerald-400">{result2.toFixed(2)}%</div>
+            )}
         </div>
+
       </div>
     </div>
   );

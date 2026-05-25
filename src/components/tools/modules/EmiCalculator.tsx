@@ -1,48 +1,79 @@
 "use client";
-
 import React, { useState } from 'react';
 
 export default function EmiCalculator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [principal, setPrincipal] = useState('100000');
+  const [rate, setRate] = useState('10');
+  const [tenure, setTenure] = useState('12');
+  const [emi, setEmi] = useState<number | null>(null);
+  const [totalInterest, setTotalInterest] = useState<number | null>(null);
+  const [totalPayment, setTotalPayment] = useState<number | null>(null);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const calculate = () => {
+    const p = parseFloat(principal);
+    const r = parseFloat(rate) / 12 / 100;
+    const n = parseFloat(tenure);
+
+    if (!p || !r || !n) return;
+
+    const emiValue = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const totalPay = emiValue * n;
+    
+    setEmi(emiValue);
+    setTotalPayment(totalPay);
+    setTotalInterest(totalPay - p);
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (EmiCalculator) was auto-generated and is ready for business logic.
-      </div>
+    <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in duration-500">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-8">
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Loan Amount ($)</label>
+              <input 
+                type="number" value={principal} onChange={e => setPrincipal(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-amber-500 rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Interest Rate (% p.a)</label>
+              <input 
+                type="number" value={rate} onChange={e => setRate(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-amber-500 rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Loan Tenure (Months)</label>
+              <input 
+                type="number" value={tenure} onChange={e => setTenure(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-amber-500 rounded-xl px-4 py-3 outline-none"
+              />
+            </div>
+         </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
+         <button
+            onClick={calculate}
+            className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95"
           >
-            Process
+            Calculate EMI
           </button>
-        </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
+          {emi !== null && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+               <div className="text-center">
+                 <div className="text-xs text-amber-600 font-bold uppercase mb-1">Monthly EMI</div>
+                 <div className="text-3xl font-black text-amber-700 dark:text-amber-400">${emi.toFixed(2)}</div>
+               </div>
+               <div className="text-center">
+                 <div className="text-xs text-amber-600 font-bold uppercase mb-1">Total Interest</div>
+                 <div className="text-xl font-bold text-amber-700 dark:text-amber-400 mt-2">${totalInterest?.toFixed(2)}</div>
+               </div>
+               <div className="text-center">
+                 <div className="text-xs text-amber-600 font-bold uppercase mb-1">Total Payment</div>
+                 <div className="text-xl font-bold text-amber-700 dark:text-amber-400 mt-2">${totalPayment?.toFixed(2)}</div>
+               </div>
+            </div>
+          )}
       </div>
     </div>
   );

@@ -1,47 +1,53 @@
 "use client";
-
 import React, { useState } from 'react';
+import { DollarSign } from 'lucide-react';
 
 export default function ProfitMarginCalculator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [cost, setCost] = useState(100);
+  const [revenue, setRevenue] = useState(150);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
-  };
+  const profit = revenue - cost;
+  const margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+  const markup = cost > 0 ? (profit / cost) * 100 : 0;
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (ProfitMarginCalculator) was auto-generated and is ready for business logic.
+    <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-6 animate-in fade-in duration-500">
+      <div className="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+        <DollarSign className="w-5 h-5 text-emerald-500" />
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Profit Margin Calculator</h3>
       </div>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+        <div className="space-y-4">
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Cost of Goods ($)</label>
+            <input type="number" value={cost} onChange={e => setCost(Math.max(0, parseFloat(e.target.value) || 0))} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white text-sm outline-none" />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Sale Revenue ($)</label>
+            <input type="number" value={revenue} onChange={e => setRevenue(Math.max(0, parseFloat(e.target.value) || 0))} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white text-sm outline-none" />
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        <div className="bg-zinc-50 dark:bg-black/30 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="text-xs text-zinc-400">Gross Profit</span>
+                <p className="text-xl font-bold text-zinc-850 dark:text-white">$${profit.toFixed(2)}</p>
+              </div>
+              <div>
+                <span className="text-xs text-zinc-400">Markup Percentage</span>
+                <p className="text-xl font-bold text-emerald-500">${markup.toFixed(1)}%</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-6">
+            <span className="text-xs text-zinc-400">Gross Profit Margin</span>
+            <p className="text-4xl font-extrabold text-emerald-500">${margin.toFixed(2)}%</p>
+          </div>
         </div>
       </div>
     </div>

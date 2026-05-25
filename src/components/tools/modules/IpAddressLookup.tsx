@@ -1,47 +1,114 @@
 "use client";
 
 import React, { useState } from 'react';
+import { ShieldAlert, Download, RefreshCw, Globe } from 'lucide-react';
+import { toast } from 'react-hot-toast';
+
+interface IpDetails {
+  ip: string;
+  city: string;
+  region: string;
+  country_name: string;
+  postal: string;
+  org: string;
+}
 
 export default function IpAddressLookup() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [ipAddress, setIpAddress] = useState('');
+  const [details, setDetails] = useState<IpDetails | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const fetchIpDetails = async () => {
+    setIsProcessing(true);
+    setDetails(null);
+
+    // If empty input, queries self IP
+    const target = ipAddress.trim() ? ipAddress.trim() : '';
+    const url = target ? `https://ipapi.co/${target}/json/` : 'https://ipapi.co/json/';
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json() as any;
+      if (data.error) {
+        toast.error('Invalid IP Address or rate limit exceeded');
+        return;
+      }
+      setDetails({
+        ip: data.ip,
+        city: data.city || 'Unknown',
+        region: data.region || 'Unknown',
+        country_name: data.country_name || 'Unknown',
+        postal: data.postal || 'Unknown',
+        org: data.org || 'Unknown'
+      });
+      toast.success('IP Address details resolved!');
+    } catch (err) {
+      toast.error('Failed to query geo database offline');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (IpAddressLookup) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Globe className="w-5 h-5 text-indigo-500" />
+          IP Address Geo-Lookup & ISP Resolver
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Lookup IPv4 or IPv6 details including Country location, region coordinates, ZIP codes, and ISP providers.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Lookup Controls */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4 flex flex-col justify-between">
+          <div className="space-y-3">
+            <span className="text-xs text-zinc-400 font-bold uppercase block">IP Address query</span>
+            <input 
+              type="text" 
+              value={ipAddress}
+              onChange={e => setIpAddress(e.target.value)}
+              placeholder="e.g. 8.8.8.8 (leave empty to query your current IP)"
+              className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white text-xs outline-none"
+            />
+          </div>
+
+          <button onClick={fetchIpDetails} disabled={isProcessing} className="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+            <RefreshCw className={`w-4 h-4 ${isProcessing ? 'animate-spin' : ''}`} />
+            Resolve IP Details
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Geo Details */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl min-h-[250px] flex flex-col justify-center">
+          {details ? (
+            <div className="space-y-4 animate-in zoom-in-95 duration-200 text-xs">
+              <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-zinc-800 pb-2">Resolved Geolocation details</span>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                  <span className="text-[10px] text-zinc-500 block uppercase">Resolved IP</span>
+                  <p className="font-mono font-bold text-indigo-400 mt-1">{details.ip}</p>
+                </div>
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                  <span className="text-[10px] text-zinc-500 block uppercase">ISP Network</span>
+                  <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.org}</p>
+                </div>
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                  <span className="text-[10px] text-zinc-500 block uppercase">Country & Postal</span>
+                  <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.country_name} ({details.postal})</p>
+                </div>
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                  <span className="text-[10px] text-zinc-500 block uppercase">City & State</span>
+                  <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.city}, {details.region}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center text-zinc-500">
+              <ShieldAlert className="w-10 h-10 mx-auto mb-2 text-zinc-300 dark:text-zinc-700" />
+              <p className="text-xs">No IP Address details loaded. Trigger resolution query.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

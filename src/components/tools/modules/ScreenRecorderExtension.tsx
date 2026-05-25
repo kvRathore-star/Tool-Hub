@@ -1,47 +1,147 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Eye, Download, Video, Sparkles } from 'lucide-react';
+import { toast } from 'react-hot-toast';
+import JSZip from 'jszip';
 
 export default function ScreenRecorderExtension() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [activeTab, setActiveTab] = useState<'manifest' | 'popupHtml' | 'popupJs'>('manifest');
+  const [extName, setExtName] = useState('Tab Recorder Pro');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const manifest = `{
+  "manifest_version": 3,
+  "name": "${extName}",
+  "version": "1.0",
+  "description": "Quick screen and tab video recorder extension utility.",
+  "permissions": [
+    "tabCapture"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}`;
+
+  const popupHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { width: 220px; padding: 10px; font-family: sans-serif; background: #09090b; color: white; }
+    .header { font-size: 13px; font-weight: bold; color: #ec4899; text-align: center; margin-bottom: 10px; }
+    button { width: 100%; padding: 8px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
+    .start-btn { background: #ec4899; color: white; }
+    .stop-btn { background: #52525b; color: white; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div className="header">Screen Recorder</div>
+  <button id="startBtn" className="start-btn">Start Recording</button>
+  <button id="stopBtn" className="stop-btn">Stop & Save</button>
+  <script src="popup.js"></script>
+</body>
+</html>`;
+
+  const popupJs = `let mediaRecorder;
+let recordedChunks = [];
+
+document.getElementById('startBtn').addEventListener('click', async () => {
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) recordedChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recording.webm';
+      a.click();
+      recordedChunks = [];
+    };
+
+    mediaRecorder.start();
+  } catch (e) {
+    console.error('Failed to capture stream: ', e);
+  }
+});
+
+document.getElementById('stopBtn').addEventListener('click', () => {
+  if (mediaRecorder) mediaRecorder.stop();
+});`;
+
+  const handleDownload = async () => {
+    try {
+      const zip = new JSZip();
+      zip.file("manifest.json", manifest);
+      zip.file("popup.html", popupHtml);
+      zip.file("popup.js", popupJs);
+
+      const content = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(content);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `screen_recorder_extension.zip`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success('Screen recorder extension ZIP downloaded!');
+    } catch (err) {
+      toast.error('Failed to create package');
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (ScreenRecorderExtension) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Video className="w-5 h-5 text-indigo-500" />
+          Tab Screen Recorder Extension Builder
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Build and download a custom Chrome extension package allowing users to capture active tab video streams directly.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider block border-b border-zinc-800 pb-2">Settings</span>
+          
+          <div className="space-y-2">
+            <label className="text-xs text-zinc-400 font-bold">Extension Name</label>
+            <input 
+              type="text" 
+              value={extName} 
+              onChange={e => setExtName(e.target.value)}
+              className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white text-xs outline-none"
+            />
+          </div>
+
+          <button onClick={handleDownload} className="w-full mt-4 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+            <Download className="w-4 h-4" /> Download Extension ZIP
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        <div className="lg:col-span-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between min-h-[450px]">
+          <div className="space-y-3 flex-1 flex flex-col">
+            <div className="flex bg-zinc-50 dark:bg-black/45 p-1 rounded-xl gap-1">
+              <button onClick={() => setActiveTab('manifest')} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${activeTab === 'manifest' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500'}`}>
+                manifest.json
+              </button>
+              <button onClick={() => setActiveTab('popupHtml')} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${activeTab === 'popupHtml' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500'}`}>
+                popup.html
+              </button>
+              <button onClick={() => setActiveTab('popupJs')} className={`flex-1 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${activeTab === 'popupJs' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500'}`}>
+                popup.js
+              </button>
+            </div>
+
+            <textarea
+              value={activeTab === 'manifest' ? manifest : activeTab === 'popupHtml' ? popupHtml : popupJs}
+              readOnly
+              className="w-full flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-mono h-80 outline-none text-xs resize-none"
+            />
+          </div>
         </div>
       </div>
     </div>

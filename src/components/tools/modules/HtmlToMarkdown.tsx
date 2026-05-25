@@ -1,47 +1,79 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Clipboard, Copy, Download, RefreshCw, FileText } from 'lucide-react';
+import { toast } from 'react-hot-toast';
+// @ts-ignore
+import TurndownService from 'turndown';
 
 export default function HtmlToMarkdown() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [html, setHtml] = useState('');
+  const [markdown, setMarkdown] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const convertHtmlToMarkdown = () => {
+    if (!html.trim()) {
+      setMarkdown('');
+      return;
+    }
+
+    try {
+      const turndownService = new TurndownService({
+        headingStyle: 'atx',
+        codeBlockStyle: 'fenced'
+      });
+      const md = turndownService.turndown(html);
+      setMarkdown(md);
+      toast.success('Successfully converted HTML to Markdown!');
+    } catch (err: any) {
+      toast.error('Failed to parse HTML string.');
+    }
+  };
+
+  const handleCopy = () => {
+    if (!markdown) return;
+    navigator.clipboard.writeText(markdown);
+    toast.success('Copied Markdown!');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (HtmlToMarkdown) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <FileText className="w-5 h-5 text-indigo-500" />
+          HTML to Markdown Converter
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Convert HTML markup tags into clean, human-readable standard Markdown syntax offline.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <span className="text-xs text-zinc-400 font-bold uppercase block">HTML Content Input</span>
+          <textarea
+            value={html}
+            onChange={e => setHtml(e.target.value)}
+            placeholder="e.g. <h1>Title</h1><p>This is a <strong>paragraph</strong>.</p>..."
+            className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white font-mono h-64 outline-none text-xs resize-none"
           />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+          <button onClick={convertHtmlToMarkdown} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+            <RefreshCw className="w-4 h-4" /> Convert to Markdown
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+          <div className="space-y-2 flex-1 flex flex-col">
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-zinc-400 font-bold uppercase">Markdown Output</span>
+              {markdown && (
+                <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
+              )}
+            </div>
+            <textarea
+              value={markdown}
+              readOnly
+              placeholder="Markdown output syntax will appear here..."
+              className="w-full flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white font-mono h-64 outline-none text-xs resize-none"
+            />
+          </div>
         </div>
       </div>
     </div>

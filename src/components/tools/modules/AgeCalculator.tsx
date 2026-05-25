@@ -1,48 +1,76 @@
 "use client";
-
 import React, { useState } from 'react';
 
 export default function AgeCalculator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [dob, setDob] = useState('');
+  const [targetDate, setTargetDate] = useState(new Date().toISOString().split('T')[0]);
+  const [result, setResult] = useState<any>(null);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const calculate = () => {
+    if (!dob) return;
+    const d1 = new Date(dob);
+    const d2 = new Date(targetDate);
+    
+    let years = d2.getFullYear() - d1.getFullYear();
+    let months = d2.getMonth() - d1.getMonth();
+    let days = d2.getDate() - d1.getDate();
+
+    if (days < 0) {
+      months -= 1;
+      const prevMonth = new Date(d2.getFullYear(), d2.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+    
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+
+    setResult({ years, months, days });
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (AgeCalculator) was auto-generated and is ready for business logic.
-      </div>
+    <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in duration-500">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-6">
+         <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Age Calculator</h2>
+         <p className="text-zinc-500">Calculate your exact age in years, months, and days.</p>
+         
+         <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Date of Birth</label>
+              <input 
+                type="date"
+                value={dob}
+                onChange={e => setDob(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-blue-500 rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Target Date (Defaults to Today)</label>
+              <input 
+                type="date"
+                value={targetDate}
+                onChange={e => setTargetDate(e.target.value)}
+                className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-blue-500 rounded-xl px-4 py-3 text-zinc-900 dark:text-white outline-none"
+              />
+            </div>
+         </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
+         <button
+            onClick={calculate}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95"
           >
-            Process
+            Calculate Exact Age
           </button>
-        </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
+          {result && (
+            <div className="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-center space-y-2">
+               <div className="text-sm text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">Your Exact Age is</div>
+               <div className="text-4xl font-black text-blue-700 dark:text-blue-300">
+                 {result.years} <span className="text-xl">Years</span>, {result.months} <span className="text-xl">Months</span>, {result.days} <span className="text-xl">Days</span>
+               </div>
+            </div>
+          )}
       </div>
     </div>
   );

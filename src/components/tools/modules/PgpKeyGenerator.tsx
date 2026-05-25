@@ -1,47 +1,130 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Key, Download, Copy, RefreshCw } from 'lucide-react';
+import { toast } from 'react-hot-toast';
+import * as openpgp from 'openpgp';
 
 export default function PgpKeyGenerator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [name, setName] = useState('John Doe');
+  const [email, setEmail] = useState('john@domain.com');
+  const [passphrase, setPassphrase] = useState('secret123');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [publicKey, setPublicKey] = useState('');
+  const [privateKey, setPrivateKey] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const generateKeys = async () => {
+    if (!name.trim() || !email.trim()) {
+      toast.error('Please enter Name and Email');
+      return;
+    }
+
+    setIsGenerating(true);
+    toast.success('Generating 2048-bit RSA key pair client-side, please wait...');
+
+    try {
+      const { privateKey: privKey, publicKey: pubKey } = await openpgp.generateKey({
+        type: 'rsa',
+        rsaBits: 2048,
+        userIDs: [{ name: name.trim(), email: email.trim() }],
+        passphrase: passphrase.trim()
+      });
+
+      setPublicKey(pubKey);
+      setPrivateKey(privKey);
+      toast.success('PGP Keys successfully generated!');
+    } catch (err: any) {
+      console.error(err);
+      toast.error('Failed to generate key pair: ' + err.message);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopy = (txt: string, label: string) => {
+    navigator.clipboard.writeText(txt);
+    toast.success(`${label} copied!`);
+  };
+
+  const handleDownload = (txt: string, filename: string) => {
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (PgpKeyGenerator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Key className="w-5 h-5 text-indigo-500" />
+          PGP Key Pair Generator
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Generate RSA-2048 public and private PGP key blocks offline using openpgp securely in-browser.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Settings */}
+        <div className="lg:col-span-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4 text-xs">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase border-b border-zinc-800 pb-2">User Identity</h3>
+          
+          <div className="space-y-1">
+            <label className="text-[10px] text-zinc-400 font-bold">User Name</label>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 outline-none" />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] text-zinc-400 font-bold">Email Address</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 outline-none" />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] text-zinc-400 font-bold">Passphrase (Password Lock)</label>
+            <input type="text" value={passphrase} onChange={e => setPassphrase(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 outline-none" />
+          </div>
+
+          <button onClick={generateKeys} disabled={isGenerating} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+            {isGenerating ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Key className="w-4 h-4" />}
+            Generate PGP Keys
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Outputs */}
+        <div className="lg:col-span-8 space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            {/* Public Key */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+              <div className="flex justify-between items-center border-b border-zinc-800 pb-2 mb-2">
+                <span className="text-xs text-zinc-450 font-bold uppercase">Public Key Block</span>
+                {publicKey && (
+                  <div className="flex gap-2">
+                    <button onClick={() => handleCopy(publicKey, 'Public Key')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Copy className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => handleDownload(publicKey, 'public_key.asc')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Download className="w-3.5 h-3.5" /></button>
+                  </div>
+                )}
+              </div>
+              <textarea readOnly value={publicKey} placeholder="Generate keys to view public armor block..." className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 text-emerald-400 font-mono text-[9px] h-60 outline-none resize-none" />
+            </div>
+
+            {/* Private Key */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+              <div className="flex justify-between items-center border-b border-zinc-800 pb-2 mb-2">
+                <span className="text-xs text-zinc-455 font-bold uppercase">Private Key Block</span>
+                {privateKey && (
+                  <div className="flex gap-2">
+                    <button onClick={() => handleCopy(privateKey, 'Private Key')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Copy className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => handleDownload(privateKey, 'private_key.asc')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Download className="w-3.5 h-3.5" /></button>
+                  </div>
+                )}
+              </div>
+              <textarea readOnly value={privateKey} placeholder="Generate keys to view private armor block..." className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 text-emerald-400 font-mono text-[9px] h-60 outline-none resize-none" />
+            </div>
+
+          </div>
         </div>
       </div>
     </div>

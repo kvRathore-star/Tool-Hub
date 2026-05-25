@@ -1,49 +1,40 @@
 "use client";
-
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useAiProvider } from '@/hooks/useAiProvider';
+import AiSettings from '../AiSettings';
 
 export default function AiEssayWriter() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const { isConfigured, generateCompletion } = useAiProvider();
+  const [topic, setTopic] = useState('');
+  const [outputText, setOutputText] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const handleGenerate = async () => {
+    if (!topic.trim()) return toast.error('Enter a topic');
+    if (!isConfigured) return toast.error('Configure AI Provider');
+
+    setIsProcessing(true);
+    try {
+      const prompt = "Write a comprehensive, highly-detailed 5-paragraph academic essay on the following topic. Ensure it has a strong introduction, 3 well-supported body paragraphs, and a conclusive summary.\n\nTopic:\n" + topic;
+      const response = await generateCompletion([{ role: 'user', content: prompt }], 0.7);
+      setOutputText(response);
+    } catch (e: any) {
+      toast.error(e.message || "Failed");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (AiEssayWriter) was auto-generated and is ready for business logic.
+    <div className="max-w-5xl mx-auto animate-in fade-in duration-500 space-y-6">
+      <AiSettings />
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl">
+        <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Essay Topic</label>
+        <input type="text" value={topic} onChange={e => setTopic(e.target.value)} placeholder="e.g., The Impact of Artificial Intelligence on Modern Healthcare..." className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 focus:border-blue-500 rounded-xl px-4 py-3 outline-none" />
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
-        </div>
-
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
-      </div>
+      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl">{isProcessing ? 'Writing...' : 'Generate Essay'}</button>
+      {outputText && <div className="p-6 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 whitespace-pre-wrap">{outputText}</div>}
     </div>
   );
 }

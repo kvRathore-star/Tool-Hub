@@ -1,47 +1,96 @@
 "use client";
 
 import React, { useState } from 'react';
+import { FileText, Copy, RefreshCw } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function BrailleTranslator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [text, setText] = useState('');
+  const [braille, setBraille] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const brailleMap: Record<string, string> = {
+    'a': '⠁', 'b': '⠃', 'c': '⠉', 'd': '⠙', 'e': '⠑', 'f': '⠋', 'g': '⠛', 'h': '⠓',
+    'i': '⠊', 'j': '⠚', 'k': '⠅', 'l': '⠇', 'm': '⠍', 'n': '⠝', 'o': '⠕', 'p': '⠏',
+    'q': '⠟', 'r': '⠗', 's': '⠎', 't': '⠞', 'u': '⠥', 'v': '⠧', 'w': '⠺', 'x': '⠭',
+    'y': '⠽', 'z': '⠵', ' ': ' ', '0': '⠚', '1': '⠁', '2': '⠃', '3': '⠉', '4': '⠙',
+    '5': '⠑', '6': '⠋', '7': '⠛', '8': '⠓', '9': '⠊'
+  };
+
+  const reverseBrailleMap = Object.entries(brailleMap).reduce((acc, [key, val]) => {
+    acc[val] = key;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const translateToBraille = () => {
+    if (!text.trim()) {
+      setBraille('');
+      return;
+    }
+    const result = text
+      .toLowerCase()
+      .split('')
+      .map(char => brailleMap[char] || char)
+      .join('');
+    setBraille(result);
+  };
+
+  const translateToText = () => {
+    if (!braille.trim()) {
+      setText('');
+      return;
+    }
+    const result = braille
+      .split('')
+      .map(char => reverseBrailleMap[char] || char)
+      .join('');
+    setText(result.toUpperCase());
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (BrailleTranslator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <FileText className="w-5 h-5 text-indigo-500" />
+          English to Braille Translator
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Convert alphabet text into standard Grade 1 Braille cell symbols or translate Braille back into text.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <span className="text-xs text-zinc-400 font-bold uppercase block">English Plaintext</span>
+          <textarea
+            value={text}
+            onChange={e => setText(e.target.value)}
+            placeholder="Type standard text here..."
+            className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-48 outline-none text-xs resize-none"
           />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={translateToBraille} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Translate to Braille →
+            </button>
+            <button onClick={() => { navigator.clipboard.writeText(text); toast.success('Copied text!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Copy Text
+            </button>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <span className="text-xs text-zinc-400 font-bold uppercase block">Braille Characters Output</span>
+          <textarea
+            value={braille}
+            onChange={e => setBraille(e.target.value)}
+            placeholder="Braille cells output (e.g. ⠓⠑⠇⠇⠕)..."
+            className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-indigo-400 font-serif h-48 outline-none text-lg resize-none"
           />
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={translateToText} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              ← Translate to Text
+            </button>
+            <button onClick={() => { navigator.clipboard.writeText(braille); toast.success('Copied Braille!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Copy Braille
+            </button>
+          </div>
         </div>
       </div>
     </div>

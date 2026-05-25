@@ -1,49 +1,301 @@
 "use client";
 
 import React, { useState } from 'react';
+import { DollarSign, Percent, TrendingUp, Users, ShieldAlert, BarChart3, HelpCircle } from 'lucide-react';
 
 export default function SaasPricingCalculator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [arpu, setArpu] = useState<number>(50); // Average Revenue Per User (monthly)
+  const [cac, setCac] = useState<number>(300); // Customer Acquisition Cost
+  const [churn, setChurn] = useState<number>(3); // Monthly Churn Rate %
+  const [opex, setOpex] = useState<number>(10000); // Monthly Operating Expense (USD)
+  const [cogsPercent, setCogsPercent] = useState<number>(15); // COGS % (hosting, api cost, support)
+  const [targetMrr, setTargetMrr] = useState<number>(50000); // Target MRR Goal
+  const [startingCustomers, setStartingCustomers] = useState<number>(100);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  // Calculations
+  const grossMarginMultiplier = 1 - (cogsPercent / 100);
+  const ltv = churn > 0 ? (arpu * grossMarginMultiplier) / (churn / 100) : 0;
+  const ltvToCac = cac > 0 ? ltv / cac : 0;
+  
+  const breakEvenCustomers = arpu * grossMarginMultiplier > 0 
+    ? Math.ceil(opex / (arpu * grossMarginMultiplier)) 
+    : 0;
+
+  const targetCustomers = arpu > 0 ? Math.ceil(targetMrr / arpu) : 0;
+  const paybackPeriod = (arpu * grossMarginMultiplier) > 0 
+    ? cac / (arpu * grossMarginMultiplier) 
+    : 0;
+
+  // LTV:CAC Health Indicator
+  let healthText = "Unviable";
+  let healthColor = "text-rose-500 bg-rose-500/10 border-rose-500/20";
+  if (ltvToCac >= 5) {
+    healthText = "Excellent (Highly Scalable)";
+    healthColor = "text-emerald-500 bg-emerald-500/10 border-emerald-500/20";
+  } else if (ltvToCac >= 3) {
+    healthText = "Good (Standard SaaS Target)";
+    healthColor = "text-indigo-500 bg-indigo-500/10 border-indigo-500/20";
+  } else if (ltvToCac >= 1.5) {
+    healthText = "Cautionary (High CAC or Churn)";
+    healthColor = "text-amber-500 bg-amber-500/10 border-amber-500/20";
+  }
+
+  // Generate 12-month projection
+  const generateProjections = () => {
+    const list = [];
+    let currentCust = startingCustomers;
+    const monthlyBudgetForAcquisition = Math.max(2000, opex * 0.3); // Assumed 30% of opex goes to marketing
+    const newCustomersPerMonth = Math.round(monthlyBudgetForAcquisition / cac);
+
+    for (let month = 1; month <= 12; month++) {
+      const churned = Math.round(currentCust * (churn / 100));
+      const netAdd = newCustomersPerMonth - churned;
+      const startCust = currentCust;
+      currentCust = Math.max(0, currentCust + netAdd);
+      const mrr = currentCust * arpu;
+      const arr = mrr * 12;
+      const grossProfit = mrr * grossMarginMultiplier;
+
+      list.push({
+        month,
+        startCust,
+        added: newCustomersPerMonth,
+        churned,
+        endCust: currentCust,
+        mrr,
+        arr,
+        grossProfit
+      });
+    }
+    return list;
   };
 
+  const projections = generateProjections();
+
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (SaasPricingCalculator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500">
+      
+      {/* Title */}
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-950 dark:text-white flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-indigo-500" />
+          SaaS Pricing & Economics Calculator
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Simulate unit economics, customer lifetime value, and MRR growth projections.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* Input Panel */}
+        <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider border-b border-zinc-100 dark:border-zinc-800 pb-2">
+            Economics & Drivers
+          </h3>
+
+          <div className="space-y-4">
+            {/* ARPU */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Avg. Revenue Per User (ARPU)</span>
+                <span className="text-zinc-900 dark:text-white">${arpu}/mo</span>
+              </div>
+              <input 
+                type="range" min="5" max="500" step="5" value={arpu} 
+                onChange={e => setArpu(parseInt(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* CAC */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Customer Acquisition Cost (CAC)</span>
+                <span className="text-zinc-900 dark:text-white">${cac}</span>
+              </div>
+              <input 
+                type="range" min="10" max="2000" step="10" value={cac} 
+                onChange={e => setCac(parseInt(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* Churn */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Monthly Churn Rate (%)</span>
+                <span className="text-zinc-900 dark:text-white">{churn}%</span>
+              </div>
+              <input 
+                type="range" min="0.5" max="25" step="0.5" value={churn} 
+                onChange={e => setChurn(parseFloat(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* OpEx */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Monthly Operating Expense</span>
+                <span className="text-zinc-900 dark:text-white">${opex.toLocaleString()}/mo</span>
+              </div>
+              <input 
+                type="range" min="1000" max="100000" step="1000" value={opex} 
+                onChange={e => setOpex(parseInt(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* COGS % */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>COGS (Hosting/Support/API %)</span>
+                <span className="text-zinc-900 dark:text-white">{cogsPercent}%</span>
+              </div>
+              <input 
+                type="range" min="5" max="60" step="5" value={cogsPercent} 
+                onChange={e => setCogsPercent(parseInt(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* Starting Customers */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                <span>Starting Customers</span>
+                <span className="text-zinc-900 dark:text-white">{startingCustomers}</span>
+              </div>
+              <input 
+                type="range" min="0" max="1000" step="10" value={startingCustomers} 
+                onChange={e => setStartingCustomers(parseInt(e.target.value))} 
+                className="w-full accent-indigo-600"
+              />
+            </div>
+
+            {/* Target MRR */}
+            <div className="space-y-1 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+              <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Target Monthly Recurring Revenue</label>
+              <div className="relative">
+                <input 
+                  type="number" value={targetMrr} 
+                  onChange={e => setTargetMrr(Math.max(100, parseInt(e.target.value) || 0))}
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white font-bold outline-none focus:border-zinc-350 text-sm"
+                />
+                <span className="absolute right-4 top-3.5 text-zinc-400 font-bold text-xs">USD</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Results & Calculations Panel */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          {/* Key Metrics Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            {/* LTV:CAC Ratio */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-5 shadow-md flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">LTV : CAC Ratio</span>
+                <h4 className="text-2xl font-black text-zinc-900 dark:text-white mt-1">
+                  {ltvToCac.toFixed(1)}x
+                </h4>
+              </div>
+              <div className={`mt-3 border px-2 py-1 rounded-md text-[10px] font-bold text-center ${healthColor}`}>
+                {healthText}
+              </div>
+            </div>
+
+            {/* CAC Payback Period */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-5 shadow-md flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">CAC Payback</span>
+                <h4 className="text-2xl font-black text-indigo-500 mt-1">
+                  {paybackPeriod.toFixed(1)} months
+                </h4>
+              </div>
+              <span className="text-[10px] text-zinc-400 mt-3 block">Time to recover initial acquisition cost.</span>
+            </div>
+
+            {/* Break-Even Points */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-5 shadow-md flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">OpEx Break-even</span>
+                <h4 className="text-2xl font-black text-emerald-500 mt-1">
+                  {breakEvenCustomers.toLocaleString()} users
+                </h4>
+              </div>
+              <span className="text-[10px] text-zinc-400 mt-3 block">
+                Required active users for gross profitability.
+              </span>
+            </div>
+
+          </div>
+
+          {/* Core Metrics Breakdown */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800">
+              Economics Analysis
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div className="flex justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/20 rounded-xl">
+                <span className="text-zinc-500">Gross Margin:</span>
+                <span className="font-bold text-zinc-900 dark:text-white">{(grossMarginMultiplier * 100).toFixed(0)}%</span>
+              </div>
+              <div className="flex justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/20 rounded-xl">
+                <span className="text-zinc-500">Customer Lifetime Value (LTV):</span>
+                <span className="font-bold text-zinc-900 dark:text-white">${Math.round(ltv).toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/20 rounded-xl">
+                <span className="text-zinc-500">Target MRR Customers:</span>
+                <span className="font-bold text-zinc-900 dark:text-white">{targetCustomers.toLocaleString()} accounts</span>
+              </div>
+              <div className="flex justify-between p-2.5 bg-zinc-50 dark:bg-zinc-800/20 rounded-xl">
+                <span className="text-zinc-500">Gross Profit per User:</span>
+                <span className="font-bold text-zinc-900 dark:text-white">${(arpu * grossMarginMultiplier).toFixed(2)}/mo</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Growth Simulator Output */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800 flex items-center justify-between">
+              <span>12-Month Projections</span>
+              <span className="text-[10px] text-zinc-400 font-normal">Assumes 30% of OpEx allocated to CAC acquisition</span>
+            </h3>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left text-zinc-500 dark:text-zinc-400">
+                <thead>
+                  <tr className="border-b border-zinc-150 dark:border-zinc-800 text-zinc-400 font-semibold">
+                    <th className="py-2">Month</th>
+                    <th className="py-2">End Users</th>
+                    <th className="py-2 text-rose-500">Churned</th>
+                    <th className="py-2">Monthly MRR</th>
+                    <th className="py-2">Annual ARR</th>
+                    <th className="py-2 text-right">Profit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/50">
+                  {projections.map(proj => (
+                    <tr key={proj.month} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20">
+                      <td className="py-2.5 font-semibold text-zinc-700 dark:text-zinc-300">Month {proj.month}</td>
+                      <td className="py-2.5 font-bold text-zinc-900 dark:text-white">{proj.endCust.toLocaleString()}</td>
+                      <td className="py-2.5 text-rose-400">-{proj.churned}</td>
+                      <td className="py-2.5 font-semibold text-zinc-900 dark:text-zinc-200">${Math.round(proj.mrr).toLocaleString()}</td>
+                      <td className="py-2.5 text-zinc-450">${Math.round(proj.arr).toLocaleString()}</td>
+                      <td className="py-2.5 font-bold text-emerald-500 text-right">${Math.round(proj.grossProfit).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

@@ -1,47 +1,66 @@
 "use client";
 
 import React, { useState } from 'react';
+import { HelpCircle, RefreshCw } from 'lucide-react';
 
 export default function DiceRoller() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [dices, setDices] = useState<number[]>([1, 6]);
+  const [isRolling, setIsRolling] = useState(false);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const rollDices = () => {
+    setIsRolling(true);
+    setTimeout(() => {
+      const rolled = dices.map(() => Math.floor(Math.random() * 6) + 1);
+      setDices(rolled);
+      setIsRolling(false);
+    }, 600); // Animation duration
+  };
+
+  const addDice = () => {
+    if (dices.length < 5) setDices([...dices, 1]);
+  };
+
+  const removeDice = () => {
+    if (dices.length > 1) setDices(dices.slice(0, -1));
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (DiceRoller) was auto-generated and is ready for business logic.
+    <div className="max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-6 animate-in fade-in duration-500">
+      <div className="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-800 pb-3 justify-between">
+        <div className="flex items-center gap-2">
+          <HelpCircle className="w-5 h-5 text-indigo-500" />
+          <h3 className="text-lg font-bold text-zinc-900 dark:text-white">3D CSS Dice Roller</h3>
+        </div>
+        <div className="flex gap-2">
+          <button onClick={removeDice} className="px-2.5 py-1 bg-zinc-800 text-xs text-zinc-300 rounded font-semibold">- Remove</button>
+          <button onClick={addDice} className="px-2.5 py-1 bg-indigo-600 text-xs text-white rounded font-semibold">+ Add Dice</button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+      <div className="flex flex-col items-center justify-center space-y-12 py-10 bg-zinc-50 dark:bg-black/30 rounded-2xl border border-zinc-850">
+        <div className="flex flex-wrap justify-center gap-8 min-h-[120px] items-center">
+          {dices.map((val, idx) => (
+            <div 
+              key={idx}
+              className={`w-16 h-16 bg-white dark:bg-zinc-850 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl shadow-lg flex items-center justify-center text-3xl font-black text-indigo-500 transition-all duration-500 ${
+                isRolling ? 'rotate-180 scale-95 opacity-50 animate-bounce' : ''
+              }`}
+            >
+              {val}
+            </div>
+          ))}
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        <div className="text-center">
+          <p className="text-xs text-zinc-450 font-bold mb-4">Total Sum: {dices.reduce((a, b) => a + b, 0)}</p>
+          <button 
+            onClick={rollDices} 
+            disabled={isRolling}
+            className="bg-indigo-650 hover:bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl text-xs flex items-center gap-2 cursor-pointer shadow-lg disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${isRolling ? 'animate-spin' : ''}`} />
+            Roll Dices
+          </button>
         </div>
       </div>
     </div>

@@ -1,47 +1,105 @@
 "use client";
 
 import React, { useState } from 'react';
+import { ShieldAlert, Copy, Download } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function RobotsTxtGenerator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [sitemap, setSitemap] = useState('https://mysite.com/sitemap.xml');
+  const [disallows, setDisallows] = useState<string[]>(['/admin', '/private', '/tmp']);
+  const [newDisallow, setNewDisallow] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const addDisallow = () => {
+    if (!newDisallow.trim()) return;
+    const clean = newDisallow.trim().startsWith('/') ? newDisallow.trim() : '/' + newDisallow.trim();
+    setDisallows([...disallows, clean]);
+    setNewDisallow('');
+    toast.success('Blocked path added!');
+  };
+
+  const removeDisallow = (idx: number) => {
+    setDisallows(disallows.filter((_, i) => i !== idx));
+  };
+
+  const buildRobotsTxt = () => {
+    let txt = `User-agent: *\n`;
+    disallows.forEach(path => {
+      txt += `Disallow: ${path}\n`;
+    });
+    txt += `Allow: /\n\n`;
+    if (sitemap.trim()) {
+      txt += `Sitemap: ${sitemap.trim()}\n`;
+    }
+    return txt;
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(buildRobotsTxt());
+    toast.success('Copied robots.txt!');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (RobotsTxtGenerator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <ShieldAlert className="w-5 h-5 text-indigo-500" />
+          Robots.txt Generator
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Configure search spider crawler instructions and path allowances to index your pages correctly.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Config panel */}
+        <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase border-b border-zinc-800 pb-2">Directives</h3>
+          
+          <div className="space-y-2">
+            <label className="text-xs text-zinc-400 font-bold uppercase">Sitemap URL</label>
+            <input 
+              type="text" 
+              value={sitemap} 
+              onChange={e => setSitemap(e.target.value)} 
+              className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white text-xs outline-none"
+            />
+          </div>
+
+          <div className="border-t border-zinc-850 pt-3 space-y-3">
+            <span className="text-xs text-zinc-400 font-bold uppercase block">Block Paths (Disallow)</span>
+            <div className="flex gap-2">
+              <input 
+                type="text" 
+                value={newDisallow} 
+                onChange={e => setNewDisallow(e.target.value)}
+                placeholder="/admin-dashboard" 
+                className="flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-900 dark:text-white outline-none"
+              />
+              <button onClick={addDisallow} className="bg-indigo-600 px-3 py-2 rounded-xl text-xs font-bold text-white cursor-pointer">Add</button>
+            </div>
+            
+            <div className="space-y-1.5 max-h-[150px] overflow-y-auto">
+              {disallows.map((path, idx) => (
+                <div key={idx} className="flex justify-between items-center text-[10px] bg-zinc-50 dark:bg-black/10 p-2 rounded-xl border border-zinc-850">
+                  <span className="font-mono text-zinc-300">Disallow: {path}</span>
+                  <button onClick={() => removeDisallow(idx)} className="text-[10px] text-rose-500 hover:underline">Remove</button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Output Panel */}
+        <div className="lg:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col justify-between min-h-[400px]">
+          <div className="space-y-2 flex-1 flex flex-col">
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
+              <span className="text-xs text-zinc-400 font-bold uppercase">Generated Robots.txt</span>
+              <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
+            </div>
+            <textarea
+              value={buildRobotsTxt()}
+              readOnly
+              className="w-full flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-mono h-80 outline-none text-xs resize-none"
+            />
+          </div>
         </div>
       </div>
     </div>

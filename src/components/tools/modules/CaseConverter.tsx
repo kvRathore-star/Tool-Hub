@@ -1,48 +1,58 @@
 "use client";
-
 import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function CaseConverter() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [inputText, setInputText] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard!");
+  };
+
+  const convertCase = (type: string) => {
+    switch (type) {
+      case 'upper': return inputText.toUpperCase();
+      case 'lower': return inputText.toLowerCase();
+      case 'title': return inputText.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      case 'camel': return inputText.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+      case 'snake': return inputText.toLowerCase().replace(/\s+/g, '_');
+      case 'kebab': return inputText.toLowerCase().replace(/\s+/g, '-');
+      case 'alternating': return inputText.split('').map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join('');
+      default: return inputText;
+    }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (CaseConverter) was auto-generated and is ready for business logic.
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
+    <div className="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <textarea
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+        placeholder="Type or paste your text here..."
+        className="w-full h-[300px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 text-lg text-zinc-900 dark:text-white placeholder:text-zinc-400 outline-none resize-none shadow-sm focus:border-blue-500 transition-colors"
+      />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { id: 'upper', name: 'UPPER CASE' },
+          { id: 'lower', name: 'lower case' },
+          { id: 'title', name: 'Title Case' },
+          { id: 'camel', name: 'camelCase' },
+          { id: 'snake', name: 'snake_case' },
+          { id: 'kebab', name: 'kebab-case' },
+          { id: 'alternating', name: 'aLtErNaTiNg cAsE' },
+        ].map(type => (
+          <button
+            key={type.id}
+            onClick={() => {
+              const res = convertCase(type.id);
+              setInputText(res);
+              copyToClipboard(res);
+            }}
+            className="bg-zinc-100 hover:bg-blue-100 dark:bg-zinc-800 dark:hover:bg-blue-900/30 text-zinc-700 dark:text-zinc-300 font-medium py-3 px-4 rounded-xl transition-colors border border-transparent dark:hover:border-blue-500/30 active:scale-95"
           >
-            Process
+            {type.name}
           </button>
-        </div>
-
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
-        </div>
+        ))}
       </div>
     </div>
   );

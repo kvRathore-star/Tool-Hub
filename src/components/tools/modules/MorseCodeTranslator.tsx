@@ -1,47 +1,141 @@
 "use client";
 
 import React, { useState } from 'react';
+import { FileText, Copy, Play, Volume2 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function MorseCodeTranslator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [text, setText] = useState('');
+  const [morse, setMorse] = useState('');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const morseMap: Record<string, string> = {
+    'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.',
+    'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..',
+    'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.',
+    's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
+    'y': '-.--', 'z': '--..', '1': '.----', '2': '..---', '3': '...--',
+    '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+    '9': '----.', '0': '-----', ' ': '/'
+  };
+
+  const reverseMorseMap = Object.entries(morseMap).reduce((acc, [key, val]) => {
+    acc[val] = key;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const translateToMorse = () => {
+    if (!text.trim()) {
+      setMorse('');
+      return;
+    }
+    const clean = text.toLowerCase().trim();
+    const result = clean
+      .split('')
+      .map(char => morseMap[char] || char)
+      .join(' ');
+    setMorse(result);
+  };
+
+  const translateToText = () => {
+    if (!morse.trim()) {
+      setText('');
+      return;
+    }
+    const result = morse
+      .split(' ')
+      .map(code => reverseMorseMap[code] || code)
+      .join('');
+    setText(result.toUpperCase());
+  };
+
+  // Web Audio API dot/dash feedback player
+  const playMorseSound = () => {
+    if (!morse) return;
+    
+    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const dotDuration = 0.08; // dot length in seconds
+    let time = audioCtx.currentTime;
+
+    const chars = morse.split('');
+    chars.forEach(char => {
+      if (char === '.' || char === '-') {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        osc.frequency.setValueAtTime(600, time); // 600Hz frequency beep
+        gainNode.gain.setValueAtTime(0, time);
+        gainNode.gain.linearRampToValueAtTime(0.3, time + 0.005);
+
+        const duration = char === '.' ? dotDuration : dotDuration * 3;
+        gainNode.gain.setValueAtTime(0.3, time + duration - 0.005);
+        gainNode.gain.linearRampToValueAtTime(0, time + duration);
+
+        osc.start(time);
+        osc.stop(time + duration);
+        time += duration + dotDuration;
+      } else if (char === ' ') {
+        time += dotDuration * 2;
+      } else if (char === '/') {
+        time += dotDuration * 4;
+      }
+    });
+    toast.success('Playing audio synthesis...');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (MorseCodeTranslator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Volume2 className="w-5 h-5 text-indigo-500" />
+          Morse Code Translator & Audio Synthesizer
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Translate English text to Morse Code signals and play clean audio dots and dashes offline.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <span className="text-xs text-zinc-400 font-bold uppercase block">English Plaintext</span>
+          <textarea
+            value={text}
+            onChange={e => setText(e.target.value)}
+            placeholder="Type standard text here..."
+            className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-48 outline-none text-xs resize-none"
           />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={translateToMorse} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Translate to Morse →
+            </button>
+            <button onClick={() => { navigator.clipboard.writeText(text); toast.success('Copied text!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Copy Text
+            </button>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-xs text-zinc-400 font-bold uppercase">Morse Code Output</span>
+            {morse && (
+              <button onClick={playMorseSound} className="text-xs text-emerald-400 font-bold flex items-center gap-1 hover:underline cursor-pointer">
+                <Play className="w-4 h-4" /> Play Audio Beeps
+              </button>
+            )}
+          </div>
+          <textarea
+            value={morse}
+            onChange={e => setMorse(e.target.value)}
+            placeholder="Morse code dots and dashes (e.g. .... . .-.. .-.. ---)..."
+            className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-mono h-48 outline-none text-xs resize-none"
           />
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={translateToText} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              ← Translate to Text
+            </button>
+            <button onClick={() => { navigator.clipboard.writeText(morse); toast.success('Copied morse!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              Copy Morse
+            </button>
+          </div>
         </div>
       </div>
     </div>

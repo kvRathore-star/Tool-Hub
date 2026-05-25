@@ -1,47 +1,104 @@
 "use client";
 
 import React, { useState } from 'react';
+import { Copy, RefreshCw, Layers } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function MacAddressGenerator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [qty, setQty] = useState(5);
+  const [prefix, setPrefix] = useState('00:50:56'); // VMware default prefix
+  const [uppercase, setUppercase] = useState(true);
+  const [delimiter, setDelimiter] = useState(':');
+  const [list, setList] = useState<string[]>([]);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const generateMacs = () => {
+    const arr: string[] = [];
+    const hex = '0123456789abcdef';
+
+    for (let q = 0; q < qty; q++) {
+      let mac = prefix.replace(/[^0-9a-fA-F]/g, '').toLowerCase();
+      // Pad out to 12 hex digits
+      while (mac.length < 12) {
+        mac += hex[Math.floor(Math.random() * 16)];
+      }
+
+      // Chunk and join with delimiter
+      const chunks = mac.match(/.{2}/g);
+      if (chunks) {
+        let formatted = chunks.join(delimiter);
+        if (uppercase) formatted = formatted.toUpperCase();
+        arr.push(formatted);
+      }
+    }
+
+    setList(arr);
+    toast.success(`Generated ${qty} MAC Addresses!`);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(list.join('\n'));
+    toast.success('Copied all addresses!');
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (MacAddressGenerator) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <Layers className="w-5 h-5 text-indigo-500" />
+          MAC Address List Generator
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Generate random hardware MAC addresses with custom prefixes, formats and cases client-side.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Controls */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4 text-xs">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase border-b border-zinc-800 pb-2">Formatting</h3>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] text-zinc-400 font-bold">Quantity</label>
+              <select value={qty} onChange={e => setQty(parseInt(e.target.value))} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-2.5 py-2 outline-none">
+                <option value="5">5 Addresses</option>
+                <option value="10">10 Addresses</option>
+                <option value="20">20 Addresses</option>
+              </select>
+            </div>
+            
+            <div className="space-y-1">
+              <label className="text-[10px] text-zinc-400 font-bold">Delimiter</label>
+              <select value={delimiter} onChange={e => setDelimiter(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-2.5 py-2 outline-none">
+                <option value=":">Colon (:)</option>
+                <option value="-">Hyphen (-)</option>
+                <option value="">None</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] text-zinc-400 font-bold">OUI Prefix (e.g. 00:50:56 for VMware)</label>
+            <input type="text" value={prefix} onChange={e => setPrefix(e.target.value)} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none" />
+          </div>
+
+          <div className="flex items-center gap-1.5 pt-2">
+            <input type="checkbox" checked={uppercase} onChange={e => setUppercase(e.target.checked)} className="rounded" />
+            <label className="text-zinc-400 cursor-pointer">Uppercase Hex Letters</label>
+          </div>
+
+          <button onClick={generateMacs} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
+            <RefreshCw className="w-4 h-4" /> Generate Addresses
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Results */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl min-h-[250px] flex flex-col justify-between">
+          <div className="space-y-2 flex-1 flex flex-col">
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
+              <span className="text-xs text-zinc-400 font-bold uppercase">MAC Addresses</span>
+              {list.length > 0 && <button onClick={handleCopy} className="p-1.5 text-zinc-550 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>}
+            </div>
+            <textarea readOnly value={list.join('\n')} placeholder="Addresses will appear here..." className="w-full flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs outline-none h-48 resize-none mt-2" />
+          </div>
         </div>
       </div>
     </div>

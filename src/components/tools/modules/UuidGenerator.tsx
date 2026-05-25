@@ -1,49 +1,196 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4, v1 as uuidv1 } from 'uuid';
+import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
+
+type UuidVersion = 'v4' | 'v1';
 
 export default function UuidGenerator() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [version, setVersion] = useState<UuidVersion>('v4');
+  const [quantity, setQuantity] = useState(10);
+  const [uppercase, setUppercase] = useState(false);
+  const [hyphens, setHyphens] = useState(true);
+  const [uuids, setUuids] = useState<string[]>([]);
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const generateUuids = () => {
+    const list: string[] = [];
+    for (let i = 0; i < quantity; i++) {
+      let id = version === 'v4' ? uuidv4() : uuidv1();
+      
+      if (!hyphens) {
+        id = id.replace(/-/g, '');
+      }
+      if (uppercase) {
+        id = id.toUpperCase();
+      }
+      list.push(id);
+    }
+    setUuids(list);
+    toast.success(`Generated ${quantity} UUIDs!`);
+  };
+
+  // Run automatically on mount
+  useEffect(() => {
+    generateUuids();
+  }, [version, quantity, uppercase, hyphens]);
+
+  const copyAll = async () => {
+    if (uuids.length === 0) return;
+    try {
+      await navigator.clipboard.writeText(uuids.join('\n'));
+      toast.success("All UUIDs copied to clipboard!");
+    } catch {
+      toast.error("Failed to copy UUIDs.");
+    }
+  };
+
+  const copySingle = async (val: string) => {
+    try {
+      await navigator.clipboard.writeText(val);
+      toast.success("Copied UUID!");
+    } catch {
+      toast.error("Failed to copy.");
+    }
+  };
+
+  const downloadList = () => {
+    if (uuids.length === 0) return;
+    const blob = new Blob([uuids.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    downloadOrShare(url, `uuids-${version}.txt`);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (UuidGenerator) was auto-generated and is ready for business logic.
+    <div className="space-y-6 animate-in fade-in duration-500 max-w-5xl mx-auto">
+      {/* Banner */}
+      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-2xl text-blue-400 text-sm space-y-1">
+        <h4 className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
+          🆔 Bulk UUID Generator
+        </h4>
+        <p className="text-zinc-600 dark:text-zinc-400">
+          Generate RFC4122 compliant Universally Unique Identifiers (UUIDs) v4 (cryptographically random) or v1 (timestamp-based) entirely client-side.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
-          </button>
-        </div>
+      {/* Control Panel */}
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-white/5 shadow-sm space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* UUID Type Selector */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">UUID Version</label>
+            <div className="flex bg-white dark:bg-black p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
+              <button
+                onClick={() => setVersion('v4')}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                  version === 'v4' ? 'bg-blue-600 text-white' : 'text-zinc-500'
+                }`}
+              >
+                v4 (Random)
+              </button>
+              <button
+                onClick={() => setVersion('v1')}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
+                  version === 'v1' ? 'bg-blue-600 text-white' : 'text-zinc-500'
+                }`}
+              >
+                v1 (Time)
+              </button>
+            </div>
+          </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+          {/* Quantity Selector */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">
+              Quantity ({quantity})
+            </label>
+            <input
+              type="range"
+              min={1}
+              max={100}
+              value={quantity}
+              onChange={e => setQuantity(Number(e.target.value))}
+              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-600 mt-3"
+            />
+          </div>
+
+          {/* Toggles */}
+          <div className="space-y-2 flex flex-col justify-center gap-1">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-zinc-700 dark:text-zinc-300 font-semibold select-none">
+              <input
+                type="checkbox"
+                checked={uppercase}
+                onChange={e => setUppercase(e.target.checked)}
+                className="rounded border-zinc-300 dark:border-zinc-800 text-blue-600 focus:ring-blue-500 h-4 w-4"
+              />
+              Capitalize (UPPER)
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-zinc-700 dark:text-zinc-300 font-semibold select-none">
+              <input
+                type="checkbox"
+                checked={hyphens}
+                onChange={e => setHyphens(e.target.checked)}
+                className="rounded border-zinc-300 dark:border-zinc-800 text-blue-600 focus:ring-blue-500 h-4 w-4"
+              />
+              Include Hyphens
+            </label>
+          </div>
+
+          {/* Action button */}
+          <div className="flex items-end">
+            <button
+              onClick={generateUuids}
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all active:scale-95 text-sm"
+            >
+              🔄 Regenerate List
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Output Panel */}
+      {uuids.length > 0 && (
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl shadow-xl flex flex-col overflow-hidden">
+          {/* Output Header */}
+          <div className="px-6 py-4 bg-black/20 border-b border-zinc-200 dark:border-white/5 flex justify-between items-center shrink-0">
+            <span className="text-zinc-700 dark:text-zinc-300 text-sm font-bold uppercase tracking-wider">
+              Generated Identifiers
+            </span>
+            <div className="flex gap-2">
+              <button
+                onClick={copyAll}
+                className="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-semibold transition-colors"
+              >
+                📋 Copy All
+              </button>
+              <button
+                onClick={downloadList}
+                className="text-xs bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-lg font-semibold transition-colors"
+              >
+                💾 Save List
+              </button>
+            </div>
+          </div>
+
+          {/* UUID scrollable list */}
+          <div className="p-6 max-h-[450px] overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-850 font-mono text-sm">
+            {uuids.map((id, index) => (
+              <div key={index} className="flex justify-between items-center py-2.5 group">
+                <span className="text-zinc-950 dark:text-zinc-200">{id}</span>
+                <button
+                  onClick={() => copySingle(id)}
+                  className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs text-blue-500 hover:text-blue-400 font-semibold px-2 py-1 rounded bg-blue-500/10 transition-opacity"
+                >
+                  Copy
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

@@ -1,47 +1,186 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { Image as ImageIcon, Download, RefreshCw, Upload } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function PngToSvg() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [svgContent, setSvgContent] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [mode, setMode] = useState<'embedded' | 'silhouette'>('embedded');
 
-  const processData = () => {
-    // Basic placeholder logic
-    setOutput("This tool has been automatically generated and is ready for custom logic.\nInput was: " + input);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      setSvgContent('');
+    }
+  };
+
+  const convertToSvg = () => {
+    if (!imageFile) {
+      toast.error('Please upload an image first');
+      return;
+    }
+
+    setIsProcessing(true);
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+
+      if (mode === 'embedded') {
+        // Mode 1: Premium high fidelity Embedded Base64 Image inside SVG Wrapper
+        const img = new Image();
+        img.src = dataUrl;
+        img.onload = () => {
+          const w = img.width;
+          const h = img.height;
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
+  <image href="${dataUrl}" width="100%" height="100%"/>
+</svg>`;
+          setSvgContent(svg);
+          setIsProcessing(false);
+          toast.success('Embedded SVG vector wrapped!');
+        };
+      } else {
+        // Mode 2: Client-side Silhouette/Threshold Vector tracing
+        const img = new Image();
+        img.src = dataUrl;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            setIsProcessing(false);
+            return;
+          }
+
+          // Render small thumbnail size for faster tracing
+          const scale = Math.min(250 / img.width, 250 / img.height, 1);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+
+          // Simple threshold grouping to build silhouette paths
+          let pathD = '';
+          for (let y = 0; y < canvas.height; y++) {
+            for (let x = 0; x < canvas.width; x++) {
+              const idx = (y * canvas.width + x) * 4;
+              const r = data[idx];
+              const g = data[idx + 1];
+              const b = data[idx + 2];
+              const a = data[idx + 3];
+              const brightness = (r + g + b) / 3;
+
+              // Threshold trace black paths
+              if (brightness < 128 && a > 100) {
+                pathD += `M${x},${y}h1v1h-1z `;
+              }
+            }
+          }
+
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${canvas.width} ${canvas.height}" width="100%" height="100%">
+  <path d="${pathD}" fill="#000000"/>
+</svg>`;
+          setSvgContent(svg);
+          setIsProcessing(false);
+          toast.success('Silhouette Vector traced!');
+        };
+      }
+    };
+
+    reader.readAsDataURL(imageFile);
+  };
+
+  const downloadSvg = () => {
+    if (!svgContent) return;
+    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'traced_vector.svg';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
-      <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-blue-400 text-sm">
-        <strong>UI Ready:</strong> This module (PngToSvg) was auto-generated and is ready for business logic.
+    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
+        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <ImageIcon className="w-5 h-5 text-indigo-500" />
+          PNG to SVG Vector Converter
+        </h2>
+        <p className="text-xs text-zinc-500 mt-1">Convert raster images (PNG/JPG) to scalable vector SVG layouts. Support clean embedded vector scaling.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Input</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white h-32 outline-none focus:border-blue-500"
-            placeholder="Enter input here..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-          <button 
-            onClick={processData}
-            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95"
-          >
-            Process
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider border-b border-zinc-100 dark:border-zinc-800 pb-2">Image Upload</h3>
+          
+          <div className="border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 flex flex-col items-center justify-center bg-zinc-50 dark:bg-black/20 text-center">
+            <Upload className="w-10 h-10 text-zinc-400 mb-2" />
+            {imageFile ? (
+              <div>
+                <p className="text-xs text-zinc-800 dark:text-white font-bold">{imageFile.name}</p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">{(imageFile.size / 1024).toFixed(1)} KB</p>
+              </div>
+            ) : (
+              <div>
+                <p className="text-xs text-zinc-400">Select PNG, JPG, or WebP image</p>
+                <p className="text-[9px] text-zinc-500 mt-1">Conversion works offline in your browser</p>
+              </div>
+            )}
+            <label className="bg-indigo-650 hover:bg-indigo-600 px-4 py-2 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4">
+              Select Image File
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+            </label>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs text-zinc-400 font-bold uppercase">Conversion Method</label>
+            <div className="flex bg-zinc-50 dark:bg-black/30 p-1 rounded-xl gap-1">
+              <button 
+                onClick={() => setMode('embedded')}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${mode === 'embedded' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500'}`}
+              >
+                Embedded Vector Wrapper
+              </button>
+              <button 
+                onClick={() => setMode('silhouette')}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${mode === 'silhouette' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500'}`}
+              >
+                Silhouette Path Trace
+              </button>
+            </div>
+          </div>
+
+          <button onClick={convertToSvg} disabled={isProcessing || !imageFile} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+            {isProcessing ? <RefreshCw className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+            Trace SVG Vector
           </button>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-          <h4 className="text-zinc-900 dark:text-white font-medium">Output</h4>
-          <textarea 
-            className="w-full bg-white dark:bg-black border border-emerald-500/30 rounded-lg px-3 py-2 text-emerald-400 h-32 outline-none"
-            readOnly
-            value={output}
-            placeholder="Output will appear here..."
-          />
+        {/* Vector Display Panel */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col justify-between items-center min-h-[300px]">
+          {svgContent ? (
+            <div className="flex-1 flex flex-col items-center justify-between w-full h-full">
+              <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-850 rounded-xl min-h-[220px]">
+                <div className="max-w-full max-h-full object-contain" dangerouslySetInnerHTML={{ __html: svgContent }} />
+              </div>
+              <button onClick={downloadSvg} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                <Download className="w-4 h-4" /> Download SVG File
+              </button>
+            </div>
+          ) : (
+            <div className="flex-1 flex flex-col items-center justify-center text-zinc-500">
+              <ImageIcon className="w-12 h-12 mb-3 opacity-30 animate-pulse" />
+              <p className="text-xs">Traced SVG preview will appear here</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
