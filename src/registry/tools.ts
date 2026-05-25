@@ -12,6 +12,46 @@ export interface ToolMetadata {
 
 const rawToolsRegistry: ToolMetadata[] = [
   {
+    id: "pdf-flatten-1",
+    name: "Flatten PDF",
+    description: "Make interactive PDF forms, annotations, and layers permanent and uneditable.",
+    category: "PDF Tools",
+    slug: "flatten-pdf",
+    dependencies: "pdf-lib",
+  },
+  {
+    id: "pdf-crop-1",
+    name: "Crop PDF Pages",
+    description: "Remove white margins from your PDF documents instantly.",
+    category: "PDF Tools",
+    slug: "crop-pdf",
+    dependencies: "pdf-lib",
+  },
+  {
+    id: "pdf-org-1",
+    name: "Organize PDF Pages",
+    description: "Drag and drop to reorder PDF pages, or remove them entirely.",
+    category: "PDF Tools",
+    slug: "organize-pdf",
+    dependencies: "pdf-lib",
+  },
+  {
+    id: "pdf-ext-1",
+    name: "Extract PDF Pages",
+    description: "Pull specific pages out of a large PDF to create a smaller document.",
+    category: "PDF Tools",
+    slug: "extract-pages-from-pdf",
+    dependencies: "pdf-lib",
+  },
+  {
+    id: "pdf-heic-1",
+    name: "HEIC to PDF",
+    description: "Convert Apple iOS HEIC/HEIF photos directly into a PDF document.",
+    category: "PDF Tools",
+    slug: "heic-to-pdf",
+    dependencies: "pdf-lib, heic2any",
+  },
+  {
     id: "1",
     name: "TikTok Video Downloader",
     slug: "tiktok-video-downloader",
