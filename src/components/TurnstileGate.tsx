@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, type ReactNode } from "react";
+import { useState, useCallback, useEffect, type ReactNode } from "react";
 import Script from "next/script";
 
 export interface TurnstileGateProps {
@@ -21,18 +21,20 @@ export function TurnstileGate({
   className,
 }: TurnstileGateProps) {
   const [token, setToken] = useState<string | null>(null);
-  // Use a unique ID per instance for multiple Turnstile widgets on a page
-  const [widgetId, _] = useState(() => crypto.randomUUID());
+  const [widgetId] = useState(() => crypto.randomUUID());
 
-  const handleTurnstileCallback = useCallback(
-    (token: string) => {
+  useEffect(() => {
+    const cbName = `turnstileCb_${widgetId.replace(/-/g, "_")}`;
+    (window as any)[cbName] = (token: string) => {
       setToken(token);
       if (onVerify) {
         onVerify(token);
       }
-    },
-    [onVerify]
-  );
+    };
+    return () => {
+      delete (window as any)[cbName];
+    };
+  }, [widgetId, onVerify]);
 
   return (
     <>
@@ -42,20 +44,11 @@ export function TurnstileGate({
       />
       <div
         id={widgetId}
-        className={className}
+        className={`cf-turnstile ${className || ""}`}
         data-sitekey={siteKey}
         data-callback={`turnstileCb_${widgetId.replace(/-/g, "_")}`}
       />
-      {/* Inject the callback into window so Turnstile can call it */}
-      <Script
-        id={`turnstile-cb-${widgetId}`}
-        strategy="lazyOnload"
-      >{`
-        window.turnstileCb_${widgetId.replace(/-/g, "_")} = function(token) {
-          // Dispatch to the nearest TurnstileGate
-          window.dispatchEvent(new CustomEvent('turnstile:${widgetId}', { detail: token }));
-        };
-      `}</Script>
+      {children}
     </>
   );
 }
