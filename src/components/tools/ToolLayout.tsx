@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { GlobalErrorBoundary } from '../GlobalErrorBoundary';
-import { TurnstileLock } from '../TurnstileGate';
 import { ChevronRight, Shield, Zap, Info, Lock } from 'lucide-react';
 import { getToolByCategoryAndSlug } from '@/registry/tools';
 import { useSession } from '@/lib/auth-client';
@@ -95,44 +94,42 @@ export function ToolLayout({ title, description, category, slug, children, faqs 
           {/* The Widget Container */}
           <div className="w-full text-left bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] shadow-[var(--shadow-md)] overflow-hidden relative">
             <GlobalErrorBoundary>
-              <TurnstileLock siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}>
-                <div className={isLocked ? "blur-md pointer-events-none select-none opacity-40 transition-all duration-300" : "transition-all duration-300"}>
-                  {children}
-                </div>
-                {isLocked && (
-                  <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/20 backdrop-blur-sm">
-                    {/* Paywall Card */}
-                    <div className="w-full max-w-md bg-[var(--bg-overlay)] border-2 border-[var(--accent)] rounded-[var(--radius-2xl)] p-8 text-center shadow-2xl relative overflow-hidden">
-                      {/* Ambient background glow */}
-                      <div className="absolute -top-10 -left-10 w-32 h-32 bg-[var(--accent)]/10 blur-2xl rounded-full pointer-events-none" />
+              <div className={isLocked ? "blur-md pointer-events-none select-none opacity-40 transition-all duration-300" : "transition-all duration-300"}>
+                {children}
+              </div>
+              {isLocked && (
+                <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/20 backdrop-blur-sm">
+                  {/* Paywall Card */}
+                  <div className="w-full max-w-md bg-[var(--bg-overlay)] border-2 border-[var(--accent)] rounded-[var(--radius-2xl)] p-8 text-center shadow-2xl relative overflow-hidden">
+                    {/* Ambient background glow */}
+                    <div className="absolute -top-10 -left-10 w-32 h-32 bg-[var(--accent)]/10 blur-2xl rounded-full pointer-events-none" />
+                    
+                    <div className="w-14 h-14 bg-[var(--accent)]/15 rounded-full flex items-center justify-center mx-auto mb-6 border border-[var(--accent)]/30">
+                      <Lock className="w-6 h-6 text-[var(--accent)]" />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-white mb-2">Pro Tool</h3>
+                    <p className="text-sm text-[var(--text-secondary)] mb-6">
+                      Unlock <strong>{title}</strong> and the full suite of 48+ premium Canvas, PDF, AI, and developer tools.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <Link href="/pricing" className="block w-full">
+                        <Button variant="primary" className="w-full py-6 text-base" size="lg">
+                          Upgrade to Pro
+                        </Button>
+                      </Link>
                       
-                      <div className="w-14 h-14 bg-[var(--accent)]/15 rounded-full flex items-center justify-center mx-auto mb-6 border border-[var(--accent)]/30">
-                        <Lock className="w-6 h-6 text-[var(--accent)]" />
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-white mb-2">Pro Tool</h3>
-                      <p className="text-sm text-[var(--text-secondary)] mb-6">
-                        Unlock <strong>{title}</strong> and the full suite of 48+ premium Canvas, PDF, AI, and developer tools.
-                      </p>
-                      
-                      <div className="space-y-4">
-                        <Link href="/pricing" className="block w-full">
-                          <Button variant="primary" className="w-full py-6 text-base" size="lg">
-                            Upgrade to Pro
-                          </Button>
+                      <div className="text-xs text-[var(--text-muted)] pt-2">
+                        Already subscribed?{" "}
+                        <Link href="/dashboard" className="text-[var(--accent)] hover:underline font-semibold">
+                          Log in to unlock
                         </Link>
-                        
-                        <div className="text-xs text-[var(--text-muted)] pt-2">
-                          Already subscribed?{" "}
-                          <Link href="/dashboard" className="text-[var(--accent)] hover:underline font-semibold">
-                            Log in to unlock
-                          </Link>
-                        </div>
                       </div>
                     </div>
                   </div>
-                )}
-              </TurnstileLock>
+                </div>
+              )}
             </GlobalErrorBoundary>
           </div>
 
