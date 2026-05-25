@@ -12,6 +12,46 @@ export interface ToolMetadata {
 
 const rawToolsRegistry: ToolMetadata[] = [
   {
+    id: "gif-comp-1",
+    name: "GIF Compressor",
+    description: "Reduce GIF file sizes instantly without losing too much visual quality.",
+    category: "Video Tools",
+    slug: "gif-compressor",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "img-gif-1",
+    name: "Image to GIF Maker",
+    description: "Create animated GIFs by combining multiple images together.",
+    category: "Video Tools",
+    slug: "image-to-gif",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "mp4-gif-1",
+    name: "MP4 to GIF",
+    description: "Convert MP4 video clips into animated GIFs.",
+    category: "Video Tools",
+    slug: "mp4-to-gif",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "webm-gif-1",
+    name: "WEBM to GIF",
+    description: "Convert WebM video clips into animated GIFs.",
+    category: "Video Tools",
+    slug: "webm-to-gif",
+    dependencies: "ffmpeg",
+  },
+  {
+    id: "mov-gif-1",
+    name: "MOV to GIF",
+    description: "Convert Apple MOV video clips into animated GIFs.",
+    category: "Video Tools",
+    slug: "mov-to-gif",
+    dependencies: "ffmpeg",
+  },
+  {
     id: "vid-mp3-1",
     name: "Video to MP3 Converter",
     description: "Extract high-quality audio tracks directly from your video files.",
