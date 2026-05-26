@@ -12,7 +12,7 @@ const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
   'ai': 'AI Tools',
 };
 
-export function ToolsDirectoryClient({ initialCategory }: { initialCategory?: string }) {
+export function ToolsDirectoryClient() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
@@ -22,11 +22,15 @@ export function ToolsDirectoryClient({ initialCategory }: { initialCategory?: st
   }, []);
 
   useEffect(() => {
-    if (initialCategory) {
-      const match = categories.find(c => c.toLowerCase() === initialCategory.toLowerCase());
-      if (match) setActiveCategory(match);
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get("category");
+      if (categoryParam) {
+        const match = categories.find(c => c.toLowerCase() === categoryParam.toLowerCase());
+        if (match) setActiveCategory(match);
+      }
     }
-  }, [initialCategory, categories]);
+  }, [categories]);
 
   const filteredTools = useMemo(() => {
     return toolsRegistry.filter(tool => {

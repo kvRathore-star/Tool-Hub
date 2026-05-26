@@ -6,11 +6,8 @@ export const metadata = {
   keywords: "free online tools, utilities, image compress, pdf tools, developer tools, local tools, privacy-first tools",
 };
 
-export default async function ToolsPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
-  const searchParams = await props.searchParams;
-  const categoryParam = typeof searchParams.category === 'string' ? searchParams.category : undefined;
-  
+export default function ToolsPage() {
   return (
-    <ToolsDirectoryClient initialCategory={categoryParam} />
+    <ToolsDirectoryClient />
   );
 }
