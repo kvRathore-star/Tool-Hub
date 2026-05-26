@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { ToolsDirectoryClient } from "@/components/tools/ToolsDirectoryClient";
 
 export const metadata = {
@@ -7,10 +6,11 @@ export const metadata = {
   keywords: "free online tools, utilities, image compress, pdf tools, developer tools, local tools, privacy-first tools",
 };
 
-export default function ToolsPage() {
+export default async function ToolsPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const searchParams = await props.searchParams;
+  const categoryParam = typeof searchParams.category === 'string' ? searchParams.category : undefined;
+  
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[var(--bg-base)]" />}>
-      <ToolsDirectoryClient />
-    </Suspense>
+    <ToolsDirectoryClient initialCategory={categoryParam} />
   );
 }
