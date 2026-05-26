@@ -27,7 +27,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://toolhub.pages.dev'),
+  metadataBase: new URL('https://gotoolhub.com'),
   title: {
     default: "ToolHub — Privacy-First Web Tools",
     template: "%s | ToolHub",
@@ -49,6 +49,9 @@ export const metadata: Metadata = {
     title: "ToolHub — Privacy-First Web Tools",
     description:
       "200+ free web tools. Everything processed in your browser.",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 

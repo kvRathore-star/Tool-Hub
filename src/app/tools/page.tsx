@@ -1,7 +1,7 @@
 import { ToolsDirectoryClient } from "@/components/tools/ToolsDirectoryClient";
 
 export const metadata = {
-  title: "Browse 200+ Free Online Tools | ToolHub",
+  title: "Browse 200+ Free Online Tools",
   description: "Explore ToolHub's extensive ecosystem of 200+ offline-first web utilities. Compress images, modify PDFs, format code, and convert files safely in your browser.",
   keywords: "free online tools, utilities, image compress, pdf tools, developer tools, local tools, privacy-first tools",
 };
