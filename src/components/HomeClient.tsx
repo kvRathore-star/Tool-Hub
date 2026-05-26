@@ -40,7 +40,7 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
 
   // Sample tools for grid
   const popularTools = useMemo(() => {
-    const featuredSlugs = ['pdf-compressor', 'image-compressor', 'ai-background-generator', 'qr-code-generator', 'gst-calculator', 'word-counter'];
+    const featuredSlugs = ['pdf-compressor', 'image-compressor', 'background-remover', 'qr-code-generator', 'gst-calculator', 'word-counter'];
     const tools = featuredSlugs.map(slug => toolsRegistry.find(t => t.slug === slug)).filter(Boolean) as typeof toolsRegistry;
     
     // Fallback to top 6 if some are missing
