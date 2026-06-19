@@ -339,6 +339,9 @@ const MODULE_REGISTRY: Record<string, any> = {
   'hindi-regional-font-generator': dynamic(() => import('@/components/tools/modules/RegionalFontGenerator'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'indian-age-calculator': dynamic(() => import('@/components/tools/modules/IndianAgeCalculator'), { ssr: false, loading: () => <SkeletonLoader /> }),
   'cgpa-to-percentage-converter': dynamic(() => import('@/components/tools/modules/CgpaToPercentage'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'pdf-to-html': dynamic(() => import('@/components/tools/modules/PdfToHtml'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'html-to-pdf': dynamic(() => import('@/components/tools/modules/HtmlToPdf'), { ssr: false, loading: () => <SkeletonLoader /> }),
+  'generic-pdf-processor': dynamic(() => import('@/components/tools/modules/GenericPDFProcessor'), { ssr: false, loading: () => <SkeletonLoader /> }),
 };
 
 const ComingSoonTool = dynamic(() => import('@/components/tools/modules/ComingSoonTool'), { ssr: false, loading: () => <SkeletonLoader /> });

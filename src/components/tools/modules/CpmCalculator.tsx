@@ -30,7 +30,7 @@ export default function CpmCalculator() {
 
         <div className="bg-zinc-50 dark:bg-black/30 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 flex flex-col justify-center items-center min-h-[160px]">
           <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase mb-2">Cost Per 1,000 Views (CPM)</span>
-          <p className="text-5xl font-extrabold text-violet-500">${cpm.toFixed(2)}</p>
+          <p className="text-5xl font-extrabold text-violet-500">{cpm.toFixed(2)}</p>
         </div>
       </div>
     </div>

@@ -47,12 +47,12 @@ export default function BmiCalculator() {
         <div className="bg-zinc-50 dark:bg-black/30 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 flex flex-col justify-between">
           <div>
             <h4 className="text-sm font-bold text-zinc-500 dark:text-zinc-400 uppercase mb-4">Body Mass Index</h4>
-            <p className="text-5xl font-extrabold text-zinc-850 dark:text-white">${bmi.toFixed(1)}</p>
+            <p className="text-5xl font-extrabold text-zinc-850 dark:text-white">{bmi.toFixed(1)}</p>
           </div>
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-6">
             <span className="text-xs text-zinc-400">Classification</span>
-            <p className={`text-2xl font-bold ${color}`}>${category}</p>
+            <p className={`text-2xl font-bold ${color}`}>{category}</p>
           </div>
         </div>
       </div>

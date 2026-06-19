@@ -1,389 +1,367 @@
 "use client";
 
-import React, { useState } from "react";
-import { 
-  Code2, 
-  Terminal, 
-  Key, 
-  Copy, 
-  Check, 
-  Play, 
-  ArrowRight,
-  Database,
-  Sparkles
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Globe,
+  Copy,
+  Check,
+  Key,
+  Trash2,
+  Plus,
+  ExternalLink,
+  Terminal,
+  Shield,
+  Zap,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession } from "@/lib/auth-client";
+import Link from "next/link";
 
-const ENDPOINTS = {
-  pdfCompress: {
-    name: "Compress PDF",
-    path: "/v1/pdf/compress",
-    method: "POST",
-    params: { ratio: "0.6" },
-    curl: `curl -X POST "https://api.toolhub.com/v1/pdf/compress" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -F "file=@/path/to/doc.pdf" \\
-  -F "compression_ratio=0.6"`,
-    node: `const axios = require('axios');
-const fs = require('fs');
-const FormData = require('form-data');
-
-const data = new FormData();
-data.append('file', fs.createReadStream('/path/to/doc.pdf'));
-data.append('compression_ratio', '0.6');
-
-axios.post('https://api.toolhub.com/v1/pdf/compress', data, {
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    ...data.getHeaders()
-  }
-}).then(res => console.log(res.data));`,
-    python: `import requests
-
-files = {'file': open('/path/to/doc.pdf', 'rb')}
-data = {'compression_ratio': '0.6'}
-headers = {'Authorization': 'Bearer YOUR_API_KEY'}
-
-response = requests.post(
-    'https://api.toolhub.com/v1/pdf/compress', 
-    headers=headers, 
-    files=files, 
-    data=data
-)
-print(response.json())`,
-    response: `{
-  "status": "success",
-  "task_id": "task_pdf_81829a8f",
-  "original_size_bytes": 1048576,
-  "compressed_size_bytes": 419430,
-  "ratio": "0.40",
-  "download_url": "https://api.toolhub.com/downloads/compressed_81829a8f.pdf"
-}`
-  },
-  removeBg: {
-    name: "Remove Background",
-    path: "/v1/image/remove-bg",
-    method: "POST",
-    params: { format: "png" },
-    curl: `curl -X POST "https://api.toolhub.com/v1/image/remove-bg" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -F "image=@/path/to/photo.jpg" \\
-  -F "output_format=png"`,
-    node: `const axios = require('axios');
-const fs = require('fs');
-const FormData = require('form-data');
-
-const data = new FormData();
-data.append('image', fs.createReadStream('/path/to/photo.jpg'));
-data.append('output_format', 'png');
-
-axios.post('https://api.toolhub.com/v1/image/remove-bg', data, {
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    ...data.getHeaders()
-  }
-}).then(res => console.log(res.data));`,
-    python: `import requests
-
-files = {'image': open('/path/to/photo.jpg', 'rb')}
-data = {'output_format': 'png'}
-headers = {'Authorization': 'Bearer YOUR_API_KEY'}
-
-response = requests.post(
-    'https://api.toolhub.com/v1/image/remove-bg', 
-    headers=headers, 
-    files=files, 
-    data=data
-)
-print(response.json())`,
-    response: `{
-  "status": "success",
-  "task_id": "task_bg_9281ba82",
-  "output_format": "png",
-  "dimensions": { "width": 1920, "height": 1080 },
-  "download_url": "https://api.toolhub.com/downloads/nobg_9281ba82.png"
-}`
-  },
-  humanizeText: {
-    name: "Humanize Text",
-    path: "/v1/text/humanize",
-    method: "POST",
-    params: { complexity: "medium" },
-    curl: `curl -X POST "https://api.toolhub.com/v1/text/humanize" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{"text": "Artificial intelligence content here", "complexity": "medium"}'`,
-    node: `const axios = require('axios');
-
-axios.post('https://api.toolhub.com/v1/text/humanize', {
-  text: "Artificial intelligence content here",
-  complexity: "medium"
-}, {
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  }
-}).then(res => console.log(res.data));`,
-    python: `import requests
-
-headers = {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
+interface ApiKeyInfo {
+  id: string;
+  name: string;
+  plan: string;
+  prefix: string;
+  requestsUsed: number;
+  requestsLimit: number;
+  createdAt: number;
+  revokedAt: number | null;
 }
-json_data = {
-    'text': 'Artificial intelligence content here',
-    'complexity': 'medium'
-}
-
-response = requests.post(
-    'https://api.toolhub.com/v1/text/humanize', 
-    headers=headers, 
-    json=json_data
-)
-print(response.json())`,
-    response: `{
-  "status": "success",
-  "original_length": 37,
-  "humanized_length": 42,
-  "humanized_text": "Here is a simplified and natural rendering of your text.",
-  "ai_score_probability": 0.04
-}`
-  }
-};
-
-type EndpointKey = keyof typeof ENDPOINTS;
 
 export default function ApiDocsPage() {
-  const [apiKey, setApiKey] = useState("th_live_click_generate_below");
-  const [copiedKey, setCopiedKey] = useState(false);
-  const [activeLang, setActiveLang] = useState<"curl" | "node" | "python">("curl");
-  const [activeEndpoint, setActiveEndpoint] = useState<EndpointKey>("pdfCompress");
-  const [sandboxApiKey, setSandboxApiKey] = useState("");
-  const [sandboxLoading, setSandboxLoading] = useState(false);
-  const [sandboxOutput, setSandboxOutput] = useState<string>("// Sandbox terminal idle. Press Run Sandbox Request above.");
-  const [copiedCode, setCopiedCode] = useState(false);
+  const { data: session, isPending: authLoading } = useSession();
+  const userId = (session?.user as any)?.id;
+  const userPlan = (session?.user as any)?.plan || "free";
 
-  const handleGenerateKey = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let keyString = "th_live_";
-    for (let i = 0; i < 32; i++) {
-      keyString += chars.charAt(Math.floor(Math.random() * chars.length));
+  const [keys, setKeys] = useState<ApiKeyInfo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [creating, setCreating] = useState(false);
+  const [newKey, setNewKey] = useState<string | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const [keyName, setKeyName] = useState("");
+
+  const apiBase = process.env.NEXT_PUBLIC_APP_URL || "";
+
+  const fetchKeys = useCallback(async () => {
+    if (!userId) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiBase}/api/v1/keys`, {
+        headers: { "x-user-id": userId },
+      });
+      if (res.ok) {
+        const data: { keys?: ApiKeyInfo[] } = await res.json();
+        setKeys(data.keys || []);
+      }
+    } catch { }
+    setLoading(false);
+  }, [userId, apiBase]);
+
+  useEffect(() => {
+    if (userId) fetchKeys();
+    else setLoading(false);
+  }, [userId, fetchKeys]);
+
+  const handleCreateKey = async () => {
+    if (!userId) return;
+    setCreating(true);
+    setError("");
+    try {
+      const res = await fetch(`${apiBase}/api/v1/keys`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-user-id": userId },
+        body: JSON.stringify({ name: keyName || "My API Key" }),
+      });
+      const data: { key?: string; error?: string } = await res.json();
+      if (res.ok) {
+        setNewKey(data.key || null);
+        setKeyName("");
+        await fetchKeys();
+      } else {
+        setError(data.error || "Failed to create key");
+      }
+    } catch {
+      setError("Network error");
     }
-    setApiKey(keyString);
-    setSandboxApiKey(keyString);
+    setCreating(false);
   };
 
-  const handleCopyKey = () => {
-    navigator.clipboard.writeText(apiKey);
-    setCopiedKey(true);
-    setTimeout(() => setCopiedKey(false), 2000);
+  const handleRevokeKey = async (keyId: string) => {
+    if (!userId) return;
+    try {
+      await fetch(`${apiBase}/api/v1/keys/${keyId}`, {
+        method: "DELETE",
+        headers: { "x-user-id": userId },
+      });
+      setKeys(prev => prev.map(k => k.id === keyId ? { ...k, revokedAt: Date.now() } : k));
+    } catch { }
   };
 
-  const handleCopyCode = (text: string) => {
+  const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
+    setCopied(id);
+    setTimeout(() => setCopied(null), 2000);
   };
 
-  const handleRunSandbox = () => {
-    if (!sandboxApiKey || sandboxApiKey === "th_live_click_generate_below") {
-      setSandboxOutput("❌ Error: Invalid API key. Please generate/insert your th_live_ key.");
-      return;
-    }
-    setSandboxLoading(true);
-    setSandboxOutput(`$ Connecting to API Gateway...\n$ Authorizing credentials: ${sandboxApiKey.substring(0, 12)}...\n$ Resolving endpoint: ${ENDPOINTS[activeEndpoint].path}`);
-    
-    setTimeout(() => {
-      setSandboxOutput((prev) => 
-        prev + `\n$ Sending payload options: ${JSON.stringify(ENDPOINTS[activeEndpoint].params)}\n$ Receiving packet stream...\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n` + ENDPOINTS[activeEndpoint].response
-      );
-      setSandboxLoading(false);
-    }, 1500);
-  };
-
-  const currentCode = ENDPOINTS[activeEndpoint][activeLang].replace("YOUR_API_KEY", apiKey);
+  const maxKeys = userPlan === "pro" ? 10 : 2;
+  const activeKeys = keys.filter(k => !k.revokedAt);
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
-      
-      {/* Background Grids */}
       <div className="absolute inset-0 z-0 flex justify-center pointer-events-none opacity-[0.03]">
         <div className="w-full max-w-[1280px] h-full" style={{ backgroundImage: "linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
       </div>
 
       <div className="relative z-10 max-w-[1280px] mx-auto pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-        
-        {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+
+        {/* Hero */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--accent)] mb-6">
-            <Code2 className="w-3.5 h-3.5" /> ToolHub API Platform
+            <Terminal className="w-3.5 h-3.5" /> Proxy API
           </div>
           <h1 className="font-[family-name:var(--font-serif)] text-5xl sm:text-7xl mb-6 tracking-tight leading-tight">
-            Developer Documentation
+            URL Fetch API
           </h1>
           <p className="text-lg sm:text-xl text-[var(--text-secondary)]">
-            Integrate our high-performance client-side media and PDF transformations into your own local pipelines and servers with simple endpoints.
+            Fetch any URL server-side. Bypass CORS, avoid rate limits, pipe remote content into your application. One endpoint, one header, unlimited possibilities.
           </p>
         </div>
 
-        {/* API Credentials Manager */}
-        <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6 sm:p-10 mb-16 max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-semibold flex items-center gap-2">
-                <Key className="w-5 h-5 text-[var(--accent)]" /> Your Developer Sandbox Credentials
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Generate a simulated token to test sandbox requests right from your browser.
-              </p>
+        {/* Endpoint Reference */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6 sm:p-8">
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <Terminal className="w-4 h-4 text-[var(--accent)]" /> Endpoint
+            </h2>
+            <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-sm">
+              <span className="text-[var(--accent)] font-bold">GET</span>{" "}
+              <span className="text-[var(--text-primary)]">/api/proxy-url?url=</span>
+              <span className="text-[var(--text-muted)]">{"<encoded-remote-url>"}</span>
             </div>
-            <Button onClick={handleGenerateKey} className="shrink-0 gap-2">
-              <Sparkles className="w-4 h-4" /> Generate API Key
-            </Button>
-          </div>
 
-          <div className="mt-6 flex items-center gap-3 bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] px-4 py-3 font-mono text-sm overflow-hidden select-all">
-            <span className="text-[var(--text-muted)] shrink-0">API_KEY:</span>
-            <span className="text-[var(--text-primary)] truncate flex-1">{apiKey}</span>
-            <button 
-              onClick={handleCopyKey} 
-              className="p-1.5 rounded bg-[var(--bg-base)] border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-white transition-colors"
-            >
-              {copiedKey ? <Check className="w-4 h-4 text-[var(--success)]" /> : <Copy className="w-4 h-4" />}
-            </button>
+            <div className="mt-6 space-y-4">
+              <h3 className="text-sm font-semibold">Authentication</h3>
+              <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-sm">
+                <span className="text-[var(--text-muted)]">Authorization: Bearer </span>
+                <span className="text-[var(--accent)]">th_live_</span>
+                <span className="text-[var(--text-muted)]">{"<your-api-key>"}</span>
+              </div>
+              <p className="text-xs text-[var(--text-secondary)]">Get your API key below. Pass it as a Bearer token in the Authorization header.</p>
+            </div>
+
+            <div className="mt-6 space-y-3">
+              <h3 className="text-sm font-semibold">Code Examples</h3>
+
+              <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto">
+                <pre className="leading-relaxed">curl -X GET "https://toolhub.com/api/proxy-url?url=https://example.com/file.pdf" \
+  -H "Authorization: Bearer th_live_your_key_here" \
+  --output file.pdf</pre>
+              </div>
+
+              <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto">
+                <pre className="leading-relaxed">{`const res = await fetch("/api/proxy-url?url=" + encodeURIComponent("https://example.com/file.pdf"), {
+  headers: { "Authorization": "Bearer th_live_your_key_here" }
+});
+const blob = await res.blob();`}</pre>
+              </div>
+
+              <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto">
+                <pre className="leading-relaxed">{`import requests
+url = "https://toolhub.com/api/proxy-url"
+params = {"url": "https://example.com/file.pdf"}
+headers = {"Authorization": "Bearer th_live_your_key_here"}
+response = requests.get(url, params=params, headers=headers)`}</pre>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Interactive Shell & Sandbox */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-24">
-          
-          {/* Endpoint selector and code viewer */}
-          <div className="lg:col-span-7 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6 sm:p-8 flex flex-col min-h-[580px]">
-            
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4 mb-6">
-              <div className="flex gap-2">
-                {Object.keys(ENDPOINTS).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setActiveEndpoint(key as EndpointKey)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                      activeEndpoint === key 
-                      ? "bg-[var(--accent)] text-white" 
-                      : "bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    }`}
-                  >
-                    {ENDPOINTS[key as EndpointKey].name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Language Selector */}
-              <div className="flex bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-lg p-0.5 text-[11px] font-mono">
-                <button onClick={() => setActiveLang("curl")} className={`px-2.5 py-1 rounded transition-colors ${activeLang === "curl" ? "bg-[var(--accent)] text-white" : "text-[var(--text-muted)] hover:text-white"}`}>cURL</button>
-                <button onClick={() => setActiveLang("node")} className={`px-2.5 py-1 rounded transition-colors ${activeLang === "node" ? "bg-[var(--accent)] text-white" : "text-[var(--text-muted)] hover:text-white"}`}>Node.js</button>
-                <button onClick={() => setActiveLang("python")} className={`px-2.5 py-1 rounded transition-colors ${activeLang === "python" ? "bg-[var(--accent)] text-white" : "text-[var(--text-muted)] hover:text-white"}`}>Python</button>
-              </div>
+        {/* Pricing Tiers */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Pricing</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6">
+              <h3 className="font-semibold mb-1">Free</h3>
+              <p className="text-3xl font-bold mb-4">$0</p>
+              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> 50 requests / day</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> 1 API key</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> Standard rate limit</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> Community support</li>
+              </ul>
             </div>
-
-            <div className="flex-1 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-sm border border-emerald-500/20 font-bold">
-                    {ENDPOINTS[activeEndpoint].method}
-                  </span>
-                  <code className="text-sm font-mono text-[var(--text-primary)]">{ENDPOINTS[activeEndpoint].path}</code>
-                </div>
-                <button 
-                  onClick={() => handleCopyCode(currentCode)}
-                  className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-white transition-colors"
-                >
-                  {copiedCode ? <Check className="w-3.5 h-3.5 text-[var(--success)]" /> : <Copy className="w-3.5 h-3.5" />}
-                  Copy Code
-                </button>
+            <div className="bg-[var(--bg-overlay)] border-2 border-[var(--accent)] rounded-[var(--radius-2xl)] p-6 relative">
+              <div className="absolute -top-3 left-4 bg-[var(--accent)] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                Pro
               </div>
-
-              <div className="bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-5 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto whitespace-pre leading-relaxed flex-1">
-                {currentCode}
-              </div>
+              <h3 className="font-semibold mb-1 mt-2">Pro</h3>
+              <p className="text-3xl font-bold mb-4">$14.99<span className="text-sm font-normal text-[var(--text-muted)]">/mo</span></p>
+              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> 10,000 requests / day</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Up to 10 API keys</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Priority rate limit</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Email support</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Included with ToolHub Pro</li>
+              </ul>
+              <Link href="/pricing">
+                <Button variant="primary" className="w-full mt-4">Upgrade to Pro</Button>
+              </Link>
             </div>
-
           </div>
-
-          {/* Simulated API Sandbox Terminal */}
-          <div className="lg:col-span-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6 sm:p-8 flex flex-col min-h-[580px] justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Terminal className="w-5 h-5 text-[var(--accent)]" />
-                <h3 className="text-lg font-semibold">API Sandbox Terminal</h3>
-              </div>
-              <p className="text-xs text-[var(--text-secondary)] mb-6">
-                Input your generated API token below and execute simulated client requests.
-              </p>
-
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-[11px] font-mono uppercase text-[var(--text-muted)] tracking-wider mb-1.5">Sandbox Token</label>
-                  <input
-                    type="password"
-                    value={sandboxApiKey}
-                    onChange={(e) => setSandboxApiKey(e.target.value)}
-                    placeholder="th_live_..."
-                    className="w-full bg-[var(--bg-base)] text-xs border border-[var(--border-subtle)] rounded-[var(--radius-md)] px-3 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] font-mono"
-                  />
-                </div>
-
-                <Button 
-                  onClick={handleRunSandbox} 
-                  disabled={sandboxLoading}
-                  className="w-full gap-2 text-xs py-2 h-auto"
-                >
-                  {sandboxLoading ? (
-                    <>
-                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Executing Pipeline...
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-3.5 h-3.5" /> Run Sandbox Request
-                    </>
-                  )}
-                </Button>
-              </div>
-            </div>
-
-            {/* Console Output Screen */}
-            <div className="flex-1 bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-4 font-mono text-[10px] text-[var(--text-muted)] overflow-y-auto leading-relaxed h-[280px] whitespace-pre-wrap select-all">
-              {sandboxOutput}
-            </div>
-
-          </div>
-
         </div>
 
-        {/* Global Infrastructure Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
-            <div className="w-10 h-10 rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center mb-4">
-              <Database className="w-5 h-5" />
-            </div>
-            <h4 className="font-semibold text-sm mb-1">Global Scale CDN</h4>
-            <p className="text-xs text-[var(--text-secondary)]">Edge network response caching routing pipelines instantly near you.</p>
-          </div>
+        {/* Key Management */}
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Your API Keys</h2>
 
-          <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
-            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
-              <Key className="w-5 h-5" />
+          {authLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-5 h-5 animate-spin text-[var(--text-muted)]" />
             </div>
-            <h4 className="font-semibold text-sm mb-1">Encrypted Payload Gate</h4>
-            <p className="text-xs text-[var(--text-secondary)]">Zero retention of parameters. SSL-secured data processing tunnels.</p>
-          </div>
+          ) : !userId ? (
+            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-8 text-center">
+              <Key className="w-8 h-8 mx-auto mb-3 text-[var(--text-muted)]" />
+              <p className="text-sm text-[var(--text-secondary)] mb-4">Sign in to create and manage API keys.</p>
+              <Button onClick={() => window.location.href = "/sign-in"}>Sign In</Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* Create Key Form */}
+              <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-sm text-[var(--text-secondary)]">
+                      {activeKeys.length} / {maxKeys} active keys
+                    </p>
+                  </div>
+                </div>
 
-          <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
-            <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4">
-              <Sparkles className="w-5 h-5" />
+                {activeKeys.length < maxKeys && (
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="text"
+                      value={keyName}
+                      onChange={(e) => setKeyName(e.target.value)}
+                      placeholder="Key name (optional)"
+                      className="flex-1 bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] px-3 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)]"
+                    />
+                    <Button onClick={handleCreateKey} disabled={creating} className="gap-2 shrink-0">
+                      {creating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                      Create Key
+                    </Button>
+                  </div>
+                )}
+
+                {error && (
+                  <div className="mt-3 flex items-center gap-2 text-xs text-red-400">
+                    <AlertCircle className="w-3.5 h-3.5" /> {error}
+                  </div>
+                )}
+              </div>
+
+              {/* New Key Toast */}
+              {newKey && (
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-[var(--radius-xl)] p-4">
+                  <div className="flex items-start gap-3">
+                    <Shield className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-amber-300 mb-1">Key created — copy it now</p>
+                      <p className="text-xs text-amber-400/70 mb-2">You won't be able to see it again.</p>
+                      <div className="flex items-center gap-2 bg-[var(--bg-overlay)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] px-3 py-2 font-mono text-xs">
+                        <span className="truncate text-[var(--text-primary)]">{newKey}</span>
+                        <button onClick={() => handleCopy(newKey, "new-key")} className="p-1 rounded hover:bg-[var(--bg-base)] text-[var(--text-muted)] hover:text-white shrink-0">
+                          {copied === "new-key" ? <Check className="w-3.5 h-3.5 text-[var(--success)]" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                    </div>
+                    <button onClick={() => setNewKey(null)} className="text-[var(--text-muted)] hover:text-white shrink-0">&times;</button>
+                  </div>
+                </div>
+              )}
+
+              {/* Key List */}
+              {loading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-5 h-5 animate-spin text-[var(--text-muted)]" />
+                </div>
+              ) : keys.length === 0 ? (
+                <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-8 text-center">
+                  <Key className="w-8 h-8 mx-auto mb-3 text-[var(--text-muted)]" />
+                  <p className="text-sm text-[var(--text-secondary)]">No API keys yet. Create one above.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {keys.map((key) => (
+                    <div key={key.id} className={`bg-[var(--bg-elevated)] border ${key.revokedAt ? "border-red-500/20 opacity-60" : "border-[var(--border-subtle)]"} rounded-[var(--radius-xl)] p-4`}>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-medium">{key.name}</span>
+                            {key.revokedAt ? (
+                              <span className="text-[10px] text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded">Revoked</span>
+                            ) : (
+                              <span className="text-[10px] text-[var(--accent)] bg-[var(--accent)]/10 px-1.5 py-0.5 rounded">Active</span>
+                            )}
+                          </div>
+                          <div className="font-mono text-xs text-[var(--text-muted)]">
+                            th_live_{key.prefix}...
+                          </div>
+                          <div className="mt-2 flex items-center gap-4 text-xs text-[var(--text-secondary)]">
+                            <span>{key.requestsUsed} / {key.requestsLimit} requests used</span>
+                            <span>Plan: {key.plan}</span>
+                          </div>
+                          {/* Usage bar */}
+                          <div className="mt-2 w-full h-1.5 bg-[var(--bg-base)] rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all"
+                              style={{
+                                width: `${Math.min(100, (key.requestsUsed / key.requestsLimit) * 100)}%`,
+                                backgroundColor: key.requestsUsed / key.requestsLimit > 0.8 ? "rgb(239 68 68)" : "var(--accent)",
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          {!key.revokedAt && (
+                            <button
+                              onClick={() => handleRevokeKey(key.id)}
+                              className="p-2 rounded-lg border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-colors"
+                              title="Revoke key"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <h4 className="font-semibold text-sm mb-1">Local Sandboxing SDK</h4>
-            <p className="text-xs text-[var(--text-secondary)]">Optionally pack compiler into Docker to run api offline inside local VPS.</p>
+          )}
+        </div>
+
+        {/* Limits & Info */}
+        <div className="max-w-3xl mx-auto mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-5">
+              <Globe className="w-5 h-5 text-[var(--accent)] mb-3" />
+              <h4 className="text-sm font-semibold mb-1">Any URL</h4>
+              <p className="text-xs text-[var(--text-secondary)]">HTTP/HTTPS only. Internal/private IPs are blocked for security.</p>
+            </div>
+            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-5">
+              <Zap className="w-5 h-5 text-[var(--accent)] mb-3" />
+              <h4 className="text-sm font-semibold mb-1">Edge Cached</h4>
+              <p className="text-xs text-[var(--text-secondary)]">Responses are cached at the edge for 5 minutes. Repeated requests are fast.</p>
+            </div>
+            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-5">
+              <Shield className="w-5 h-5 text-[var(--accent)] mb-3" />
+              <h4 className="text-sm font-semibold mb-1">No Logging</h4>
+              <p className="text-xs text-[var(--text-secondary)]">We proxy your request and stream the response. Nothing is stored permanently.</p>
+            </div>
           </div>
         </div>
 

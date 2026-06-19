@@ -80,7 +80,7 @@ export default function RootLayout({
           
           <Suspense fallback={null}>
             <AnalyticsProvider />
-            <DebugSanityRunner />
+            {process.env.NODE_ENV === 'development' && <DebugSanityRunner />}
           </Suspense>
 
           <Toaster 

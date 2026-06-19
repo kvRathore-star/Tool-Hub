@@ -43,7 +43,7 @@ export default function BreakEvenCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-xs text-zinc-400">Contribution Margin</span>
-                <p className="text-lg font-bold text-zinc-850 dark:text-white">${contributionMargin.toFixed(2)}</p>
+                <p className="text-lg font-bold text-zinc-850 dark:text-white">{contributionMargin.toFixed(2)}</p>
               </div>
               <div>
                 <span className="text-xs text-zinc-400">Break-Even Units</span>
@@ -54,7 +54,7 @@ export default function BreakEvenCalculator() {
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-6">
             <span className="text-xs text-zinc-400">Break-Even Sales Volume</span>
-            <p className="text-3xl font-extrabold text-indigo-500">${Math.round(breakEvenSales).toLocaleString()}</p>
+            <p className="text-3xl font-extrabold text-indigo-500">{Math.round(breakEvenSales).toLocaleString()}</p>
           </div>
         </div>
       </div>

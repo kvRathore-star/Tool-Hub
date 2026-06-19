@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ToolHub
+
+Client-side utility toolbox with 260+ tools across image, PDF, video, audio, AI, developer, and Indian utilities. Every file operation runs in your browser — zero server uploads.
+
+- **Stack**: Next.js (client-rendered), TypeScript, Tailwind CSS
+- **Deploy**: Static export to Cloudflare Pages
+- **Auth**: Better Auth with D1 database
+- **Payments**: Stripe + Razorpay
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # static export + sitemap
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Notable Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build + sitemap |
+| `npm run lint` | ESLint check |
+| `npm run typecheck` | TypeScript type check |
+| `npm run wasm:optimize` | Optimize WASM binaries for `ffmpeg.wasm` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment
 
-## Learn More
+Copy `.env.example` to `.env.local` and fill in the required variables. See `.env.example` for documentation of each variable.
 
-To learn more about Next.js, take a look at the following resources:
+## Key Directories
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Path | Purpose |
+|------|---------|
+| `src/components/tools/modules/` | Individual tool implementations (~270 files) |
+| `src/registry/tools.ts` | Central tool registry with metadata |
+| `functions/api/` | Cloudflare Functions (payments, proxy, webhooks) |
+| `scripts/` | Build-time generation (sitemap, registry) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- All tool processing is client-side using `pdf-lib`, `pdfjs-dist`, `jsPDF`, `ffmpeg.wasm`, `sharp` (WASM), and other browser-compatible libraries.
+- Tools are lazy-loaded via Next.js `dynamic()` imports.
+- SEO content is generated per-tool using category-aware templates with structured data (FAQPage, SoftwareApplication schemas).

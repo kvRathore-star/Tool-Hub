@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, FileCode, Play, Sparkles, RefreshCw, FileText, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import DOMPurify from 'dompurify';
 
 const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
   <!-- Background -->
@@ -164,7 +165,7 @@ export default function SvgEditor() {
             {/* Render block */}
             <div 
               className="relative z-10 w-[350px] h-[350px] sm:w-[400px] sm:h-[400px] flex items-center justify-center"
-              dangerouslySetInnerHTML={{ __html: renderedSvg }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(renderedSvg, { USE_PROFILES: { svg: true, svgFilters: true } }) }}
             />
           </div>
         </div>

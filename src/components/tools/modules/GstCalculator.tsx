@@ -60,18 +60,18 @@ export default function GstCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-xs text-zinc-400">Net Amount</span>
-                <p className="text-lg font-bold text-zinc-850 dark:text-zinc-150">₹${originalAmount.toFixed(2)}</p>
+                <p className="text-lg font-bold text-zinc-850 dark:text-zinc-150">₹{originalAmount.toFixed(2)}</p>
               </div>
               <div>
-                <span className="text-xs text-zinc-400">GST Value (${rate}%)</span>
-                <p className="text-lg font-bold text-emerald-500">₹${gstAmount.toFixed(2)}</p>
+                <span className="text-xs text-zinc-400">GST Value ({rate}%)</span>
+                <p className="text-lg font-bold text-emerald-500">₹{gstAmount.toFixed(2)}</p>
               </div>
             </div>
           </div>
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-6">
             <span className="text-xs text-zinc-400">Total Price</span>
-            <p className="text-3xl font-extrabold text-emerald-500">₹${total.toFixed(2)}</p>
+            <p className="text-3xl font-extrabold text-emerald-500">₹{total.toFixed(2)}</p>
           </div>
         </div>
       </div>

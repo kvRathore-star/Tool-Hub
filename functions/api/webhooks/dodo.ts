@@ -75,10 +75,16 @@ export async function onRequestPost(context: any) {
     const webhookId = request.headers.get("webhook-id") || "";
     const signatureHeader = request.headers.get("webhook-signature") || "";
     const timestamp = request.headers.get("webhook-timestamp") || "";
-    const webhookSecret = context.env.DODO_WEBHOOK_SECRET || "mock_dodo_webhook_secret";
+    const webhookSecret = context.env.DODO_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      return new Response(JSON.stringify({ error: "Webhook secret not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
-    // 1. Verify signature if not in mock mode
-    if (webhookId && signatureHeader && !webhookSecret.includes("mock")) {
+    // 1. Verify signature
+    if (webhookId && signatureHeader) {
       const isValid = await verifyDodoSignature(
         webhookId,
         timestamp,
@@ -139,7 +145,7 @@ export async function onRequestPost(context: any) {
 
   } catch (err: any) {
     console.error("Dodo webhook error:", err);
-    return new Response(JSON.stringify({ error: "Internal Server Error", details: err.message }), {
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

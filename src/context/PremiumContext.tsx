@@ -25,8 +25,13 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
   const verifyLicense = async (token: string) => {
     try {
-      // Securely verify signature instead of just decoding
-      const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET || 'toolhub_fallback_secret_v1');
+      // Securely verify signature — no fallback; fail loudly if env var is missing
+      const jwtSecret = process.env.NEXT_PUBLIC_JWT_SECRET;
+      if (!jwtSecret) {
+        console.error("JWT_SECRET is not configured");
+        return false;
+      }
+      const secret = new TextEncoder().encode(jwtSecret);
       const { payload: claims } = await jose.jwtVerify(token, secret);
       
       if (claims && claims.tier === 'pro') {

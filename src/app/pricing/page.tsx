@@ -206,6 +206,10 @@ export default function PricingPage() {
                   <Check className="w-4.5 h-4.5 text-[var(--accent)] shrink-0" />
                   <span>Indian local utility tools enabled</span>
                 </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-4.5 h-4.5 text-[var(--accent)] shrink-0" />
+                  <span>Proxy API access with 10,000 requests/day</span>
+                </li>
               </ul>
             </div>
           </div>

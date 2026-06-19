@@ -1,24 +1,34 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { toPng, toJpeg, toSvg } from 'html-to-image';
 
 export default function HtmlToImage() {
   const [htmlContent, setHtmlContent] = useState('<div style="padding: 20px; background: linear-gradient(45deg, #FF6B6B, #4ECDC4); border-radius: 10px; color: white; font-family: sans-serif; text-align: center;"><h1>Hello World</h1><p>Edit this HTML to generate an image!</p></div>');
   const [format, setFormat] = useState<'png' | 'jpeg' | 'svg'>('png');
-  const previewRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const previewContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe || !iframe.contentDocument) return;
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(htmlContent);
+    iframe.contentDocument.close();
+  }, [htmlContent]);
 
   const convert = async () => {
-    if (!previewRef.current) return;
+    const container = previewContainerRef.current;
+    if (!container) return;
     toast.loading("Rendering Image...", { id: 'html' });
     try {
       let dataUrl = '';
       if (format === 'png') {
-        dataUrl = await toPng(previewRef.current, { cacheBust: true });
+        dataUrl = await toPng(container, { cacheBust: true });
       } else if (format === 'jpeg') {
-        dataUrl = await toJpeg(previewRef.current, { quality: 0.95 });
+        dataUrl = await toJpeg(container, { quality: 0.95 });
       } else if (format === 'svg') {
-        dataUrl = await toSvg(previewRef.current);
+        dataUrl = await toSvg(container);
       }
       
       const a = document.createElement('a');
@@ -65,8 +75,13 @@ export default function HtmlToImage() {
            {/* Preview */}
            <div className="space-y-4">
              <h3 className="font-semibold">Live Preview</h3>
-             <div className="border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl p-4 overflow-auto bg-zinc-50 dark:bg-black/20 flex items-center justify-center min-h-[16rem]">
-               <div ref={previewRef} dangerouslySetInnerHTML={{ __html: htmlContent }} />
+             <div ref={previewContainerRef} className="border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl p-4 overflow-auto bg-zinc-50 dark:bg-black/20 flex items-center justify-center min-h-[16rem]">
+               <iframe
+                 ref={iframeRef}
+                 className="w-full h-full min-h-[14rem]"
+                 sandbox="allow-same-origin"
+                 title="Preview"
+               />
              </div>
            </div>
          </div>

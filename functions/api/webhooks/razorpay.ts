@@ -27,10 +27,16 @@ export async function onRequestPost(context: any) {
   try {
     const rawBody = await request.text();
     const signature = request.headers.get("x-razorpay-signature");
-    const webhookSecret = context.env.RAZORPAY_WEBHOOK_SECRET || "mock_webhook_secret";
+    const webhookSecret = context.env.RAZORPAY_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      return new Response(JSON.stringify({ error: "Webhook secret not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     // 1. Signature Verification
-    if (signature && !webhookSecret.includes("mock")) {
+    if (signature) {
       const computedSig = await computeHmacSha256Hex(rawBody, webhookSecret);
       if (computedSig !== signature) {
         return new Response(JSON.stringify({ error: "Invalid signature verification failed" }), {
@@ -86,7 +92,7 @@ export async function onRequestPost(context: any) {
 
   } catch (err: any) {
     console.error("Razorpay webhook error:", err);
-    return new Response(JSON.stringify({ error: "Internal Server Error", details: err.message }), {
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

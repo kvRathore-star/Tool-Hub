@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { Image as ImageIcon, Download, RefreshCw, Upload } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import DOMPurify from 'dompurify';
 
 export default function PngToSvg() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -169,7 +170,7 @@ export default function PngToSvg() {
           {svgContent ? (
             <div className="flex-1 flex flex-col items-center justify-between w-full h-full">
               <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-850 rounded-xl min-h-[220px]">
-                <div className="max-w-full max-h-full object-contain" dangerouslySetInnerHTML={{ __html: svgContent }} />
+                <div className="max-w-full max-h-full object-contain" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true, svgFilters: true } }) }} />
               </div>
               <button onClick={downloadSvg} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
                 <Download className="w-4 h-4" /> Download SVG File

@@ -8,6 +8,8 @@ export interface ToolMetadata {
   description: string;
   dependencies: string;
   isPro?: boolean;
+  instructions?: { title: string; desc: string }[];
+  faqs?: { question: string; answer: string }[];
 }
 
 const rawToolsRegistry: ToolMetadata[] = [
@@ -2060,6 +2062,30 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: String(Math.floor(Math.random() * 10000) + 1000),
     dependencies: 'None'
   },
+  {
+    name: 'PDF to HTML',
+    slug: 'pdf-to-html',
+    description: 'Convert PDF pages into a clean, responsive HTML5 document.',
+    category: 'PDF',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'PDF.js'
+  },
+  {
+    name: 'HTML to PDF',
+    slug: 'html-to-pdf',
+    description: 'Convert HTML source code into a downloadable PDF document.',
+    category: 'PDF',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'jsPDF'
+  },
+  {
+    name: 'Generic PDF Processor',
+    slug: 'generic-pdf-processor',
+    description: 'Compress, rotate pages, or strip metadata from PDFs in one unified tool.',
+    category: 'PDF',
+    id: String(Math.floor(Math.random() * 10000) + 1000),
+    dependencies: 'pdf-lib'
+  },
 ];
 
 const proSlugs = [
@@ -2075,7 +2101,8 @@ const proSlugs = [
   "ai-thumbnail-maker", "mp3-compressor", "gif-to-mp4", "video-trimmer",
   "video-watermark-adder", "ai-blog-title-generator", "ai-hashtag-generator",
   "prompt-library-generator", "ai-chat-hub", "ai-changelog-generator",
-  "saas-pricing-calculator", "employee-turnover-calculator"
+  "saas-pricing-calculator", "employee-turnover-calculator",
+  "pdf-to-html", "html-to-pdf", "generic-pdf-processor"
 ];
 
 export const toolsRegistry: ToolMetadata[] = rawToolsRegistry.map(tool => ({

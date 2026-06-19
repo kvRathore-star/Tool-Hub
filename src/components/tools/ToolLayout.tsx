@@ -7,7 +7,7 @@ import { ChevronRight, Shield, Zap, Info, Lock } from 'lucide-react';
 import { getToolByCategoryAndSlug } from '@/registry/tools';
 import { useSession } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
-import { ToolPageSEOContent, generateToolFAQs } from './ToolPageSEOContent';
+import { ToolPageSEOContent } from './ToolPageSEOContent';
 
 interface ToolLayoutProps {
   title: string;
@@ -37,7 +37,7 @@ export function ToolLayout({ title, description, category, slug, children, faqs 
   const displayCategory = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   // Use custom FAQs if provided, otherwise auto-generate them
-  const finalFaqs = faqs && faqs.length > 0 ? faqs : (tool ? generateToolFAQs(tool) : []);
+  const finalFaqs = faqs && faqs.length > 0 ? faqs : [];
 
   const faqSchema = finalFaqs && finalFaqs.length > 0 ? {
     "@context": "https://schema.org",

@@ -17,12 +17,26 @@ export async function onRequestPost(context: any) {
       const body = await request.json();
       plan = body.plan || "";
       gateway = body.gateway || "";
-      userId = body.userId || "guest_user";
     } else {
       const formData = await request.formData();
       plan = formData.get("plan")?.toString() || "";
       gateway = formData.get("gateway")?.toString() || "";
-      userId = formData.get("userId")?.toString() || "guest_user";
+    }
+
+    // Derive userId from session token, never from client-provided body
+    try {
+      const authHeader = request.headers.get("Authorization") || "";
+      if (authHeader.startsWith("Bearer ")) {
+        const token = authHeader.slice(7);
+        const { jwtVerify } = await import("jose");
+        const jwtSecret = new TextEncoder().encode(context.env.JWT_SECRET || "insecure-fallback");
+        const { payload } = await jwtVerify(token, jwtSecret);
+        if (payload?.sub) {
+          userId = payload.sub as string;
+        }
+      }
+    } catch {
+      // Fall through with guest_user if token is invalid
     }
 
     // Validation
@@ -40,9 +54,21 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    const RAZORPAY_KEY_ID = context.env.RAZORPAY_KEY_ID || "rzp_test_mockkeyid";
-    const RAZORPAY_KEY_SECRET = context.env.RAZORPAY_KEY_SECRET || "mockkeysecret";
-    const DODO_API_KEY = context.env.DODO_API_KEY || "dodo_test_mockapikey";
+    const RAZORPAY_KEY_ID = context.env.RAZORPAY_KEY_ID;
+    const RAZORPAY_KEY_SECRET = context.env.RAZORPAY_KEY_SECRET;
+    const DODO_API_KEY = context.env.DODO_API_KEY;
+    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
+      return new Response(JSON.stringify({ error: "Payment gateway not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    if (!DODO_API_KEY) {
+      return new Response(JSON.stringify({ error: "Payment gateway not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     // Setup Drizzle if DB binding is available
     let db: any = null;
@@ -61,24 +87,24 @@ export async function onRequestPost(context: any) {
       if (plan === "weekly") amountInPaise = 9900; // ₹99
       if (plan === "yearly") amountInPaise = 299900; // ₹2999
 
-      let orderId = `order_mock_${Date.now()}`;
-      
-      // Attempt real Razorpay order if keys are not mocks
-      if (!RAZORPAY_KEY_ID.includes("mock")) {
-        try {
-          const razorpay = new Razorpay({
-            key_id: RAZORPAY_KEY_ID,
-            key_secret: RAZORPAY_KEY_SECRET,
-          });
-          const order = await razorpay.orders.create({
-            amount: amountInPaise,
-            currency: "INR",
-            receipt: `receipt_order_${Date.now()}`,
-          });
-          orderId = order.id;
-        } catch (error: any) {
-          console.warn("Real Razorpay Order creation failed, falling back to mock:", error.message);
-        }
+      let orderId: string;
+      try {
+        const razorpay = new Razorpay({
+          key_id: RAZORPAY_KEY_ID,
+          key_secret: RAZORPAY_KEY_SECRET,
+        });
+        const order = await razorpay.orders.create({
+          amount: amountInPaise,
+          currency: "INR",
+          receipt: `receipt_order_${Date.now()}`,
+        });
+        orderId = order.id;
+      } catch (error: any) {
+        console.error("Razorpay order creation failed:", error.message);
+        return new Response(JSON.stringify({ error: "Payment gateway error" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
       // Record payment intent in database if available
@@ -128,42 +154,42 @@ export async function onRequestPost(context: any) {
         amount = 149.99;
       }
 
-      let checkoutUrl = `https://test.dodopayments.com/checkout/mock_session_${Date.now()}`;
-      let paymentId = `dodo_mock_${Date.now()}`;
+      let checkoutUrl: string;
+      let paymentId: string;
+      try {
+        const client = new DodoPayments({
+          bearerToken: DODO_API_KEY,
+          environment: "live_mode",
+        });
 
-      if (!DODO_API_KEY.includes("mock")) {
-        try {
-          const client = new DodoPayments({
-            bearerToken: DODO_API_KEY,
-            environment: "test_mode",
-          });
-
-          const paymentInfo = await client.payments.create({
-            billing: {
-              city: "New York",
-              country: "US",
-              state: "NY",
-              street: "100 Broadway",
-              zipcode: "10005",
+        const paymentInfo = await client.payments.create({
+          billing: {
+            city: "New York",
+            country: "US",
+            state: "NY",
+            street: "100 Broadway",
+            zipcode: "10005",
+          },
+          customer: {
+            email: "customer@toolhub.online",
+            name: "ToolHub Subscriber",
+          },
+          product_cart: [
+            {
+              product_id: productId,
+              quantity: 1,
             },
-            customer: {
-              email: "customer@toolhub.online",
-              name: "ToolHub Subscriber",
-            },
-            product_cart: [
-              {
-                product_id: productId,
-                quantity: 1,
-              },
-            ],
-          });
-          
-          paymentId = paymentInfo.payment_id;
-          // In standard DodoPayments API, checkout_url is provided for hosted checkout redirects
-          checkoutUrl = (paymentInfo as any).checkout_url || checkoutUrl;
-        } catch (error: any) {
-          console.warn("Real DodoPayments Session creation failed, falling back to mock:", error.message);
-        }
+          ],
+        });
+        
+        paymentId = paymentInfo.payment_id;
+        checkoutUrl = (paymentInfo as any).checkout_url || `https://checkout.dodopayments.com/${paymentId}`;
+      } catch (error: any) {
+        console.error("DodoPayments session creation failed:", error.message);
+        return new Response(JSON.stringify({ error: "Payment gateway error" }), {
+          status: 502,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
       // Record payment intent in database if available
@@ -204,7 +230,7 @@ export async function onRequestPost(context: any) {
 
   } catch (err: any) {
     console.error("Checkout route internal error:", err);
-    return new Response(JSON.stringify({ error: "Internal Server Error", details: err.message }), {
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
