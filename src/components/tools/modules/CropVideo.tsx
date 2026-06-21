@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { Crop, Upload, Download, Loader2 } from 'lucide-react';
@@ -48,7 +49,7 @@ export default function CropVideo() {
       await ffmpeg.deleteFile(outputName);
     } catch (e) {
       console.error(e);
-      alert('Failed to crop video. Ensure crop dimensions fit within original video bounds.');
+      toast.error("Failed to crop video. Ensure crop dimensions fit within original video bounds.");
     } finally {
       setIsProcessing(false);
     }

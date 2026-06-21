@@ -95,7 +95,7 @@ export default function PincodeFinder() {
           <MapPin className="w-6 h-6 text-indigo-500" />
           India Pincode & Branch Finder
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Search details by pincode or lookup pincodes by Post Office/Branch name across India. Free official postal API integration.
         </p>
       </div>
@@ -110,8 +110,8 @@ export default function PincodeFinder() {
           }}
           className={`flex-1 py-2 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
             searchMode === 'pincode'
-              ? 'bg-indigo-650 text-white shadow-sm'
-              : 'text-zinc-650 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+              ? 'bg-[var(--accent)] text-white shadow-sm'
+              : 'text-[var(--text-secondary)] dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
           Search by Pincode
@@ -124,8 +124,8 @@ export default function PincodeFinder() {
           }}
           className={`flex-1 py-2 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
             searchMode === 'postoffice'
-              ? 'bg-indigo-650 text-white shadow-sm'
-              : 'text-zinc-650 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+              ? 'bg-[var(--accent)] text-white shadow-sm'
+              : 'text-[var(--text-secondary)] dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
           Search by Branch Name
@@ -151,7 +151,7 @@ export default function PincodeFinder() {
                 <button
                   onClick={handleSearch}
                   disabled={loading}
-                  className="bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+                  className="bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
                   Search
@@ -174,7 +174,7 @@ export default function PincodeFinder() {
                 <button
                   onClick={handleSearch}
                   disabled={loading}
-                  className="bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+                  className="bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
                   Search
@@ -189,7 +189,7 @@ export default function PincodeFinder() {
             <AlertCircle className="w-5 h-5 text-rose-500 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-rose-400">Search Error</h4>
-              <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-0.5">{error}</p>
+              <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-0.5">{error}</p>
             </div>
           </div>
         )}
@@ -238,7 +238,7 @@ export default function PincodeFinder() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-bold text-zinc-900 dark:text-zinc-150 text-sm block">
+                      <span className="font-bold text-zinc-900 dark:text-[var(--text-primary)] text-sm block">
                         {office.Name}
                       </span>
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${office.DeliveryStatus === 'Delivery' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`}>
@@ -248,7 +248,7 @@ export default function PincodeFinder() {
                     <span className="text-zinc-500 block">Type: {office.BranchType}</span>
                   </div>
 
-                  <div className="space-y-1 text-zinc-650 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-800 pt-2">
+                  <div className="space-y-1 text-[var(--text-secondary)] dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-800 pt-2">
                     <span className="block">Pincode: <strong className="font-mono text-indigo-400">{office.Pincode}</strong></span>
                     <span className="block">District: {office.District}</span>
                     <span className="block">Circle: {office.Circle}</span>

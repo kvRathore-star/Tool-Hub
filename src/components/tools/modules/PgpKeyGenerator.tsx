@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Key, Download, Copy, RefreshCw } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import * as openpgp from 'openpgp';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function PgpKeyGenerator() {
   const [name, setName] = useState('John Doe');
@@ -49,17 +50,13 @@ export default function PgpKeyGenerator() {
   const handleDownload = (txt: string, filename: string) => {
     const blob = new Blob([txt], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, filename);
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Key className="w-5 h-5 text-indigo-500" />
           PGP Key Pair Generator
         </h2>
@@ -99,7 +96,7 @@ export default function PgpKeyGenerator() {
             {/* Public Key */}
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
               <div className="flex justify-between items-center border-b border-zinc-800 pb-2 mb-2">
-                <span className="text-xs text-zinc-450 font-bold uppercase">Public Key Block</span>
+                <span className="text-xs text-[var(--text-muted)] font-bold uppercase">Public Key Block</span>
                 {publicKey && (
                   <div className="flex gap-2">
                     <button onClick={() => handleCopy(publicKey, 'Public Key')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Copy className="w-3.5 h-3.5" /></button>
@@ -113,7 +110,7 @@ export default function PgpKeyGenerator() {
             {/* Private Key */}
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
               <div className="flex justify-between items-center border-b border-zinc-800 pb-2 mb-2">
-                <span className="text-xs text-zinc-455 font-bold uppercase">Private Key Block</span>
+                <span className="text-xs text-[var(--text-muted)] font-bold uppercase">Private Key Block</span>
                 {privateKey && (
                   <div className="flex gap-2">
                     <button onClick={() => handleCopy(privateKey, 'Private Key')} className="p-1 text-zinc-500 hover:text-white border border-zinc-800 rounded"><Copy className="w-3.5 h-3.5" /></button>

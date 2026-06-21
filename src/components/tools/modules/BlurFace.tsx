@@ -3,15 +3,29 @@ import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import * as blazeface from '@tensorflow-models/blazeface';
 import '@tensorflow/tfjs';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function BlurFace() {
   const [image, setImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [model, setModel] = useState<blazeface.BlazeFaceModel | null>(null);
+  const [modelLoading, setModelLoading] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    blazeface.load().then(setModel).catch(err => console.error("Failed to load blazeface", err));
+    setModelLoading(true);
+    const loadToast = toast.loading("Loading AI face detection model...");
+    blazeface.load().then(m => {
+      setModel(m);
+      setModelLoading(false);
+      toast.dismiss(loadToast);
+      toast.success("Face detection model ready");
+    }).catch(err => {
+      setModelLoading(false);
+      toast.dismiss(loadToast);
+      toast.error("Failed to load face detection model");
+      console.error("Failed to load blazeface", err);
+    });
   }, []);
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,10 +73,7 @@ export default function BlurFace() {
         ctx.filter = 'none';
 
         const outUrl = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        a.href = outUrl;
-        a.download = 'blurred_faces.png';
-        a.click();
+        downloadOrShare(outUrl, 'blurred_faces.png');
         toast.success(`Blurred ${predictions.length} faces!`, { id: 'blur' });
       } catch (err) {
         toast.error("Failed to process image", { id: 'blur' });

@@ -38,7 +38,7 @@ export default function BurnRateCalculator() {
         <div className="bg-zinc-50 dark:bg-black/30 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 flex flex-col justify-between">
           <div className="space-y-4">
             <h4 className="text-sm font-bold text-zinc-500 dark:text-zinc-400 uppercase">Monthly Burn</h4>
-            <p className="text-3xl font-extrabold text-zinc-850 dark:text-white">{Math.round(burn).toLocaleString()}/mo</p>
+            <p className="text-3xl font-extrabold text-[var(--text-secondary)] dark:text-white">{Math.round(burn).toLocaleString()}/mo</p>
           </div>
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-6">

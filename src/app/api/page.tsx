@@ -8,7 +8,6 @@ import {
   Key,
   Trash2,
   Plus,
-  ExternalLink,
   Terminal,
   Shield,
   Zap,
@@ -17,7 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/lib/auth-client";
-import Link from "next/link";
+import type { SessionUser } from "@/types/tool";
 
 interface ApiKeyInfo {
   id: string;
@@ -32,8 +31,9 @@ interface ApiKeyInfo {
 
 export default function ApiDocsPage() {
   const { data: session, isPending: authLoading } = useSession();
-  const userId = (session?.user as any)?.id;
-  const userPlan = (session?.user as any)?.plan || "free";
+  const sessionUser = session?.user as unknown as SessionUser | undefined;
+  const userId = sessionUser?.id;
+  const userPlan = sessionUser?.plan || "free";
 
   const [keys, setKeys] = useState<ApiKeyInfo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -175,40 +175,6 @@ params = {"url": "https://example.com/file.pdf"}
 headers = {"Authorization": "Bearer th_live_your_key_here"}
 response = requests.get(url, params=params, headers=headers)`}</pre>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Pricing Tiers */}
-        <div className="max-w-3xl mx-auto mb-16">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Pricing</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6">
-              <h3 className="font-semibold mb-1">Free</h3>
-              <p className="text-3xl font-bold mb-4">$0</p>
-              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> 50 requests / day</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> 1 API key</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> Standard rate limit</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--success)]" /> Community support</li>
-              </ul>
-            </div>
-            <div className="bg-[var(--bg-overlay)] border-2 border-[var(--accent)] rounded-[var(--radius-2xl)] p-6 relative">
-              <div className="absolute -top-3 left-4 bg-[var(--accent)] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                Pro
-              </div>
-              <h3 className="font-semibold mb-1 mt-2">Pro</h3>
-              <p className="text-3xl font-bold mb-4">$14.99<span className="text-sm font-normal text-[var(--text-muted)]">/mo</span></p>
-              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> 10,000 requests / day</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Up to 10 API keys</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Priority rate limit</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Email support</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[var(--accent)]" /> Included with ToolHub Pro</li>
-              </ul>
-              <Link href="/pricing">
-                <Button variant="primary" className="w-full mt-4">Upgrade to Pro</Button>
-              </Link>
             </div>
           </div>
         </div>

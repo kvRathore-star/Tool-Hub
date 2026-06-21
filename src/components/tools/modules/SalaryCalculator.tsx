@@ -60,7 +60,7 @@ export default function SalaryCalculator() {
               </div>
               <div>
                 <span className="text-xs text-zinc-400">Annual Take-Home</span>
-                <p className="text-lg font-bold text-zinc-850 dark:text-zinc-150">₹${Math.round(netAnnual).toLocaleString('en-IN')}</p>
+                <p className="text-lg font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]">₹${Math.round(netAnnual).toLocaleString('en-IN')}</p>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { PDFDocument } from 'pdf-lib';
 import { FileText, Crop, Download } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function CropPdf() {
   const [file, setFile] = useState<File | null>(null);
@@ -35,12 +36,7 @@ export default function CropPdf() {
       const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = file.name.replace('.pdf', '_cropped.pdf');
-      a.click();
-      
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, file.name.replace('.pdf', '_cropped.pdf'));
       toast.success('PDF Cropped Successfully!', { id: 'crop' });
     } catch (error) {
       console.error(error);

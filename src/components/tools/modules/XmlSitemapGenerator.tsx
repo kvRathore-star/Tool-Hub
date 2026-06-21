@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { FileText, Copy, Download, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface UrlEntry {
   loc: string;
@@ -69,17 +70,13 @@ export default function XmlSitemapGenerator() {
   const handleDownload = () => {
     const blob = new Blob([buildXml()], { type: 'application/xml' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'sitemap.xml';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'sitemap.xml');
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <FileText className="w-5 h-5 text-indigo-500" />
           XML Sitemap Generator
         </h2>
@@ -136,7 +133,7 @@ export default function XmlSitemapGenerator() {
               </div>
             </div>
             
-            <button onClick={addEntry} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
+            <button onClick={addEntry} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
               <Plus className="w-4 h-4" /> Add Path
             </button>
           </div>
@@ -145,12 +142,12 @@ export default function XmlSitemapGenerator() {
             <span className="text-xs text-zinc-400 font-bold uppercase block">Current Paths ({entries.length})</span>
             <div className="space-y-2 max-h-[180px] overflow-y-auto pr-1">
               {entries.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center text-[10px] bg-zinc-50 dark:bg-black/10 p-2 rounded-xl border border-zinc-850">
+                <div key={idx} className="flex justify-between items-center text-[10px] bg-zinc-50 dark:bg-black/10 p-2 rounded-xl border border-[var(--border-subtle)]">
                   <div className="font-mono text-zinc-300">
                     <p className="font-bold text-zinc-100">{item.loc}</p>
                     <p className="text-zinc-500">Freq: {item.changefreq} | Pri: {item.priority}</p>
                   </div>
-                  <button onClick={() => removeEntry(idx)} className="p-1 text-zinc-500 hover:text-rose-500 rounded">
+                  <button onClick={() => removeEntry(idx)} className="p-1 text-zinc-500 hover:text-rose-500 rounded" aria-label="Delete">
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -165,8 +162,8 @@ export default function XmlSitemapGenerator() {
             <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
               <span className="text-xs text-zinc-400 font-bold uppercase">XML Output</span>
               <div className="flex gap-2">
-                <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
-                <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Download className="w-4 h-4" /></button>
+                <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
+                <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Download"><Download className="w-4 h-4" /></button>
               </div>
             </div>
             <textarea

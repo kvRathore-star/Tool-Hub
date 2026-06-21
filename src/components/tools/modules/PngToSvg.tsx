@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { Image as ImageIcon, Download, RefreshCw, Upload } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import DOMPurify from 'dompurify';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function PngToSvg() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -101,17 +102,13 @@ export default function PngToSvg() {
     if (!svgContent) return;
     const blob = new Blob([svgContent], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'traced_vector.svg';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'traced_vector.svg');
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <ImageIcon className="w-5 h-5 text-indigo-500" />
           PNG to SVG Vector Converter
         </h2>
@@ -135,7 +132,7 @@ export default function PngToSvg() {
                 <p className="text-[9px] text-zinc-500 mt-1">Conversion works offline in your browser</p>
               </div>
             )}
-            <label className="bg-indigo-650 hover:bg-indigo-600 px-4 py-2 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4">
+            <label className="bg-[var(--accent)] hover:bg-indigo-600 px-4 py-2 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4">
               Select Image File
               <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
             </label>
@@ -169,7 +166,7 @@ export default function PngToSvg() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col justify-between items-center min-h-[300px]">
           {svgContent ? (
             <div className="flex-1 flex flex-col items-center justify-between w-full h-full">
-              <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-850 rounded-xl min-h-[220px]">
+              <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-[var(--border-subtle)] rounded-xl min-h-[220px]">
                 <div className="max-w-full max-h-full object-contain" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true, svgFilters: true } }) }} />
               </div>
               <button onClick={downloadSvg} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">

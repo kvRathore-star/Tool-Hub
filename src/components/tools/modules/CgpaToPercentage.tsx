@@ -104,7 +104,7 @@ export default function CgpaToPercentage() {
           <Calculator className="w-6 h-6 text-indigo-500" />
           CGPA to Percentage Converter
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Convert 10-point CGPA pointers to equivalent percentage scales officially used by Indian boards and universities (CBSE, MU, VTU, etc.).
         </p>
       </div>
@@ -177,13 +177,14 @@ export default function CgpaToPercentage() {
           <div className="flex gap-4">
             <button
               onClick={calculate}
-              className="flex-1 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
               Convert to Percentage
             </button>
             <button
               onClick={handleReset}
-              className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+              className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+              aria-label="Reset"
             >
               <RefreshCw className="w-5 h-5" />
             </button>
@@ -203,7 +204,7 @@ export default function CgpaToPercentage() {
                 </div>
               </div>
 
-              <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-xl text-xs text-zinc-650 dark:text-zinc-400 space-y-1">
+              <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-xl text-xs text-[var(--text-secondary)] dark:text-zinc-400 space-y-1">
                 <span className="font-bold text-zinc-800 dark:text-zinc-200 block">Calculation Method:</span>
                 <span>{result.description}</span>
               </div>
@@ -222,7 +223,7 @@ export default function CgpaToPercentage() {
             <div className="space-y-1 text-xs">
               <span className="font-bold text-zinc-800 dark:text-zinc-200 block">{currentFormula?.name} Scale</span>
               <span className="font-mono text-indigo-400 block">{currentFormula?.formula}</span>
-              <p className="text-zinc-550 leading-relaxed mt-1">{currentFormula?.desc}</p>
+              <p className="text-[var(--text-secondary)] leading-relaxed mt-1">{currentFormula?.desc}</p>
             </div>
 
             <div className="p-4 bg-white dark:bg-black/35 rounded-xl border border-zinc-200 dark:border-white/5 text-xs text-zinc-500 space-y-2">

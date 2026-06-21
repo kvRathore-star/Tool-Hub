@@ -30,10 +30,13 @@ export default function TextSummarizer() {
     <div className="max-w-5xl mx-auto animate-in fade-in duration-500 space-y-6">
       <AiSettings />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <textarea value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Paste long text to summarize..." className="w-full h-96 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent outline-none" />
+        <textarea value={inputText} onChange={e => setInputText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleGenerate()} placeholder="Paste long text to summarize..." className="w-full h-96 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent outline-none" />
         <textarea value={outputText} readOnly placeholder="Summary will appear here..." className="w-full h-96 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 outline-none" />
       </div>
-      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl">{isProcessing ? 'Summarizing...' : 'Summarize Text'}</button>
+      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl">{isProcessing ? <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+                Summarizing...
+              </> : 'Summarize Text'}</button>
     </div>
   );
 }

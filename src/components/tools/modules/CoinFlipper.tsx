@@ -42,7 +42,7 @@ export default function CoinFlipper() {
           <button 
             onClick={flipCoin} 
             disabled={isFlipping}
-            className="mt-6 bg-indigo-650 hover:bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-lg disabled:opacity-50 animate-in"
+            className="mt-6 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-lg disabled:opacity-50 animate-in"
           >
             <RefreshCw className={`w-4 h-4 ${isFlipping ? 'animate-spin' : ''}`} />
             Flip Coin
@@ -51,14 +51,14 @@ export default function CoinFlipper() {
 
         {/* Flipping stats info */}
         <div className="space-y-4 flex flex-col justify-center">
-          <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-zinc-850 pb-2">Coin Flip Statistics</span>
+          <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-[var(--border-subtle)] pb-2">Coin Flip Statistics</span>
           
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-zinc-850 text-center">
+            <div className="bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-[var(--border-subtle)] text-center">
               <span className="text-[10px] text-zinc-500 block uppercase">Heads Total</span>
               <p className="text-2xl font-black text-amber-500 mt-1">{stats.heads}</p>
             </div>
-            <div className="bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-zinc-850 text-center">
+            <div className="bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-[var(--border-subtle)] text-center">
               <span className="text-[10px] text-zinc-500 block uppercase">Tails Total</span>
               <p className="text-2xl font-black text-indigo-400 mt-1">{stats.tails}</p>
             </div>

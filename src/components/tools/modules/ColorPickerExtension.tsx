@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Eye, Download, Code, Sparkles, HelpCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import JSZip from 'jszip';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ColorPickerExtension() {
   const [activeTab, setActiveTab] = useState<'manifest' | 'popupHtml' | 'popupJs'>('manifest');
@@ -92,7 +93,7 @@ export default function ColorPickerExtension() {
 
   const popupJs = `document.getElementById('dropBtn').addEventListener('click', async () => {
   if (!window.EyeDropper) {
-    alert('Your browser does not support EyeDropper API.');
+    toast.error("Your browser does not support EyeDropper API.");
     return;
   }
   
@@ -131,11 +132,7 @@ export default function ColorPickerExtension() {
 
       const content = await zip.generateAsync({ type: "blob" });
       const url = URL.createObjectURL(content);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `color_picker_extension.zip`;
-      a.click();
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, `color_picker_extension.zip`);
       toast.success('Chrome extension template ZIP generated!');
     } catch (err) {
       toast.error('Failed to create extension package');
@@ -146,7 +143,7 @@ export default function ColorPickerExtension() {
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-500" />
             Color Picker Chrome Extension Builder
           </h2>

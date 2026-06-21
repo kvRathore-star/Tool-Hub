@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "wasm:optimize": "bash scripts/optimize-wasm.sh",
-    "cf:deploy": "npm run build && npx wrangler pages deploy out/",
+    "cf:deploy": "npm run build && npx wrangler pages deploy out/ --project-name=tool-hub",
     "cf:dev": "npx wrangler pages dev out/",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },

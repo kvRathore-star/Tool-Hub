@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Download, RefreshCw, Music, AlertTriangle } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function SoundCloudDownloader() {
   const [url, setUrl] = useState("");
@@ -34,11 +35,7 @@ export default function SoundCloudDownloader() {
           // Generate simulated audio file download
           const blob = new Blob(["MOCK_SOUNDCLOUD_AUDIO_PAYLOAD"], { type: "audio/mp3" });
           const outUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = outUrl;
-          a.download = "soundcloud_track_audio.mp3";
-          a.click();
-          URL.revokeObjectURL(outUrl);
+          downloadOrShare(outUrl, "soundcloud_track_audio.mp3");
           toast.success("SoundCloud track extracted and saved successfully!");
         }, 600);
       }, 500);
@@ -68,7 +65,7 @@ export default function SoundCloudDownloader() {
           <button 
             onClick={startDownloadSim} 
             disabled={isDownloading}
-            className="w-full bg-orange-650 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-colors"
+            className="w-full bg-[var(--warning)] hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-colors"
           >
             {isDownloading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
             {isDownloading ? `Extracting SoundCloud audio (${progress}%)...` : "Extract Audio"}

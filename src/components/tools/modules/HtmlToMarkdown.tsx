@@ -38,7 +38,7 @@ export default function HtmlToMarkdown() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <FileText className="w-5 h-5 text-indigo-500" />
           HTML to Markdown Converter
         </h2>
@@ -64,7 +64,7 @@ export default function HtmlToMarkdown() {
             <div className="flex justify-between items-center">
               <span className="text-xs text-zinc-400 font-bold uppercase">Markdown Output</span>
               {markdown && (
-                <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
+                <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
               )}
             </div>
             <textarea

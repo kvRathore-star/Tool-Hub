@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FileUploader } from '../FileUploader';
 import { Trash2, Download, Sliders, RefreshCw, Eye, Zap, MousePointer } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function BackgroundRemover() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -110,10 +111,7 @@ export default function BackgroundRemover() {
 
   const handleDownload = () => {
     if (!processedUrl) return;
-    const a = document.createElement('a');
-    a.href = processedUrl;
-    a.download = `transparent-${imageFile?.name.replace(/\.[^/.]+$/, "") || 'photo'}.png`;
-    a.click();
+    downloadOrShare(processedUrl, `transparent-${imageFile?.name.replace(/\.[^/.]+$/, "") || 'photo'}.png`);
   };
 
   const reset = () => {
@@ -144,11 +142,11 @@ export default function BackgroundRemover() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{imageFile?.name}</h3>
-          <p className="text-xs text-zinc-555">Click background color inside workspace to erase it</p>
+          <p className="text-xs text-[var(--text-muted)]">Click background color inside workspace to erase it</p>
         </div>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
         >
           Change Photo
         </button>
@@ -164,7 +162,7 @@ export default function BackgroundRemover() {
 
           {/* Tolerance */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Tolerance (Color Range)</span>
               <span className="text-indigo-400 font-bold">{tolerance}</span>
             </div>
@@ -180,7 +178,7 @@ export default function BackgroundRemover() {
 
           {/* Feathering */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Edge Feathering</span>
               <span className="text-indigo-400 font-bold">{feather} px</span>
             </div>
@@ -199,7 +197,7 @@ export default function BackgroundRemover() {
               <span className="text-zinc-500 font-bold uppercase block">Selected Key Color</span>
               <div className="flex items-center gap-2">
                 <div
-                  className="w-8 h-8 rounded-lg border border-zinc-350 dark:border-zinc-700 shadow"
+                  className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] dark:border-zinc-700 shadow"
                   style={{ backgroundColor: `rgb(${targetColor.r}, ${targetColor.g}, ${targetColor.b})` }}
                 />
                 <span className="font-mono text-zinc-700 dark:text-zinc-300">
@@ -212,7 +210,7 @@ export default function BackgroundRemover() {
           <div className="pt-2">
             <button
               onClick={() => setTargetColor(null)}
-              className="w-full py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
             >
               Clear Selected Color
             </button>
@@ -220,7 +218,7 @@ export default function BackgroundRemover() {
         </div>
 
         {/* Workspace */}
-        <div className="lg:col-span-2 bg-zinc-950 border border-zinc-850 rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
+        <div className="lg:col-span-2 bg-zinc-950 border border-[var(--border-subtle)] rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
           <div className="flex-1 flex justify-center items-center relative">
             <canvas
               ref={canvasRef}

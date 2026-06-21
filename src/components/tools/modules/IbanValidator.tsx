@@ -54,7 +54,7 @@ export default function IbanValidator() {
                   <Check className="w-8 h-8" />
                 </div>
                 <h4 className="text-lg font-bold text-emerald-500">Valid IBAN</h4>
-                <p className="text-xs text-zinc-450">The account format and checksum calculations are correct.</p>
+                <p className="text-xs text-[var(--text-muted)]">The account format and checksum calculations are correct.</p>
               </div>
             ) : (
               <div className="text-center space-y-2 animate-in zoom-in-95">
@@ -62,7 +62,7 @@ export default function IbanValidator() {
                   <AlertTriangle className="w-8 h-8" />
                 </div>
                 <h4 className="text-lg font-bold text-rose-500">Invalid IBAN</h4>
-                <p className="text-xs text-zinc-450">Format checksum check failed. Please verify and retype.</p>
+                <p className="text-xs text-[var(--text-muted)]">Format checksum check failed. Please verify and retype.</p>
               </div>
             )
           ) : (

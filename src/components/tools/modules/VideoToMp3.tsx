@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { Music, Upload, Download, Loader2 } from 'lucide-react';
@@ -42,7 +43,7 @@ export default function VideoToMp3() {
       await ffmpeg.deleteFile(outputName);
     } catch (e) {
       console.error(e);
-      alert('Failed to process video. Make sure the file contains an audio track.');
+      toast.error("Failed to process video. Make sure the file contains an audio track.");
     } finally {
       setIsProcessing(false);
     }

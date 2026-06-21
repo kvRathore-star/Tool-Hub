@@ -29,8 +29,11 @@ export default function PlagiarismChecker() {
   return (
     <div className="max-w-5xl mx-auto animate-in fade-in duration-500 space-y-6">
       <AiSettings />
-      <textarea value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Paste text to check for plagiarism..." className="w-full h-48 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent outline-none" />
-      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl">{isProcessing ? 'Checking...' : 'Check Plagiarism'}</button>
+      <textarea value={inputText} onChange={e => setInputText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleGenerate()} placeholder="Paste text to check for plagiarism..." className="w-full h-48 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-transparent outline-none" />
+      <button onClick={handleGenerate} disabled={isProcessing} className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl">{isProcessing ? <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+                Checking...
+              </> : 'Check Plagiarism'}</button>
       {outputText && <div className="p-6 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 whitespace-pre-wrap">{outputText}</div>}
     </div>
   );

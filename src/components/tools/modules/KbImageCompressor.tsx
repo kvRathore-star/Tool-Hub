@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader } from '../FileUploader';
 import imageCompression from 'browser-image-compression';
 import { downloadOrShare } from '@/utils/nativeShare';
@@ -44,7 +45,7 @@ export default function KbImageCompressor() {
       setOutputSize(compressedFile.size);
     } catch (e) {
       console.error(e);
-      alert("Failed to compress image.");
+      toast.error("Failed to compress image.");
     } finally {
       setIsProcessing(false);
     }

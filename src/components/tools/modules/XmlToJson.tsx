@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 // Dynamic import to keep initial bundle size low
 // Next.js handles xml2js nicely, but we wrap it in a try-catch for browser safety
 import { parseStringPromise } from 'xml2js';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function XmlToJson() {
   const [xmlInput, setXmlInput] = useState('');
@@ -55,13 +56,7 @@ export default function XmlToJson() {
     if (!jsonOutput) return;
     const blob = new Blob([jsonOutput], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'converted.json');
   };
 
   return (

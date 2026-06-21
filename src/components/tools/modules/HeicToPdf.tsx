@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { PDFDocument } from 'pdf-lib';
 import heic2any from 'heic2any';
 import { FileText, Download, UploadCloud } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function HeicToPdf() {
   const [file, setFile] = useState<File | null>(null);
@@ -47,12 +48,7 @@ export default function HeicToPdf() {
       const outBlob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(outBlob);
       
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = file.name.replace(/\.(heic|heif)$/i, '.pdf');
-      a.click();
-      
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, file.name.replace(/\.(heic|heif)$/i, '.pdf'));
       toast.success('HEIC Converted to PDF!', { id: 'heic' });
     } catch (error) {
       console.error(error);

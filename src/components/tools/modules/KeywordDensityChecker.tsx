@@ -64,7 +64,7 @@ export default function KeywordDensityChecker() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Search className="w-5 h-5 text-indigo-500" />
           Keyword Density Checker
         </h2>
@@ -101,7 +101,7 @@ export default function KeywordDensityChecker() {
               
               <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
                 {results.map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-xs bg-zinc-50 dark:bg-black/10 p-2.5 rounded-xl border border-zinc-850">
+                  <div key={idx} className="flex justify-between items-center text-xs bg-zinc-50 dark:bg-black/10 p-2.5 rounded-xl border border-[var(--border-subtle)]">
                     <span className="font-bold text-zinc-300 font-mono">#{idx+1} {item.word}</span>
                     <span className="text-zinc-500">Count: {item.count} ({item.density}%)</span>
                   </div>

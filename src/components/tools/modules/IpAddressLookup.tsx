@@ -52,7 +52,7 @@ export default function IpAddressLookup() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Globe className="w-5 h-5 text-indigo-500" />
           IP Address Geo-Lookup & ISP Resolver
         </h2>
@@ -85,19 +85,19 @@ export default function IpAddressLookup() {
             <div className="space-y-4 animate-in zoom-in-95 duration-200 text-xs">
               <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-zinc-800 pb-2">Resolved Geolocation details</span>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                   <span className="text-[10px] text-zinc-500 block uppercase">Resolved IP</span>
                   <p className="font-mono font-bold text-indigo-400 mt-1">{details.ip}</p>
                 </div>
-                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                   <span className="text-[10px] text-zinc-500 block uppercase">ISP Network</span>
                   <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.org}</p>
                 </div>
-                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                   <span className="text-[10px] text-zinc-500 block uppercase">Country & Postal</span>
                   <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.country_name} ({details.postal})</p>
                 </div>
-                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+                <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                   <span className="text-[10px] text-zinc-500 block uppercase">City & State</span>
                   <p className="font-bold text-zinc-900 dark:text-white mt-1">{details.city}, {details.region}</p>
                 </div>

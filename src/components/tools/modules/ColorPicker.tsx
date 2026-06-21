@@ -131,7 +131,7 @@ export default function ColorPicker() {
                 type="color" 
                 value={color} 
                 onChange={e => setColor(e.target.value)} 
-                className="w-full h-14 rounded-xl cursor-pointer border border-zinc-200 dark:border-zinc-850" 
+                className="w-full h-14 rounded-xl cursor-pointer border border-zinc-200 dark:border-[var(--border-subtle)]" 
               />
             </div>
             <div className="space-y-2">
@@ -140,7 +140,7 @@ export default function ColorPicker() {
                 type="color" 
                 value={textColor} 
                 onChange={e => setTextColor(e.target.value)} 
-                className="w-full h-14 rounded-xl cursor-pointer border border-zinc-200 dark:border-zinc-850" 
+                className="w-full h-14 rounded-xl cursor-pointer border border-zinc-200 dark:border-[var(--border-subtle)]" 
               />
             </div>
           </div>
@@ -148,15 +148,15 @@ export default function ColorPicker() {
           {/* Color Values display */}
           <div className="space-y-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
             <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/40 p-3 rounded-xl">
-              <span className="text-xs font-bold text-zinc-550 dark:text-zinc-400 font-mono">HEX: {color.toUpperCase()}</span>
+              <span className="text-xs font-bold text-[var(--text-secondary)] dark:text-zinc-400 font-mono">HEX: {color.toUpperCase()}</span>
               <button onClick={() => copyToClipboard(color.toUpperCase(), 'HEX')} className="text-xs text-indigo-500 font-bold flex items-center gap-1 hover:underline cursor-pointer">Copy</button>
             </div>
             <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/40 p-3 rounded-xl">
-              <span className="text-xs font-bold text-zinc-550 dark:text-zinc-400 font-mono">RGB: rgb({rgb.r}, {rgb.g}, {rgb.b})</span>
+              <span className="text-xs font-bold text-[var(--text-secondary)] dark:text-zinc-400 font-mono">RGB: rgb({rgb.r}, {rgb.g}, {rgb.b})</span>
               <button onClick={() => copyToClipboard(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`, 'RGB')} className="text-xs text-indigo-500 font-bold flex items-center gap-1 hover:underline cursor-pointer">Copy</button>
             </div>
             <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/40 p-3 rounded-xl">
-              <span className="text-xs font-bold text-zinc-550 dark:text-zinc-400 font-mono">HSL: hsl({hsl.h}, {hsl.s}%, {hsl.l}%)</span>
+              <span className="text-xs font-bold text-[var(--text-secondary)] dark:text-zinc-400 font-mono">HSL: hsl({hsl.h}, {hsl.s}%, {hsl.l}%)</span>
               <button onClick={() => copyToClipboard(`hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`, 'HSL')} className="text-xs text-indigo-500 font-bold flex items-center gap-1 hover:underline cursor-pointer">Copy</button>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function ColorPicker() {
           
           {/* Contrast Ratio Box */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl">
-            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800 mb-4">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800 mb-4">
               Contrast Preview & WCAG 2.1
             </h3>
 
@@ -215,7 +215,7 @@ export default function ColorPicker() {
 
           {/* Harmony Palettes */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
-            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800">
               Harmonious Palettes
             </h3>
 

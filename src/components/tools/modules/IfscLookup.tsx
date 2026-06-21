@@ -101,7 +101,7 @@ export default function IfscLookup() {
           <Building className="w-6 h-6 text-indigo-500" />
           IFSC Bank Branch Lookup
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Look up Indian Financial System Code (IFSC) branch details, address, MICR, contact information, and bank features instantly.
         </p>
       </div>
@@ -123,7 +123,7 @@ export default function IfscLookup() {
             <button
               onClick={handleLookup}
               disabled={loading}
-              className="bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+              className="bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
               Lookup
@@ -136,7 +136,7 @@ export default function IfscLookup() {
             <AlertCircle className="w-5 h-5 text-rose-500 mt-0.5 shrink-0" />
             <div>
               <h4 className="font-bold text-rose-400">Lookup Error</h4>
-              <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-0.5">{error}</p>
+              <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-0.5">{error}</p>
             </div>
           </div>
         )}
@@ -148,7 +148,7 @@ export default function IfscLookup() {
                 <HelpCircle className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-amber-400">Offline Fallback Match</h4>
-                  <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-0.5">
+                  <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-0.5">
                     We identified this bank code locally, but detailed branch information requires an active internet connection.
                   </p>
                 </div>
@@ -158,12 +158,12 @@ export default function IfscLookup() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 space-y-1">
                 <span className="text-xs text-zinc-500 font-bold uppercase block">Bank Name</span>
-                <span className="text-lg font-bold text-zinc-900 dark:text-zinc-150 block">{data.BANK}</span>
+                <span className="text-lg font-bold text-zinc-900 dark:text-[var(--text-primary)] block">{data.BANK}</span>
               </div>
 
               <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 space-y-1">
                 <span className="text-xs text-zinc-500 font-bold uppercase block">Branch Name</span>
-                <span className="text-lg font-bold text-zinc-900 dark:text-zinc-150 block">{data.BRANCH}</span>
+                <span className="text-lg font-bold text-zinc-900 dark:text-[var(--text-primary)] block">{data.BRANCH}</span>
               </div>
 
               <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 space-y-1">
@@ -222,7 +222,7 @@ export default function IfscLookup() {
             )}
 
             {data.CONTACT && data.CONTACT !== 'N/A' && (
-              <div className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
+              <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] dark:text-zinc-400">
                 <Phone className="w-4 h-4 text-indigo-500" />
                 <span>Contact Number: <strong>{data.CONTACT}</strong></span>
               </div>

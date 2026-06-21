@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import JSZip from 'jszip';
 import { FileArchive, Download } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ArchiveConverter() {
   const [file, setFile] = useState<File | null>(null);
@@ -39,12 +40,7 @@ export default function ArchiveConverter() {
       const blob = await newZip.generateAsync({ type: 'blob', compression: "STORE" });
       
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = file.name.replace(/\.[^/.]+$/, `_converted.${format === 'rar' ? 'zip' : format}`);
-      a.click();
-      
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, file.name.replace(/\.[^/.]+$/, `_converted.${format === 'rar' ? 'zip' : format}`));
       toast.success(`Converted to ${format.toUpperCase()} successfully!`, { id: 'archive' });
     } catch (error) {
       console.error(error);

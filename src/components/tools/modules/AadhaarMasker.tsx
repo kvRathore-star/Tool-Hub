@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader } from '../FileUploader';
 import * as pdfjsLib from 'pdfjs-dist';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 // Configure PDF.js worker for client-side parsing
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.mjs`;
@@ -40,7 +42,7 @@ export default function AadhaarMasker() {
       }
     } catch (e) {
       console.error(e);
-      alert("Failed to parse file.");
+      toast.error("Failed to parse file.");
     } finally {
       setIsProcessing(false);
     }
@@ -121,10 +123,7 @@ export default function AadhaarMasker() {
   const downloadMaskedImage = () => {
     if (!canvasRef.current) return;
     const dataUrl = canvasRef.current.toDataURL('image/jpeg', 0.95);
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'masked_aadhaar.jpg';
-    link.click();
+    downloadOrShare(dataUrl, 'masked_aadhaar.jpg');
   };
 
   if (isProcessing) {

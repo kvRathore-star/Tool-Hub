@@ -6,6 +6,7 @@ import 'cropperjs/dist/cropper.css';
 import { FileUploader } from '../FileUploader';
 import { Crop, RotateCw, RefreshCcw, Download, FlipHorizontal, FlipVertical, Trash2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function CropImage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -31,12 +32,8 @@ export default function CropImage() {
     croppedCanvas.toBlob((blob: Blob | null) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `cropped-${imageFile?.name || 'photo.png'}`;
-      a.click();
+      downloadOrShare(url, `cropped-${imageFile?.name || 'photo.png'}`);
       toast.success("Cropped image downloaded!");
-      URL.revokeObjectURL(url);
     }, 'image/png');
   };
 
@@ -93,12 +90,12 @@ export default function CropImage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{imageFile?.name}</h3>
-          <p className="text-xs text-zinc-550">Upload scan or custom photo to crop</p>
+          <p className="text-xs text-[var(--text-secondary)]">Upload scan or custom photo to crop</p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={handleStartOver}
-            className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+            className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
           >
             <Trash2 className="w-4 h-4" />
             Start Over
@@ -108,7 +105,7 @@ export default function CropImage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Editor workspace */}
-        <div className="lg:col-span-3 bg-zinc-950 border border-zinc-850 rounded-2xl overflow-hidden relative min-h-[400px] flex items-center justify-center p-4">
+        <div className="lg:col-span-3 bg-zinc-950 border border-[var(--border-subtle)] rounded-2xl overflow-hidden relative min-h-[400px] flex items-center justify-center p-4">
           <Cropper
             src={imageSrc}
             style={{ height: 400, width: "100%" }}
@@ -141,8 +138,8 @@ export default function CropImage() {
                   onClick={() => changeAspectRatio(ratio.value)}
                   className={`py-2 px-3 rounded-lg font-bold border transition-all cursor-pointer ${
                     aspectRatio === ratio.value
-                      ? 'bg-indigo-650 border-indigo-600 text-white'
-                      : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-650'
+                      ? 'bg-[var(--accent)] border-indigo-600 text-white'
+                      : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-[var(--border-subtle)]'
                   }`}
                 >
                   {ratio.label}
@@ -156,28 +153,28 @@ export default function CropImage() {
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => handleRotate(-90)}
-                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-650 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-[var(--border-subtle)] font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <RefreshCcw className="w-3.5 h-3.5" />
                 Rotate -90°
               </button>
               <button
                 onClick={() => handleRotate(90)}
-                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-650 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-[var(--border-subtle)] font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <RotateCw className="w-3.5 h-3.5" />
                 Rotate +90°
               </button>
               <button
                 onClick={() => handleFlip('h')}
-                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-650 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-[var(--border-subtle)] font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <FlipHorizontal className="w-3.5 h-3.5" />
                 Flip Horiz
               </button>
               <button
                 onClick={() => handleFlip('v')}
-                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-650 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-[var(--border-subtle)] font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <FlipVertical className="w-3.5 h-3.5" />
                 Flip Vert
@@ -188,13 +185,13 @@ export default function CropImage() {
           <div className="flex flex-col gap-2 pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <button
               onClick={handleReset}
-              className="w-full py-2.5 bg-zinc-105 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-all cursor-pointer"
+              className="w-full py-2.5 bg-[var(--bg-overlay)] dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-all cursor-pointer"
             >
               Reset Crop Guides
             </button>
             <button
               onClick={handleCrop}
-              className="w-full py-3.5 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+              className="w-full py-3.5 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
             >
               <Download className="w-4 h-4" />
               Crop & Download

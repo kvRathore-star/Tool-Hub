@@ -3,23 +3,33 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { toolsRegistry } from "@/registry/tools";
-import { Search, ChevronRight, Image as ImageIcon, FileText, Type, Mic, Video, Cpu, ArrowLeftRight } from "lucide-react";
+import type { ToolMetadata } from "@/registry/tools";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getCategoryTheme } from "@/lib/categoryTheme";
 
 const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
   'indian-utilities': 'India 🇮🇳',
   'e-commerce': 'E-Commerce',
   'ai': 'AI Tools',
+  'transcription': 'Transcription',
+  'branding': 'Branding',
+  'productivity': 'Productivity',
+  'marketing': 'Marketing',
 };
 
-export function ToolsDirectoryClient() {
+const ITEMS_PER_PAGE = 30;
+
+export function ToolsDirectoryClient({ initialTools }: { initialTools?: ToolMetadata[] }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(toolsRegistry.map(t => t.category).filter(Boolean)));
+    const source = initialTools ?? toolsRegistry;
+    const cats = Array.from(new Set(source.map(t => t.category).filter(Boolean)));
     return ["All", ...cats.sort()];
-  }, []);
+  }, [initialTools]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,12 +43,22 @@ export function ToolsDirectoryClient() {
   }, [categories]);
 
   const filteredTools = useMemo(() => {
-    return toolsRegistry.filter(tool => {
+    return (initialTools ?? toolsRegistry).filter(tool => {
       const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             tool.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = activeCategory === "All" || tool.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
+  }, [searchQuery, activeCategory, initialTools]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredTools.length / ITEMS_PER_PAGE));
+  const paginatedTools = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredTools.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredTools, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
   }, [searchQuery, activeCategory]);
 
   return (
@@ -50,7 +70,7 @@ export function ToolsDirectoryClient() {
             Ecosystem Directory
           </h1>
           <p className="text-[var(--text-secondary)] text-lg max-w-2xl">
-            Explore 200+ offline-first utilities. Everything runs locally in your browser.
+            Explore {(initialTools ?? toolsRegistry).length}+ offline-first utilities. Everything runs locally in your browser.
           </p>
           
           <div className="mt-8 relative max-w-2xl">
@@ -110,27 +130,11 @@ export function ToolsDirectoryClient() {
               </Button>
             </div>
           ) : (
+            <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredTools.map((tool) => {
-                const isImage = tool.category.includes('Image');
-                const isPdf = tool.category.includes('PDF');
-                const isText = tool.category.includes('Text');
-                const isAudio = tool.category.includes('Audio');
-                const isVideo = tool.category.includes('Video');
-                const isAI = tool.category.includes('AI');
-                const isIndia = tool.category.includes('India');
-                
-                let gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-orange-500/5';
-                let iconColor = 'text-[var(--text-muted)]';
-                let bgTint = 'bg-[var(--bg-overlay)]';
-                
-                if (isImage) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-purple-500/5'; iconColor = 'text-purple-500'; bgTint = 'bg-purple-500/10'; }
-                else if (isPdf) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-amber-500/5'; iconColor = 'text-amber-500'; bgTint = 'bg-amber-500/10'; }
-                else if (isText) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-teal-500/5'; iconColor = 'text-teal-500'; bgTint = 'bg-teal-500/10'; }
-                else if (isAudio) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-pink-500/5'; iconColor = 'text-pink-500'; bgTint = 'bg-pink-500/10'; }
-                else if (isVideo) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-blue-500/5'; iconColor = 'text-blue-500'; bgTint = 'bg-blue-500/10'; }
-                else if (isAI) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-indigo-500/5'; iconColor = 'text-indigo-500'; bgTint = 'bg-indigo-500/10'; }
-                else if (isIndia) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-[#FF6B35]/5'; iconColor = 'text-[#FF6B35]'; bgTint = 'bg-[#FF6B35]/10'; }
+              {paginatedTools.map((tool) => {
+                const theme = getCategoryTheme(tool.category);
+                const Icon = theme.icon;
 
                 return (
                   <Link 
@@ -138,16 +142,10 @@ export function ToolsDirectoryClient() {
                     href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
                     className="group block h-full"
                   >
-                    <div className={`h-full p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-all duration-300 shadow-sm hover:shadow-[var(--shadow-md)] hover:border-[var(--border-default)] hover:-translate-y-1 ${gradientHover}`}>
+                    <div className={`h-full p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-all duration-300 shadow-sm hover:shadow-[var(--shadow-md)] hover:border-[var(--border-default)] hover:-translate-y-1 ${theme.gradientHover}`}>
                       <div className="flex items-start justify-between mb-4">
-                        <div className={`w-8 h-8 rounded-full ${bgTint} flex items-center justify-center`}>
-                          {isImage ? <ImageIcon className={`w-4 h-4 ${iconColor}`} /> :
-                           isPdf ? <FileText className={`w-4 h-4 ${iconColor}`} /> :
-                           isText ? <Type className={`w-4 h-4 ${iconColor}`} /> :
-                           isAudio ? <Mic className={`w-4 h-4 ${iconColor}`} /> :
-                           isVideo ? <Video className={`w-4 h-4 ${iconColor}`} /> :
-                           isAI ? <Cpu className={`w-4 h-4 ${iconColor}`} /> :
-                           <ArrowLeftRight className={`w-4 h-4 ${iconColor}`} />}
+                        <div className={`w-8 h-8 rounded-full ${theme.bgTint} flex items-center justify-center`}>
+                          <Icon className={`w-4 h-4 ${theme.iconColor}`} />
                         </div>
                         <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] border border-[var(--border-subtle)] px-2 py-0.5 rounded">
                           {tool.category}
@@ -161,14 +159,38 @@ export function ToolsDirectoryClient() {
                         {tool.description}
                       </p>
                       <div className="h-1.5 w-full bg-[var(--bg-overlay)] rounded-full overflow-hidden">
-                        <div className={`h-full ${bgTint.replace('/10', '')} opacity-50`} style={{ width: `${Math.floor(Math.random() * 60) + 20}%` }} />
+                        <div className={`h-full ${theme.bgTint.replace('/10', '')} opacity-50`} style={{ width: `${Math.floor(Math.random() * 60) + 20}%` }} />
                       </div>
                     </div>
                   </Link>
                 );
               })}
             </div>
-          )}
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
+                </button>
+                <span className="text-sm text-[var(--text-secondary)]">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </>)}
         </main>
       </div>
     </div>

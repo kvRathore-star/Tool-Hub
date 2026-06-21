@@ -142,14 +142,14 @@ export default function HtmlToPdf() {
           <textarea
             value={htmlInput}
             onChange={(e) => setHtmlInput(e.target.value)}
-            className="w-full h-80 bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-zinc-250 font-mono text-xs leading-relaxed outline-none focus:border-indigo-500 resize-none"
+            className="w-full h-80 bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-[var(--text-secondary)] font-mono text-xs leading-relaxed outline-none focus:border-indigo-500 resize-none"
             placeholder="Enter HTML here..."
           />
 
           <button
             onClick={convertToPdf}
             disabled={isProcessing}
-            className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
+            className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
           >
             {isProcessing ? (
               <>
@@ -184,7 +184,7 @@ export default function HtmlToPdf() {
               </button>
             </div>
           ) : (
-            <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-dashed border-zinc-205 dark:border-zinc-800 p-6 rounded-2xl flex flex-col items-center justify-center h-full min-h-[250px] text-zinc-400 text-center">
+            <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-dashed border-[var(--border-subtle)] dark:border-zinc-800 p-6 rounded-2xl flex flex-col items-center justify-center h-full min-h-[250px] text-zinc-400 text-center">
               <FileText className="w-12 h-12 mb-4 opacity-30" />
               <p className="text-sm font-medium">Generated PDF will appear here</p>
             </div>

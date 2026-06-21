@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useAiProvider } from '@/hooks/useAiProvider';
 import AiSettings from '../AiSettings';
 import { Clipboard, Download, Sparkles, GitBranch, ChevronDown, ChevronRight } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface MindMapNode {
   name: string;
@@ -91,11 +92,7 @@ export default function AiMindMapGenerator() {
   const handleDownload = () => {
     const blob = new Blob([rawText], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `mindmap_${new Date().toISOString().slice(0,10)}.txt`;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `mindmap_${new Date().toISOString().slice(0,10)}.txt`);
   };
 
   // Recursive renderer component for tree nodes
@@ -157,7 +154,7 @@ export default function AiMindMapGenerator() {
               <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Central Concept or Topic</label>
               <textarea
                 value={topic}
-                onChange={e => setTopic(e.target.value)}
+                onChange={e => setTopic(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleGenerate()}
                 placeholder="e.g. Remote work team productivity, launching a web agency..."
                 className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-44 outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm resize-none"
               />
@@ -205,14 +202,14 @@ export default function AiMindMapGenerator() {
                 <button 
                   onClick={handleCopy} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Copy Structured Outline"
+                  title="Copy Structured Outline" aria-label="Copy"
                 >
                   <Clipboard className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={handleDownload} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Download File"
+                  title="Download File" aria-label="Download"
                 >
                   <Download className="w-4 h-4" />
                 </button>

@@ -146,12 +146,13 @@ export default function TextToSpeechTts() {
            )}
            
            {(isPlaying || isPaused) && (
-             <button 
-               onClick={handleStop}
-               className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg shadow transition-all active:scale-95 flex items-center justify-center"
-             >
-               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" /></svg>
-             </button>
+<button 
+                onClick={handleStop}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg shadow transition-all active:scale-95 flex items-center justify-center"
+                aria-label="Stop"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" /></svg>
+              </button>
            )}
         </div>
       </div>

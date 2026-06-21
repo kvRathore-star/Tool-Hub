@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { Images, Upload, Download, Loader2 } from 'lucide-react';
@@ -55,7 +56,7 @@ export default function ImageToGif() {
       await ffmpeg.deleteFile(outputName);
     } catch (e) {
       console.error(e);
-      alert('Failed to generate GIF.');
+      toast.error("Failed to generate GIF.");
     } finally {
       setIsProcessing(false);
     }

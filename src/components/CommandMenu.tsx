@@ -66,24 +66,24 @@ export function CommandMenu() {
       {/* Search Button for display */}
       <button
         onClick={() => setOpen(true)}
-        className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-400 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-lg transition-colors cursor-pointer w-48 justify-between"
+        className="hidden md:flex items-center gap-2 px-3 py-1.5 text-[13px] text-[var(--text-muted)] bg-[var(--bg-overlay)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-secondary)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] transition-all duration-200 cursor-pointer w-48 hover:w-64 focus:w-64 justify-between"
       >
         <span className="flex items-center gap-1.5">
           <Search className="w-3.5 h-3.5" />
           <span>Search tools...</span>
         </span>
-        <kbd className="font-mono text-[10px] bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-300 dark:border-zinc-700">
+        <kbd className="font-mono text-[10px] bg-[var(--bg-elevated)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)] text-[var(--text-muted)]">
           ⌘K
         </kbd>
       </button>
 
       {/* Cmdk Dialog Overlay */}
       <div 
-        className="fixed inset-0 z-[100] bg-zinc-950/40 dark:bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[15vh] p-4"
+        className="fixed inset-0 z-[100] bg-[var(--bg-base)]/60 backdrop-blur-sm flex items-start justify-center pt-[15vh] p-4"
         onClick={() => setOpen(false)}
       >
         <div 
-          className="w-full max-w-[600px] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] shadow-[var(--shadow-lg)] overflow-hidden flex flex-col max-h-[60vh] mt-[10vh]"
+          className="w-[calc(100%-2rem)] max-w-[600px] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] shadow-[var(--shadow-lg)] overflow-hidden flex flex-col max-h-[60vh] mt-[10vh]"
           onClick={(e) => e.stopPropagation()}
         >
           <Command className="flex flex-col h-full">

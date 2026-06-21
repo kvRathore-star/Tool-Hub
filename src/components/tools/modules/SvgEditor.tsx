@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Download, FileCode, Play, Sparkles, RefreshCw, FileText, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import DOMPurify from 'dompurify';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
   <!-- Background -->
@@ -66,11 +67,7 @@ export default function SvgEditor() {
     const blob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = "vector_design.svg";
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, "vector_design.svg");
     toast.success("Vector SVG downloaded!");
   };
 
@@ -85,7 +82,7 @@ export default function SvgEditor() {
       
       {/* Title */}
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <FileCode className="w-5 h-5 text-indigo-500" />
           Offline SVG Editor
         </h2>
@@ -97,7 +94,7 @@ export default function SvgEditor() {
         {/* Editor Code Panel */}
         <div className="lg:col-span-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col justify-between h-[600px]">
           <div className="space-y-4 flex-1 flex flex-col">
-            <div className="flex justify-between items-center border-b border-zinc-150 dark:border-zinc-800 pb-2">
+            <div className="flex justify-between items-center border-b border-[var(--border-subtle)] dark:border-zinc-800 pb-2">
                <h3 className="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
                  <FileCode className="w-4 h-4" />
                  SVG Source Code
@@ -115,7 +112,7 @@ export default function SvgEditor() {
             <textarea
               value={svgCode}
               onChange={e => setSvgCode(e.target.value)}
-              className="w-full bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-zinc-250 font-mono text-xs leading-relaxed outline-none focus:border-indigo-500 resize-none flex-1 overflow-y-auto"
+              className="w-full bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-[var(--text-secondary)] font-mono text-xs leading-relaxed outline-none focus:border-indigo-500 resize-none flex-1 overflow-y-auto"
               placeholder="Write SVG code here..."
             />
           </div>
@@ -123,21 +120,21 @@ export default function SvgEditor() {
           <div className="grid grid-cols-3 gap-3 mt-4">
             <button 
               onClick={clearAll}
-              className="py-3 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-750 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
+              className="py-3 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-[var(--bg-elevated)] border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
             >
               <Trash2 className="w-3.5 h-3.5" />
               Reset
             </button>
             <button 
               onClick={handleRun}
-              className="py-3 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-700 dark:hover:bg-zinc-650 text-white font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
+              className="py-3 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-700 dark:hover:bg-[var(--bg-elevated)] text-white font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
             >
               <Play className="w-3.5 h-3.5" />
               Render Live
             </button>
             <button 
               onClick={downloadSvgFile}
-              className="py-3 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
+              className="py-3 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold rounded-xl text-xs transition-all active:scale-[0.98] cursor-pointer flex justify-center items-center gap-1"
             >
               <Download className="w-3.5 h-3.5" />
               Export SVG
@@ -146,12 +143,12 @@ export default function SvgEditor() {
         </div>
 
         {/* Live Vector View Panel */}
-        <div className="lg:col-span-6 flex flex-col bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-zinc-850 p-5 rounded-2xl h-[600px]">
+        <div className="lg:col-span-6 flex flex-col bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-[var(--border-subtle)] p-5 rounded-2xl h-[600px]">
           <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-4">
              <span className="text-xs font-bold text-zinc-400">VECTOR RENDER CANVAS (AUTO ASPECT)</span>
           </div>
 
-          <div className="flex-1 flex items-center justify-center p-4 bg-white dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-800 rounded-xl relative overflow-hidden shadow-2xl">
+          <div className="flex-1 flex items-center justify-center p-4 bg-white dark:bg-zinc-950 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl relative overflow-hidden shadow-2xl">
             {/* Checkerboard Grid pattern for transparent preview backing */}
             <div 
               className="absolute inset-0 opacity-10"

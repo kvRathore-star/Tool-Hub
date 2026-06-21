@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef } from 'react';
+import { toast } from "react-hot-toast";
 import { Layers, Upload, Download, Settings2, Loader2 } from 'lucide-react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -87,7 +88,7 @@ export default function BatchImageEditor() {
       
     } catch (e) {
       console.error(e);
-      alert('Failed to process images.');
+      toast.error("Failed to process images.");
     } finally {
       setIsProcessing(false);
     }

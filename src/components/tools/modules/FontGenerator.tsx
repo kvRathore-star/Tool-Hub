@@ -43,7 +43,7 @@ export default function FontGenerator() {
           <Code className="w-6 h-6 text-indigo-500" />
           Google Font Previewer & Code Generator
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Type custom text, preview typography styles using Google Fonts, and copy ready-to-use CSS declarations for web integration.
         </p>
       </div>
@@ -62,7 +62,7 @@ export default function FontGenerator() {
           </div>
 
           <div className="space-y-3">
-            <span className="text-xs font-bold text-zinc-550 block uppercase tracking-wider">Select Font family</span>
+            <span className="text-xs font-bold text-[var(--text-secondary)] block uppercase tracking-wider">Select Font family</span>
             <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-1">
               {FONTS_LIST.map((font) => (
                 <button
@@ -71,7 +71,7 @@ export default function FontGenerator() {
                   className={`w-full text-left p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                     selectedFont.name === font.name
                       ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400'
-                      : 'bg-zinc-50 dark:bg-black/35 border-zinc-200 dark:border-zinc-800 text-zinc-650 dark:text-zinc-400 hover:border-zinc-350 dark:hover:border-zinc-750'
+                      : 'bg-zinc-50 dark:bg-black/35 border-zinc-200 dark:border-zinc-800 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-[var(--border-subtle)] dark:hover:border-[var(--border-subtle)]'
                   }`}
                 >
                   {font.name}
@@ -97,7 +97,7 @@ export default function FontGenerator() {
           {/* CSS output panel */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-2">
-              <span className="text-xs font-bold text-zinc-550 uppercase">CSS Integration Code</span>
+              <span className="text-xs font-bold text-[var(--text-secondary)] uppercase">CSS Integration Code</span>
               <button
                 onClick={handleCopyCSS}
                 className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer"
@@ -107,7 +107,7 @@ export default function FontGenerator() {
               </button>
             </div>
 
-            <pre className="p-4 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-white/5 rounded-xl text-xs font-mono text-zinc-800 dark:text-zinc-350 overflow-x-auto">
+            <pre className="p-4 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-white/5 rounded-xl text-xs font-mono text-zinc-800 dark:text-[var(--text-muted)] overflow-x-auto">
               {`/* 1. Add this import to your CSS file */\n${selectedFont.importUrl}\n\n/* 2. Apply to your elements */\n.custom-text {\n  ${selectedFont.css}\n}`}
             </pre>
 

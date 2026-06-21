@@ -49,7 +49,7 @@ export default function BrailleTranslator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <FileText className="w-5 h-5 text-indigo-500" />
           English to Braille Translator
         </h2>
@@ -61,12 +61,12 @@ export default function BrailleTranslator() {
           <span className="text-xs text-zinc-400 font-bold uppercase block">English Plaintext</span>
           <textarea
             value={text}
-            onChange={e => setText(e.target.value)}
+            onChange={e => setText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && translateToBraille()}
             placeholder="Type standard text here..."
             className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-48 outline-none text-xs resize-none"
           />
           <div className="grid grid-cols-2 gap-4">
-            <button onClick={translateToBraille} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+            <button onClick={translateToBraille} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
               Translate to Braille →
             </button>
             <button onClick={() => { navigator.clipboard.writeText(text); toast.success('Copied text!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
@@ -84,7 +84,7 @@ export default function BrailleTranslator() {
             className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-indigo-400 font-serif h-48 outline-none text-lg resize-none"
           />
           <div className="grid grid-cols-2 gap-4">
-            <button onClick={translateToText} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+            <button onClick={translateToText} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
               ← Translate to Text
             </button>
             <button onClick={() => { navigator.clipboard.writeText(braille); toast.success('Copied Braille!'); }} className="border border-zinc-800 hover:bg-zinc-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">

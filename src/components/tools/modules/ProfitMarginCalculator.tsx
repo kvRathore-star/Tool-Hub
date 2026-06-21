@@ -35,7 +35,7 @@ export default function ProfitMarginCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-xs text-zinc-400">Gross Profit</span>
-                <p className="text-xl font-bold text-zinc-850 dark:text-white">$${profit.toFixed(2)}</p>
+                <p className="text-xl font-bold text-[var(--text-secondary)] dark:text-white">$${profit.toFixed(2)}</p>
               </div>
               <div>
                 <span className="text-xs text-zinc-400">Markup Percentage</span>

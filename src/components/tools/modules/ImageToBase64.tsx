@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { FileUploader } from '../FileUploader';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ImageToBase64() {
   const [file, setFile] = useState<File | null>(null);
@@ -35,11 +36,7 @@ export default function ImageToBase64() {
     if (!text) return;
     const blob = new Blob([text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `base64_${file?.name || 'image'}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `base64_${file?.name || 'image'}.txt`);
   };
 
   const clearAll = () => {

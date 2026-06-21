@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ImageResizer() {
   const [image, setImage] = useState<string | null>(null);
@@ -35,10 +36,7 @@ export default function ImageResizer() {
       const ctx = canvas.getContext('2d')!;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = 'resized.png';
-      a.click();
+      downloadOrShare(canvas.toDataURL('image/png'), 'resized.png');
       toast.success('Downloaded!');
     };
   };
@@ -54,7 +52,7 @@ export default function ImageResizer() {
          </div>
 
          {image && (
-           <div className="grid grid-cols-2 gap-4">
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                  <label className="block text-sm font-bold text-left mb-2 text-zinc-600">Width (px)</label>
                  <input type="number" value={width} onChange={e => setWidth(e.target.value)} className="w-full bg-zinc-50 dark:bg-black border-2 border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 outline-none" />

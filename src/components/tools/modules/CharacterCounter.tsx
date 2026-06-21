@@ -74,7 +74,7 @@ export default function CharacterCounter() {
           <FileText className="w-6 h-6 text-indigo-500" />
           Advanced Character & Word Analyzer
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Detailed text metrics (letters, sentences, paragraphs, read time) and real-time word density tracker.
         </p>
       </div>
@@ -108,7 +108,7 @@ export default function CharacterCounter() {
             {text && (
               <button
                 onClick={handleClear}
-                className="absolute top-4 right-4 bg-zinc-100 hover:bg-zinc-250 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-650 dark:text-zinc-350 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                className="absolute top-4 right-4 bg-zinc-100 hover:bg-[var(--bg-surface)] dark:bg-zinc-800 dark:hover:bg-zinc-700 text-[var(--text-secondary)] dark:text-[var(--text-muted)] text-xs font-bold px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
               >
                 Clear Text
               </button>
@@ -143,11 +143,11 @@ export default function CharacterCounter() {
             <div className="grid grid-cols-2 gap-3 text-center text-xs">
               <div className="p-3 bg-white dark:bg-black/35 rounded-xl border border-zinc-200 dark:border-white/5">
                 <span className="text-zinc-500 block">Read Time</span>
-                <span className="text-sm font-bold text-zinc-900 dark:text-zinc-250 block mt-1">{readingTimeSeconds} seconds</span>
+                <span className="text-sm font-bold text-zinc-900 dark:text-[var(--text-secondary)] block mt-1">{readingTimeSeconds} seconds</span>
               </div>
               <div className="p-3 bg-white dark:bg-black/35 rounded-xl border border-zinc-200 dark:border-white/5">
                 <span className="text-zinc-500 block">Speaking Time</span>
-                <span className="text-sm font-bold text-zinc-900 dark:text-zinc-250 block mt-1">{speakingTimeSeconds} seconds</span>
+                <span className="text-sm font-bold text-zinc-900 dark:text-[var(--text-secondary)] block mt-1">{speakingTimeSeconds} seconds</span>
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function CharacterCounter() {
                   const pct = ((count / wordCount) * 100).toFixed(1);
                   return (
                     <div key={word} className="space-y-1 text-xs">
-                      <div className="flex justify-between text-zinc-700 dark:text-zinc-350">
+                      <div className="flex justify-between text-zinc-700 dark:text-[var(--text-muted)]">
                         <span className="font-mono font-medium">{word}</span>
                         <span className="font-bold">{count}x ({pct}%)</span>
                       </div>
@@ -179,7 +179,7 @@ export default function CharacterCounter() {
                 })}
               </div>
             ) : (
-              <div className="text-center py-6 text-xs text-zinc-550 flex items-center justify-center gap-1.5">
+              <div className="text-center py-6 text-xs text-[var(--text-secondary)] flex items-center justify-center gap-1.5">
                 <HelpCircle className="w-4 h-4" />
                 <span>Type more text to build density map.</span>
               </div>

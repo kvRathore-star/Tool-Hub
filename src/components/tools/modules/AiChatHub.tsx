@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useAiProvider, AiMessage } from '@/hooks/useAiProvider';
 import AiSettings from '../AiSettings';
 import { Clipboard, Download, Sparkles, Send, Trash2, User, Bot } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiChatHub() {
   const { isConfigured, generateCompletion } = useAiProvider();
@@ -72,11 +73,7 @@ export default function AiChatHub() {
     
     const blob = new Blob([formattedChat], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `chat_${Date.now()}.txt`;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `chat_${Date.now()}.txt`);
   };
 
   return (
@@ -121,7 +118,7 @@ export default function AiChatHub() {
             <button
               onClick={handleClear}
               disabled={messages.length === 0}
-              className="py-3.5 rounded-xl font-bold border border-zinc-200 dark:border-zinc-800 text-zinc-550 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-850 flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs disabled:opacity-50"
+              className="py-3.5 rounded-xl font-bold border border-zinc-200 dark:border-zinc-800 text-[var(--text-secondary)] dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-[var(--bg-surface)] flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs disabled:opacity-50"
             >
               <Trash2 className="w-4 h-4" />
               <span>Clear Chat</span>
@@ -130,7 +127,7 @@ export default function AiChatHub() {
             <button
               onClick={handleDownload}
               disabled={messages.length === 0}
-              className="py-3.5 rounded-xl font-bold border border-zinc-200 dark:border-zinc-800 text-zinc-550 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-850 flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs disabled:opacity-50"
+              className="py-3.5 rounded-xl font-bold border border-zinc-200 dark:border-zinc-800 text-[var(--text-secondary)] dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-[var(--bg-surface)] flex items-center justify-center gap-2 cursor-pointer transition-colors text-xs disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               <span>Save Chat</span>
@@ -169,15 +166,15 @@ export default function AiChatHub() {
                     <div className={`p-2 rounded-xl border ${
                       isUser 
                         ? 'bg-indigo-600 border-indigo-500 text-white' 
-                        : 'bg-white dark:bg-zinc-900 border-zinc-150 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'
+                        : 'bg-white dark:bg-zinc-900 border-[var(--border-subtle)] dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'
                     }`}>
                       {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                     </div>
                     
                     <div className={`rounded-2xl p-4 shadow-sm text-sm leading-relaxed ${
                       isUser 
-                        ? 'bg-indigo-650 text-white rounded-tr-none' 
-                        : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-tl-none text-zinc-850 dark:text-zinc-150'
+                        ? 'bg-[var(--accent)] text-white rounded-tr-none' 
+                        : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-tl-none text-[var(--text-secondary)] dark:text-[var(--text-primary)]'
                     }`}>
                       {m.content}
                     </div>
@@ -188,13 +185,13 @@ export default function AiChatHub() {
 
             {isProcessing && (
               <div className="flex items-start gap-3 mr-auto max-w-[85%] animate-pulse">
-                <div className="p-2 rounded-xl border bg-white dark:bg-zinc-900 border-zinc-150 dark:border-zinc-800 text-zinc-400">
+                <div className="p-2 rounded-xl border bg-white dark:bg-zinc-900 border-[var(--border-subtle)] dark:border-zinc-800 text-zinc-400">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-tl-none text-zinc-400 text-sm flex items-center gap-2">
-                  <div className="w-2 h-2 bg-zinc-450 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 bg-zinc-450 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 bg-zinc-450 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <div className="w-2 h-2 bg-[var(--bg-surface)] dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 bg-[var(--bg-surface)] dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 bg-[var(--bg-surface)] dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -216,6 +213,7 @@ export default function AiChatHub() {
               onClick={handleSend}
               disabled={isProcessing || !inputValue.trim()}
               className="p-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md transition-all active:scale-[0.95] disabled:opacity-50 flex items-center justify-center cursor-pointer"
+              aria-label="Send"
             >
               <Send className="w-4 h-4" />
             </button>

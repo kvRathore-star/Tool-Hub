@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, Download, RefreshCw, Type, Image as ImageIcon, Sliders } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface MemeTemplate {
   name: string;
@@ -109,10 +110,7 @@ export default function MemeGenerator() {
 
   const handleDownload = () => {
     if (!processedUrl) return;
-    const a = document.createElement('a');
-    a.href = processedUrl;
-    a.download = 'meme.jpg';
-    a.click();
+    downloadOrShare(processedUrl, 'meme.jpg');
   };
 
   const reset = () => {
@@ -131,7 +129,7 @@ export default function MemeGenerator() {
           <ImageIcon className="w-6 h-6 text-indigo-500" />
           Classic Meme Generator
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Pick a classic template or upload your own, type top/bottom captions, adjust font settings, and download your customized meme instantly.
         </p>
       </div>
@@ -141,7 +139,7 @@ export default function MemeGenerator() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6 max-h-[600px] overflow-y-auto pr-1">
           {/* Template Selector */}
           <div className="space-y-3">
-            <span className="text-xs font-bold text-zinc-550 block">Meme Templates</span>
+            <span className="text-xs font-bold text-[var(--text-secondary)] block">Meme Templates</span>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {POPULAR_TEMPLATES.map((t) => (
                 <button
@@ -161,7 +159,7 @@ export default function MemeGenerator() {
               ))}
             </div>
 
-            <label className="w-full py-2.5 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-350 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-zinc-200 dark:border-zinc-750">
+            <label className="w-full py-2.5 bg-zinc-100 dark:bg-[var(--bg-surface)] hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-[var(--text-muted)] font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-zinc-200 dark:border-[var(--border-subtle)]">
               <Upload className="w-4 h-4" />
               Upload Custom Template
               <input type="file" accept="image/*" className="hidden" onChange={handleCustomUpload} />
@@ -198,7 +196,7 @@ export default function MemeGenerator() {
 
           {/* Font Size */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Text Size</span>
               <span className="text-indigo-400 font-bold">{fontSize} px</span>
             </div>
@@ -210,18 +208,18 @@ export default function MemeGenerator() {
           </div>
 
           {/* Uppercase toggle */}
-          <div className="flex items-center justify-between text-xs text-zinc-650 dark:text-zinc-400">
+          <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
             <span>Force Uppercase Text</span>
             <input
               type="checkbox" checked={uppercase} onChange={e => setUppercase(e.target.checked)}
-              className="w-4 h-4 rounded border-zinc-300 text-indigo-650 focus:ring-indigo-500 accent-indigo-500"
+              className="w-4 h-4 rounded border-zinc-300 text-[var(--accent)] focus:ring-indigo-500 accent-indigo-500"
             />
           </div>
 
           <div className="flex flex-col gap-2 pt-2">
             <button
               onClick={reset}
-              className="w-full py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
             >
               Reset Meme Settings
             </button>
@@ -229,7 +227,7 @@ export default function MemeGenerator() {
         </div>
 
         {/* View Workspace */}
-        <div className="lg:col-span-2 bg-zinc-950 border border-zinc-850 rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
+        <div className="lg:col-span-2 bg-zinc-950 border border-[var(--border-subtle)] rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
           <div className="flex-1 flex justify-center items-center relative">
             <canvas
               ref={canvasRef}

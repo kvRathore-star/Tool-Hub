@@ -5,6 +5,7 @@ import { Upload, FileText, CheckCircle, XCircle, Loader2, Download, Archive, Ref
 import heic2any from 'heic2any';
 import JSZip from 'jszip';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface HeicFileItem {
   id: string;
@@ -94,10 +95,7 @@ export default function HeicToPng() {
     if (successItems.length === 1) {
       // Download single directly
       const item = successItems[0];
-      const a = document.createElement('a');
-      a.href = item.outputUrl!;
-      a.download = item.outputName!;
-      a.click();
+      downloadOrShare(item.outputUrl!, item.outputName!);
       return;
     }
 
@@ -114,12 +112,7 @@ export default function HeicToPng() {
       const zipBlob = await zip.generateAsync({ type: 'blob' });
       const zipUrl = URL.createObjectURL(zipBlob);
       
-      const a = document.createElement('a');
-      a.href = zipUrl;
-      a.download = 'converted_pngs.zip';
-      a.click();
-      
-      URL.revokeObjectURL(zipUrl);
+      downloadOrShare(zipUrl, 'converted_pngs.zip');
       toast.success('ZIP archive generated and downloaded!');
     } catch (err) {
       console.error(err);
@@ -151,7 +144,7 @@ export default function HeicToPng() {
           <FileText className="w-6 h-6 text-indigo-500" />
           HEIC to PNG Converter
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Convert Apple iOS `.heic`/`.heif` files into compatible PNGs offline in bulk. Drag or select files below.
         </p>
       </div>
@@ -162,7 +155,7 @@ export default function HeicToPng() {
           <Upload className="w-10 h-10 text-zinc-400 mb-2" />
           <span className="text-xs text-zinc-500 font-bold block mb-1">Upload HEIC / HEIF images</span>
           <span className="text-[10px] text-zinc-500 block">Drag-and-drop files or click to browse</span>
-          <label className="bg-indigo-650 hover:bg-indigo-600 px-5 py-2.5 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4 block">
+          <label className="bg-[var(--accent)] hover:bg-indigo-600 px-5 py-2.5 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4 block">
             Select HEIC Files
             <input
               type="file"
@@ -193,7 +186,7 @@ export default function HeicToPng() {
               {queue.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-white/5 text-xs text-zinc-800 dark:text-zinc-250 gap-4"
+                  className="flex items-center justify-between p-3.5 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-white/5 text-xs text-zinc-800 dark:text-[var(--text-secondary)] gap-4"
                 >
                   <div className="flex items-center gap-2.5 overflow-hidden">
                     <FileText className="w-4 h-4 text-indigo-400 shrink-0" />
@@ -241,7 +234,7 @@ export default function HeicToPng() {
               <button
                 onClick={handleConvertAll}
                 disabled={isProcessing || queue.every((i) => i.status === 'success')}
-                className="flex-1 bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-850 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow"
+                className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-[var(--accent)] text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow"
               >
                 <RefreshCw className={`w-4 h-4 ${isProcessing ? 'animate-spin' : ''}`} />
                 Convert Pending

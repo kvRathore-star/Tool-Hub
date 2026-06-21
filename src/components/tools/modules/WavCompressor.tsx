@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { Waves, Upload, Download, Loader2 } from 'lucide-react';
@@ -41,7 +42,7 @@ export default function WavCompressor() {
       await ffmpeg.deleteFile(outputName);
     } catch (e) {
       console.error(e);
-      alert('Failed to compress WAV.');
+      toast.error("Failed to compress WAV.");
     } finally {
       setIsProcessing(false);
     }

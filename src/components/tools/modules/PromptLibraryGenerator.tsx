@@ -30,14 +30,14 @@ export default function PromptLibraryGenerator() {
             className="w-full bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-3 text-zinc-900 dark:text-white h-32 outline-none focus:border-indigo-500"
             placeholder="Describe what you want the AI to do (e.g. Write a sales email, explain quantum physics...)"
             value={topic}
-            onChange={e => setTopic(e.target.value)}
+            onChange={e => setTopic(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && generatePrompt()}
           />
           <button 
             onClick={generatePrompt}
             disabled={isProcessing || !topic}
             className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50"
           >
-            {isProcessing ? "Engineering..." : "Generate Mega-Prompt"}
+            {isProcessing ? <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" /> Engineering...</> : "Generate Mega-Prompt"}
           </button>
         </div>
 

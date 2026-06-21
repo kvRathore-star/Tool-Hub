@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FileUploader } from '../FileUploader';
 import { Download, Sliders, RefreshCw, Layers, Star, Zap } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface FiltersState {
   brightness: number;
@@ -109,10 +110,7 @@ export default function ImageEnhancer() {
 
   const handleDownload = () => {
     if (!processedUrl) return;
-    const a = document.createElement('a');
-    a.href = processedUrl;
-    a.download = `enhanced-${imageFile?.name || 'photo.jpg'}`;
-    a.click();
+    downloadOrShare(processedUrl, `enhanced-${imageFile?.name || 'photo.jpg'}`);
   };
 
   const reset = () => {
@@ -143,11 +141,11 @@ export default function ImageEnhancer() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{imageFile?.name}</h3>
-          <p className="text-xs text-zinc-555">Fine tune color, light, and styling parameters</p>
+          <p className="text-xs text-[var(--text-muted)]">Fine tune color, light, and styling parameters</p>
         </div>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
         >
           Change Photo
         </button>
@@ -167,7 +165,7 @@ export default function ImageEnhancer() {
                 <button
                   key={p.name}
                   onClick={() => setFilters(p.filters)}
-                  className="py-2.5 px-3 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-750 dark:text-zinc-400 font-bold border border-zinc-205 dark:border-zinc-700 rounded-lg text-center cursor-pointer"
+                  className="py-2.5 px-3 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 font-bold border border-[var(--border-subtle)] dark:border-zinc-700 rounded-lg text-center cursor-pointer"
                 >
                   {p.name}
                 </button>
@@ -182,7 +180,7 @@ export default function ImageEnhancer() {
 
           {/* Brightness */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Brightness</span>
               <span className="text-indigo-400 font-bold">{filters.brightness}%</span>
             </div>
@@ -195,7 +193,7 @@ export default function ImageEnhancer() {
 
           {/* Contrast */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Contrast</span>
               <span className="text-indigo-400 font-bold">{filters.contrast}%</span>
             </div>
@@ -208,7 +206,7 @@ export default function ImageEnhancer() {
 
           {/* Saturation */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Saturation</span>
               <span className="text-indigo-400 font-bold">{filters.saturation}%</span>
             </div>
@@ -221,7 +219,7 @@ export default function ImageEnhancer() {
 
           {/* Blur */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Soft Blur</span>
               <span className="text-indigo-400 font-bold">{filters.blur} px</span>
             </div>
@@ -234,7 +232,7 @@ export default function ImageEnhancer() {
 
           {/* Sepia */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Sepia (Warmth)</span>
               <span className="text-indigo-400 font-bold">{filters.sepia}%</span>
             </div>
@@ -247,7 +245,7 @@ export default function ImageEnhancer() {
 
           {/* Grayscale */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Grayscale</span>
               <span className="text-indigo-400 font-bold">{filters.grayscale}%</span>
             </div>
@@ -260,7 +258,7 @@ export default function ImageEnhancer() {
         </div>
 
         {/* View Workspace */}
-        <div className="lg:col-span-2 bg-zinc-950 border border-zinc-850 rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
+        <div className="lg:col-span-2 bg-zinc-950 border border-[var(--border-subtle)] rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
           <div className="flex-1 flex justify-center items-center relative">
             <canvas
               ref={canvasRef}

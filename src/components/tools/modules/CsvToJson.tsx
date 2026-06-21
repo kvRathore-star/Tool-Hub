@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function CsvToJson() {
   const [csvInput, setCsvInput] = useState('');
@@ -59,13 +60,7 @@ export default function CsvToJson() {
     if (!jsonOutput) return;
     const blob = new Blob([jsonOutput], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'converted.json');
   };
 
   return (
@@ -117,7 +112,7 @@ export default function CsvToJson() {
           </div>
           <textarea
             value={csvInput}
-            onChange={(e) => setCsvInput(e.target.value)}
+            onChange={(e) => setCsvInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleConvert()}
             placeholder="id,name,email&#10;1,John Doe,john@example.com&#10;2,Jane Smith,jane@example.com"
             className="flex-1 w-full p-4 bg-transparent outline-none resize-none font-mono text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
             spellCheck="false"

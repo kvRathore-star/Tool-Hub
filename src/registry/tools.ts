@@ -1,10 +1,35 @@
-// Automatically generated from tools_list.csv
+export type ToolCategory =
+  | "PDF"
+  | "Image"
+  | "Text"
+  | "Developer"
+  | "Finance"
+  | "Utility"
+  | "Converter"
+  | "Downloader"
+  | "Video"
+  | "Audio"
+  | "Branding"
+  | "Productivity"
+  | "Privacy"
+  | "Design"
+  | "Transcription"
+  | "Extension"
+  | "SEO"
+  | "Marketing"
+  | "indian-utilities"
+  | "AI"
+  | "Health"
+  | "HR"
+  | "Business"
+  | "E-commerce"
+  | "Lifestyle";
 
 export interface ToolMetadata {
   id: string;
   name: string;
   slug: string;
-  category: string;
+  category: ToolCategory;
   description: string;
   dependencies: string;
   isPro?: boolean;
@@ -17,7 +42,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "add-text-1",
     name: "Add Text to Photo",
     description: "Overlay custom text onto your images using the HTML5 Canvas API entirely in your browser.",
-    category: "Image Tools",
+    category: "Image",
     slug: "add-text-to-photo",
     dependencies: "Canvas API",
   },
@@ -25,7 +50,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "batch-edit-1",
     name: "Batch Image Editor",
     description: "Resize and watermark dozens of images instantly in your browser.",
-    category: "Image Tools",
+    category: "Image",
     slug: "batch-image-editor",
     dependencies: "Canvas API, jszip",
   },
@@ -33,7 +58,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "brand-kit-1",
     name: "Brand Kit",
     description: "Save your brand colors and fonts locally to easily copy them when needed.",
-    category: "Developer Tools",
+    category: "Developer",
     slug: "brand-kit",
     dependencies: "localStorage",
   },
@@ -41,7 +66,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "gif-comp-1",
     name: "GIF Compressor",
     description: "Reduce GIF file sizes instantly without losing too much visual quality.",
-    category: "Video Tools",
+    category: "Video",
     slug: "gif-compressor",
     dependencies: "ffmpeg",
   },
@@ -49,7 +74,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "img-gif-1",
     name: "Image to GIF Maker",
     description: "Create animated GIFs by combining multiple images together.",
-    category: "Video Tools",
+    category: "Video",
     slug: "image-to-gif",
     dependencies: "ffmpeg",
   },
@@ -57,7 +82,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "mp4-gif-1",
     name: "MP4 to GIF",
     description: "Convert MP4 video clips into animated GIFs.",
-    category: "Video Tools",
+    category: "Video",
     slug: "mp4-to-gif",
     dependencies: "ffmpeg",
   },
@@ -65,7 +90,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "webm-gif-1",
     name: "WEBM to GIF",
     description: "Convert WebM video clips into animated GIFs.",
-    category: "Video Tools",
+    category: "Video",
     slug: "webm-to-gif",
     dependencies: "ffmpeg",
   },
@@ -73,7 +98,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "mov-gif-1",
     name: "MOV to GIF",
     description: "Convert Apple MOV video clips into animated GIFs.",
-    category: "Video Tools",
+    category: "Video",
     slug: "mov-to-gif",
     dependencies: "ffmpeg",
   },
@@ -81,7 +106,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "vid-mp3-1",
     name: "Video to MP3 Converter",
     description: "Extract high-quality audio tracks directly from your video files.",
-    category: "Video Tools",
+    category: "Video",
     slug: "video-to-mp3",
     dependencies: "ffmpeg",
   },
@@ -89,7 +114,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "mp3-ogg-1",
     name: "MP3 to OGG Converter",
     description: "Convert MP3 audio files into web-friendly OGG format.",
-    category: "Audio Tools",
+    category: "Audio",
     slug: "mp3-to-ogg",
     dependencies: "ffmpeg",
   },
@@ -97,7 +122,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "wav-comp-1",
     name: "WAV Compressor",
     description: "Compress heavy WAV files by downmixing to mono and reducing the sample rate.",
-    category: "Audio Tools",
+    category: "Audio",
     slug: "wav-compressor",
     dependencies: "ffmpeg",
   },
@@ -105,7 +130,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "vid-crop-1",
     name: "Crop Video",
     description: "Crop the visual area of your MP4 video entirely in the browser.",
-    category: "Video Tools",
+    category: "Video",
     slug: "crop-video",
     dependencies: "ffmpeg",
   },
@@ -113,7 +138,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "dev-json-xml-1",
     name: "JSON to XML",
     description: "Instantly convert JSON objects to XML format.",
-    category: "Developer Tools",
+    category: "Developer",
     slug: "json-to-xml",
     dependencies: "xml2js",
   },
@@ -121,7 +146,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "time-conv-1",
     name: "Time Converter",
     description: "Convert between seconds, minutes, hours, days, and more.",
-    category: "Converters",
+    category: "Converter",
     slug: "time-converter",
     dependencies: "None",
   },
@@ -129,7 +154,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "time-pst-est-1",
     name: "PST to EST Converter",
     description: "Quickly convert Pacific Standard Time (PST) to Eastern Standard Time (EST).",
-    category: "Converters",
+    category: "Converter",
     slug: "pst-to-est",
     dependencies: "None",
   },
@@ -137,7 +162,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "time-cst-est-1",
     name: "CST to EST Converter",
     description: "Quickly convert Central Standard Time (CST) to Eastern Standard Time (EST).",
-    category: "Converters",
+    category: "Converter",
     slug: "cst-to-est",
     dependencies: "None",
   },
@@ -145,7 +170,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "conv-lbs-kg-1",
     name: "Lbs to Kg Converter",
     description: "Instantly convert Pounds (lbs) to Kilograms (kg).",
-    category: "Converters",
+    category: "Converter",
     slug: "lbs-to-kg",
     dependencies: "None",
   },
@@ -153,7 +178,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "conv-kg-lbs-1",
     name: "Kg to Lbs Converter",
     description: "Instantly convert Kilograms (kg) to Pounds (lbs).",
-    category: "Converters",
+    category: "Converter",
     slug: "kg-to-lbs",
     dependencies: "None",
   },
@@ -161,7 +186,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "conv-ft-m-1",
     name: "Feet to Meters Converter",
     description: "Instantly convert length from Feet (ft) to Meters (m).",
-    category: "Converters",
+    category: "Converter",
     slug: "feet-to-meters",
     dependencies: "None",
   },
@@ -169,7 +194,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "arch-conv-1",
     name: "Archive Converter",
     description: "Convert ZIP files to TAR, RAR, or uncompressed archives directly in your browser.",
-    category: "Converters",
+    category: "Converter",
     slug: "archive-converter",
     dependencies: "jszip",
   },
@@ -177,7 +202,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-flatten-1",
     name: "Flatten PDF",
     description: "Make interactive PDF forms, annotations, and layers permanent and uneditable.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "flatten-pdf",
     dependencies: "pdf-lib",
   },
@@ -185,7 +210,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-crop-1",
     name: "Crop PDF Pages",
     description: "Remove white margins from your PDF documents instantly.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "crop-pdf",
     dependencies: "pdf-lib",
   },
@@ -193,7 +218,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-org-1",
     name: "Organize PDF Pages",
     description: "Drag and drop to reorder PDF pages, or remove them entirely.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "organize-pdf",
     dependencies: "pdf-lib",
   },
@@ -201,7 +226,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-ext-1",
     name: "Extract PDF Pages",
     description: "Pull specific pages out of a large PDF to create a smaller document.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "extract-pages-from-pdf",
     dependencies: "pdf-lib",
   },
@@ -209,7 +234,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-heic-1",
     name: "HEIC to PDF",
     description: "Convert Apple iOS HEIC/HEIF photos directly into a PDF document.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "heic-to-pdf",
     dependencies: "pdf-lib, heic2any",
   },
@@ -233,7 +258,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "yt-dl-1",
     name: "YouTube Downloader",
     description: "Download YouTube videos as MP4 or extract audio as MP3. Paste URL and save instantly.",
-    category: "Downloader Tools",
+    category: "Downloader",
     slug: "youtube-downloader",
     dependencies: "yt-dlp"
   },
@@ -265,7 +290,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "7",
     name: "AI Translator",
     slug: "ai-translator",
-    category: "Text",
+    category: "AI",
     description: "100+ languages (22 Indian languages)",
     dependencies: "Google Cloud Translation API"
   },
@@ -289,7 +314,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "10",
     name: "AI Image Generator",
     slug: "ai-image-generator",
-    category: "Image",
+    category: "AI",
     description: "Generate images from text prompts",
     dependencies: "Stable Diffusion API"
   },
@@ -353,7 +378,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "pdf-comp-1",
     name: "PDF Compressor",
     description: "Reduce PDF file size by up to 90% — free, instant, entirely in your browser. No upload, no signup.",
-    category: "PDF Tools",
+    category: "PDF",
     slug: "pdf-compressor",
     dependencies: "Ghostscript / PDF-lib"
   },
@@ -369,7 +394,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "20",
     name: "AI Writing Assistant",
     slug: "ai-writing-assistant",
-    category: "Text",
+    category: "AI",
     description: "Long-form blog, email, and essay writer",
     dependencies: "OpenAI API / LangChain"
   },
@@ -625,7 +650,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "53",
     name: "AI Paraphrasing Tool",
     slug: "ai-paraphrasing-tool",
-    category: "Text",
+    category: "AI",
     description: "Rewrite articles and sentences",
     dependencies: "HuggingFace"
   },
@@ -745,7 +770,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "69",
     name: "AI Image Upscaler",
     slug: "ai-image-upscaler",
-    category: "Image",
+    category: "AI",
     description: "Upscale images without losing quality",
     dependencies: "Real-ESRGAN"
   },
@@ -809,7 +834,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "78",
     name: "AI Content Humanizer",
     slug: "ai-content-humanizer",
-    category: "Text",
+    category: "AI",
     description: "Bypass AI detectors and make text human-like",
     dependencies: "OpenAI API / Custom NLP"
   },
@@ -881,7 +906,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "89",
     name: "AI Video Summarizer",
     slug: "ai-video-summarizer",
-    category: "Video",
+    category: "AI",
     description: "Summarize long YouTube videos",
     dependencies: "YouTube API / OpenAI API"
   },
@@ -897,7 +922,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "91",
     name: "AI Audio Enhancer",
     slug: "ai-audio-enhancer",
-    category: "Audio",
+    category: "AI",
     description: "Remove background noise from audio",
     dependencies: "Adobe Podcast API / Custom Model"
   },
@@ -921,7 +946,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "94",
     name: "AI Voice Cloning",
     slug: "ai-voice-cloning",
-    category: "Audio",
+    category: "AI",
     description: "Clone voices from short audio samples",
     dependencies: "ElevenLabs API"
   },
@@ -929,7 +954,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "95",
     name: "AI Essay Writer",
     slug: "ai-essay-writer",
-    category: "Text",
+    category: "AI",
     description: "Generate high-quality academic essays",
     dependencies: "OpenAI API"
   },
@@ -969,7 +994,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "100",
     name: "AI Avatar Generator",
     slug: "ai-avatar-generator",
-    category: "Image",
+    category: "AI",
     description: "Generate custom avatars from selfies",
     dependencies: "Stable Diffusion API"
   },
@@ -1065,7 +1090,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "112",
     name: "AI Face Swap",
     slug: "ai-face-swap",
-    category: "Image",
+    category: "AI",
     description: "Swap faces in photos for fun",
     dependencies: "InsightFace"
   },
@@ -1097,7 +1122,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "116",
     name: "AI Cover Letter Generator",
     slug: "ai-cover-letter-generator",
-    category: "Text",
+    category: "AI",
     description: "Create tailored cover letters for jobs",
     dependencies: "OpenAI API"
   },
@@ -1105,7 +1130,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "117",
     name: "AI Excel Formula Generator",
     slug: "ai-excel-formula-generator",
-    category: "Utility",
+    category: "AI",
     description: "Generate Excel/Sheets formulas",
     dependencies: "OpenAI API"
   },
@@ -1113,7 +1138,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "118",
     name: "AI Product Description Generator",
     slug: "ai-product-description-generator",
-    category: "E-commerce",
+    category: "AI",
     description: "Write descriptions for products",
     dependencies: "OpenAI API"
   },
@@ -1121,7 +1146,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "119",
     name: "AI Story Generator",
     slug: "ai-story-generator",
-    category: "Text",
+    category: "AI",
     description: "Write creative stories and plots",
     dependencies: "OpenAI API"
   },
@@ -1129,7 +1154,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "120",
     name: "AI Presentation Generator",
     slug: "ai-presentation-generator",
-    category: "Productivity",
+    category: "AI",
     description: "Generate PowerPoint slides from text",
     dependencies: "OpenAI API / PptxGenJS"
   },
@@ -1177,7 +1202,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "126",
     name: "AI Music Generator",
     slug: "ai-music-generator",
-    category: "Audio",
+    category: "AI",
     description: "Generate royalty-free background music",
     dependencies: "Suno API / Custom Model"
   },
@@ -1281,7 +1306,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "139",
     name: "AI Thumbnail Maker",
     slug: "ai-thumbnail-maker",
-    category: "Design",
+    category: "AI",
     description: "Generate clickbait YouTube thumbnails",
     dependencies: "Canvas API / OpenAI API"
   },
@@ -1329,7 +1354,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "145",
     name: "AI Flowchart Maker",
     slug: "ai-flowchart-maker",
-    category: "Productivity",
+    category: "AI",
     description: "Generate flowcharts from text",
     dependencies: "Mermaid.js / OpenAI API"
   },
@@ -1337,7 +1362,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "146",
     name: "AI Code Explainer",
     slug: "ai-code-explainer",
-    category: "Developer",
+    category: "AI",
     description: "Explain complex code snippets",
     dependencies: "OpenAI API"
   },
@@ -1345,7 +1370,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "147",
     name: "AI SQL Generator",
     slug: "ai-sql-generator",
-    category: "Developer",
+    category: "AI",
     description: "Generate SQL queries from natural language",
     dependencies: "OpenAI API"
   },
@@ -1353,7 +1378,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "148",
     name: "AI Recipe Generator",
     slug: "ai-recipe-generator",
-    category: "Lifestyle",
+    category: "AI",
     description: "Generate recipes based on ingredients",
     dependencies: "OpenAI API"
   },
@@ -1361,7 +1386,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "149",
     name: "AI Domain Name Generator",
     slug: "ai-domain-name-generator",
-    category: "Branding",
+    category: "AI",
     description: "Generate available domain names",
     dependencies: "OpenAI API / Domain API"
   },
@@ -1369,7 +1394,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "150",
     name: "AI Mind Map Generator",
     slug: "ai-mind-map-generator",
-    category: "Productivity",
+    category: "AI",
     description: "Create mind maps from prompts",
     dependencies: "OpenAI API / React Flow"
   },
@@ -1585,7 +1610,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "177",
     name: "AI Regex Generator",
     slug: "ai-regex-generator",
-    category: "Developer",
+    category: "AI",
     description: "Generate regular expressions from text",
     dependencies: "OpenAI API"
   },
@@ -1593,7 +1618,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "178",
     name: "AI Business Idea Generator",
     slug: "ai-business-idea-generator",
-    category: "Business",
+    category: "AI",
     description: "Generate startup ideas",
     dependencies: "OpenAI API"
   },
@@ -1601,7 +1626,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "179",
     name: "AI Slogan Generator",
     slug: "ai-slogan-generator",
-    category: "Branding",
+    category: "AI",
     description: "Create catchy slogans for brands",
     dependencies: "OpenAI API"
   },
@@ -1609,7 +1634,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "180",
     name: "AI Poem Generator",
     slug: "ai-poem-generator",
-    category: "Text",
+    category: "AI",
     description: "Write poems in various styles",
     dependencies: "OpenAI API"
   },
@@ -1866,7 +1891,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     id: "217",
     name: "AI Video Subtitler",
     slug: "ai-video-subtitler",
-    category: "Video",
+    category: "AI",
     description: "Auto-generate burned-in subtitles on video",
     dependencies: "Whisper API"
   },
@@ -1875,7 +1900,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ai-code-generator',
     description: 'Generate code in 50+ languages.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "218",
     dependencies: 'None'
   },
   {
@@ -1883,7 +1908,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'subtitle-generator',
     description: 'Generate SRT files from video.',
     category: 'Video',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "219",
     dependencies: 'None'
   },
   {
@@ -1891,7 +1916,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'svg-to-png-converter',
     description: 'Convert vector SVG to raster PNG.',
     category: 'Converter',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "220",
     dependencies: 'None'
   },
   {
@@ -1899,7 +1924,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'unit-converter',
     description: 'Universal unit conversion tool.',
     category: 'Utility',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "221",
     dependencies: 'None'
   },
   {
@@ -1907,7 +1932,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ai-blog-title-generator',
     description: 'Generate viral blog titles.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "222",
     dependencies: 'None'
   },
   {
@@ -1915,7 +1940,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'video-watermark-adder',
     description: 'Add logo or text watermark to video.',
     category: 'Video',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "223",
     dependencies: 'None'
   },
   {
@@ -1923,7 +1948,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ai-hashtag-generator',
     description: 'Generate viral hashtags for social media.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "224",
     dependencies: 'None'
   },
   {
@@ -1931,7 +1956,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'prompt-library-generator',
     description: 'Browse and generate AI prompts.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "225",
     dependencies: 'None'
   },
   {
@@ -1939,7 +1964,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ai-chat-hub',
     description: 'Centralized dashboard for all AI models.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "226",
     dependencies: 'None'
   },
   {
@@ -1947,7 +1972,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'gst-invoice-generator',
     description: 'Generate valid GST invoices for India.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "227",
     dependencies: 'None'
   },
   {
@@ -1955,7 +1980,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'itr-filing-helper',
     description: 'Helper for India Income Tax Returns.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "228",
     dependencies: 'None'
   },
   {
@@ -1963,7 +1988,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ai-changelog-generator',
     description: 'Generate release notes from commits.',
     category: 'AI',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "229",
     dependencies: 'None'
   },
   {
@@ -1971,7 +1996,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'browser-extension',
     description: 'All-in-one sidebar AI assistant.',
     category: 'Extension',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "230",
     dependencies: 'None'
   },
   {
@@ -1979,7 +2004,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'mp3-compressor',
     description: 'Reduce MP3 size with bitrate control',
     category: 'Utility',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "231",
     dependencies: 'FFmpeg WASM'
   },
   {
@@ -1987,7 +2012,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'gif-to-mp4',
     description: 'Convert GIF animations to MP4 videos',
     category: 'Converter',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "232",
     dependencies: 'FFmpeg WASM'
   },
   {
@@ -1995,7 +2020,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'video-trimmer',
     description: 'Trim and cut video clips locally',
     category: 'Video',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "233",
     dependencies: 'FFmpeg WASM'
   },
   {
@@ -2003,7 +2028,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'aadhaar-card-masker',
     description: 'Mask the first 8 digits of your Aadhaar card for secure sharing.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "234",
     dependencies: 'Canvas API'
   },
   {
@@ -2011,7 +2036,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'pan-verification',
     description: 'Verify PAN format and extract taxpayer category locally.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "235",
     dependencies: 'None'
   },
   {
@@ -2019,7 +2044,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'ifsc-code-lookup',
     description: 'Lookup bank branch details, address, and contact using IFSC.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "236",
     dependencies: 'IFSC API'
   },
   {
@@ -2027,7 +2052,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'voter-id-form-helper',
     description: 'Get document checklists and guidance for Form 6/7/8 registration.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "237",
     dependencies: 'None'
   },
   {
@@ -2035,7 +2060,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'india-pincode-finder',
     description: 'Search pincodes and post office branches across India.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "238",
     dependencies: 'Postal API'
   },
   {
@@ -2043,7 +2068,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'hindi-regional-font-generator',
     description: 'Generate stylish unicode fonts for Hindi, Tamil, Telugu, and other regional scripts.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "239",
     dependencies: 'None'
   },
   {
@@ -2051,7 +2076,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'indian-age-calculator',
     description: 'Calculate exact age as per DOB in DD/MM/YYYY format with eligibility check.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "240",
     dependencies: 'None'
   },
   {
@@ -2059,7 +2084,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'cgpa-to-percentage-converter',
     description: 'Convert CGPA to percentage based on CBSE, MU, and university formulas.',
     category: 'indian-utilities',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "241",
     dependencies: 'None'
   },
   {
@@ -2067,7 +2092,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'pdf-to-html',
     description: 'Convert PDF pages into a clean, responsive HTML5 document.',
     category: 'PDF',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "242",
     dependencies: 'PDF.js'
   },
   {
@@ -2075,7 +2100,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'html-to-pdf',
     description: 'Convert HTML source code into a downloadable PDF document.',
     category: 'PDF',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "243",
     dependencies: 'jsPDF'
   },
   {
@@ -2083,7 +2108,7 @@ const rawToolsRegistry: ToolMetadata[] = [
     slug: 'generic-pdf-processor',
     description: 'Compress, rotate pages, or strip metadata from PDFs in one unified tool.',
     category: 'PDF',
-    id: String(Math.floor(Math.random() * 10000) + 1000),
+    id:  "244",
     dependencies: 'pdf-lib'
   },
 ];

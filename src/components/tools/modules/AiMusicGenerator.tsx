@@ -313,10 +313,10 @@ export default function AiMusicGenerator() {
               className={`py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 cursor-pointer border transition-colors ${
                 isRecording 
                   ? 'bg-red-500/10 border-red-500 text-red-500 hover:bg-red-500/20' 
-                  : 'bg-zinc-50 hover:bg-zinc-150 border-zinc-200 dark:bg-black/20 dark:border-zinc-800 dark:text-zinc-300'
+                  : 'bg-zinc-50 hover:bg-[var(--bg-overlay)] border-zinc-200 dark:bg-black/20 dark:border-zinc-800 dark:text-zinc-300'
               }`}
             >
-              {isRecording ? <Square className="w-4 h-4" /> : <div className="w-3.5 h-3.5 bg-red-650 rounded-full animate-pulse" />}
+              {isRecording ? <Square className="w-4 h-4" /> : <div className="w-3.5 h-3.5 bg-[var(--danger)] rounded-full animate-pulse" />}
               <span>{isRecording ? "Stop Record" : "Record Loop"}</span>
             </button>
 
@@ -347,7 +347,7 @@ export default function AiMusicGenerator() {
                     className={`rounded-sm transition-all duration-150 ${
                       isPlaying && currentBeatRef.current % 8 === i % 8 
                         ? 'bg-blue-500 scale-105' 
-                        : 'bg-zinc-850'
+                        : 'bg-[var(--bg-surface)]'
                     }`} 
                   />
                 ))}
@@ -390,7 +390,7 @@ export default function AiMusicGenerator() {
                 </a>
               </div>
             ) : (
-              <div className="border-2 border-dashed border-zinc-150 dark:border-zinc-800 rounded-xl p-8 text-center text-zinc-400 flex flex-col items-center justify-center h-32">
+              <div className="border-2 border-dashed border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl p-8 text-center text-zinc-400 flex flex-col items-center justify-center h-32">
                 <Music className="w-6 h-6 text-zinc-300 dark:text-zinc-700 mb-2" />
                 <p className="text-xs">No captured loop files ready.</p>
                 <p className="text-[10px] text-zinc-500 mt-1">Arm 'Record Loop' and play the synthesizer to compile.</p>

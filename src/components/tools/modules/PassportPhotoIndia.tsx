@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { toast } from "react-hot-toast";
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { FileUploader } from '../FileUploader';
@@ -71,7 +72,7 @@ export default function PassportPhotoIndia() {
     } catch (e) {
       console.error(e);
       setIsProcessing(false);
-      alert("Failed to process image.");
+      toast.error("Failed to process image.");
     }
   };
 

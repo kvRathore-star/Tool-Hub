@@ -158,7 +158,7 @@ export default function PricingPage() {
 
             <div>
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-semibold text-white">Full Engine Access</h3>
+                <h3 className="text-xl font-semibold text-[var(--text-primary)]">Full Engine Access</h3>
                 {billingInterval === "yearly" && (
                   <span className="bg-[var(--success)]/20 text-[var(--success)] text-[10px] font-bold px-2 py-0.5 rounded">
                     Get 2 Months Free
@@ -169,7 +169,7 @@ export default function PricingPage() {
                 Complete access to the entire 224-tool offline suite.
               </p>
               <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-5xl font-mono font-bold text-white">
+                <span className="text-5xl font-mono font-bold text-[var(--text-primary)]">
                   {currencySymbol}
                   {currentPlan.price}
                 </span>
@@ -180,7 +180,7 @@ export default function PricingPage() {
               <form action="/api/payments/create-order" method="POST" className="mb-8">
                 <input type="hidden" name="plan" value={billingInterval} />
                 <input type="hidden" name="gateway" value={isIndia ? "razorpay" : "dodo"} />
-                <Button variant="primary" className="w-full" size="lg" type="submit">
+                <Button variant="primary" className="w-full whitespace-nowrap" size="lg" type="submit">
                   Upgrade to Pro ({currentPlan.label})
                 </Button>
               </form>
@@ -188,7 +188,7 @@ export default function PricingPage() {
               <ul className="space-y-4 text-sm text-[var(--text-secondary)] border-t border-[var(--border-subtle)] pt-6">
                 <li className="flex items-center gap-3">
                   <Check className="w-4.5 h-4.5 text-[var(--accent)] shrink-0" />
-                  <span className="text-white font-medium">Unlock all 48+ Pro tools</span>
+                  <span className="text-[var(--text-primary)] font-medium">Unlock all 48+ Pro tools</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-4.5 h-4.5 text-[var(--accent)] shrink-0" />

@@ -1,23 +1,86 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Command, ArrowRight, ShieldCheck, Zap, Server, ChevronRight, Play, Image as ImageIcon, FileText, Type, Mic, Video, Cpu, ArrowLeftRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  Command, ArrowRight, ShieldCheck, Zap, Server, ChevronRight, Play,
+  Upload, Download, Lock, Sparkles, Layers, Globe, Palette, BarChart3,
+  FileType, Image as ImageIcon, Video, Mic, Cpu, FileText, Code,
+  Users, Star, Check, MoveRight, Crown
+} from 'lucide-react';
 import { toolsRegistry } from '@/registry/tools';
 import { Button } from '@/components/ui/button';
+import { getCategoryTheme } from '@/lib/categoryTheme';
 
-const STATS = [
-  { label: "Operations processed", value: "10M+" },
-  { label: "Files stored on server", value: "0" },
-  { label: "Browser-based tools", value: "200+" },
+const toolCount = toolsRegistry.length;
+
+const CATEGORIES = [
+  { id: 'Image', label: 'Image', icon: ImageIcon, desc: 'Resize, crop, convert & optimize images' },
+  { id: 'PDF', label: 'PDF', icon: FileText, desc: 'Compress, merge, split & convert PDFs' },
+  { id: 'AI', label: 'AI Tools', icon: Cpu, desc: 'Generate, summarize & analyze with AI' },
+  { id: 'Video', label: 'Video', icon: Video, desc: 'Trim, compress & transcode videos' },
+  { id: 'Audio', label: 'Audio', icon: Mic, desc: 'Convert, cut & enhance audio files' },
+  { id: 'Converter', label: 'Convert', icon: FileType, desc: 'Convert between 50+ formats' },
+  { id: 'Developer', label: 'Developer', icon: Code, desc: 'Format, minify & debug code' },
+];
+
+const STEPS = [
+  { num: '01', icon: Upload, title: 'Open a Tool', desc: 'Browse 260+ utilities. Pick one. No sign-up needed.' },
+  { num: '02', icon: Zap, title: 'Process Instantly', desc: 'Everything runs in your browser via WebAssembly & TF.js. Zero uploads.' },
+  { num: '03', icon: Download, title: 'Download Results', desc: 'Your data never leaves your machine. Export clean, processed files.' },
+];
+
+const WHY_CHOOSE = [
+  { icon: Lock, title: 'Zero Data Leaving', desc: 'All processing happens client-side. No servers, no logs, no uploads.' },
+  { icon: Zap, title: 'Edge-Accelerated', desc: 'Powered by Cloudflare Workers & WebAssembly for near-instant execution.' },
+  { icon: Layers, title: '260+ Tools', desc: `From PDF compression to AI image generation — ${toolCount} tools and counting.` },
+  { icon: Globe, title: 'Works Offline', desc: 'Many tools remain functional even without an internet connection.' },
+  { icon: Palette, title: 'Beautiful by Default', desc: 'Dark & light themes. Fluid animations. Typography crafted for readability.' },
+  { icon: BarChart3, title: 'No Rate Limits', desc: 'Free tier gives you generous daily usage. Pro unlocks everything.' },
 ];
 
 const FEATURES = [
-  { icon: ShieldCheck, title: "100% Private", desc: "Files never leave your device." },
-  { icon: Zap, title: "Lightning Fast", desc: "Zero upload times. Instant processing." },
-  { icon: Server, title: "Edge Powered", desc: "Runs instantly and securely on your device." },
+  { icon: ShieldCheck, title: "100% Private", desc: "Files never leave your device. Every tool runs locally via WebAssembly." },
+  { icon: Zap, title: "Lightning Fast", desc: "Zero upload times. Processing starts the moment you select a file." },
+  { icon: Server, title: "Edge Powered", desc: "Powered by Cloudflare Workers for instant load times worldwide." },
 ];
+
+const USE_CASES = [
+  {
+    title: 'For Designers',
+    items: ['Remove image backgrounds instantly', 'Batch resize product photos', 'Generate AI avatars & thumbnails', 'Extract colors from any image'],
+    slug: '/tools?category=Image',
+  },
+  {
+    title: 'For Developers',
+    items: ['Format & minify JSON/CSS/JS', 'Generate regex patterns with AI', 'Convert Markdown to HTML', 'Create fake JSON data for testing'],
+    slug: '/tools?category=Developer',
+  },
+  {
+    title: 'For Content Creators',
+    items: ['Compress videos for social media', 'Transcribe audio to text', 'Generate blog titles with AI', 'Create branded social media posts'],
+    slug: '/tools?category=AI',
+  },
+  {
+    title: 'For Business',
+    items: ['Merge & split PDF contracts', 'Generate GST invoices', 'Calculate SaaS pricing', 'Create professional business cards'],
+    slug: '/tools?category=Business',
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+};
 
 export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
   const [activeTab, setActiveTab] = useState("compress");
@@ -30,7 +93,6 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
       const cookies = document.cookie.split(';');
       const countryCookie = cookies.find(c => c.trim().startsWith('user-country='));
       const country = countryCookie ? countryCookie.split('=')[1] : null;
-      
       const isIndiaTZ = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Kolkata';
       if (country === 'IN' || isIndiaTZ) {
         setShowIndia(true);
@@ -38,69 +100,70 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
     }
   }, [isIndia]);
 
-  // Sample tools for grid
   const popularTools = useMemo(() => {
-    const featuredSlugs = ['pdf-compressor', 'image-compressor', 'background-remover', 'qr-code-generator', 'gst-calculator', 'word-counter'];
+    const featuredSlugs = ['pdf-compressor', 'image-compressor', 'background-remover', 'qr-code-generator', 'gst-calculator', 'word-counter',
+      'ai-image-generator', 'video-compressor', 'text-to-speech-tts',
+    ];
     const tools = featuredSlugs.map(slug => toolsRegistry.find(t => t.slug === slug)).filter(Boolean) as typeof toolsRegistry;
-    
-    // Fallback to top 6 if some are missing
-    if (tools.length < 6) {
-      const remaining = 6 - tools.length;
+    if (tools.length < 9) {
+      const remaining = 9 - tools.length;
       const additional = toolsRegistry.filter(t => !featuredSlugs.includes(t.slug)).slice(0, remaining);
       return [...tools, ...additional];
     }
     return tools;
   }, []);
 
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+
   return (
     <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] overflow-hidden">
-      
-      {/* Background Glow */}
-      <div className="absolute top-[-20%] left-[20%] w-[60%] h-[50%] rounded-full bg-[var(--accent)]/10 blur-[120px] pointer-events-none" />
 
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Left: Copy */}
-          <div className="flex flex-col items-start text-left z-10">
+      {/* ===== 1. HERO ===== */}
+      <section ref={heroRef} className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+        <motion.div style={{ y: heroY }} className="absolute top-[-20%] left-[10%] w-[80%] h-[60%] rounded-full bg-[var(--accent)]/8 blur-[140px] pointer-events-none" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div className="flex flex-col items-start text-left">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-secondary)] mb-8"
             >
-              <Command className="w-3.5 h-3.5" />
-              <span>ToolHub V2.0 / Edge Compute</span>
+              <Sparkles className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span>{toolCount} tools &middot; zero uploads &middot; free to use</span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               className="font-[family-name:var(--font-serif)] text-6xl sm:text-7xl lg:text-[84px] leading-[0.95] tracking-tight mb-8"
             >
-              Do more.<br />
-              <span className="text-[var(--text-muted)]">Wait less.</span>
+              The browser<br />
+              <span className="bg-gradient-to-r from-[var(--accent)] to-purple-400 bg-clip-text text-transparent">supercomputer.</span>
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-md mb-10 leading-relaxed font-[family-name:var(--font-sans)]"
+              className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-md mb-10 leading-relaxed"
             >
-              Compress PDFs, edit images, and run AI models directly in your browser. Uncompromising privacy meets instant execution.
+              {toolCount}+ tools — PDF, image, video, AI — that run entirely in your browser.
+              Nothing uploaded. Nothing stored. Just instant, private utility.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center gap-4"
+              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
             >
-              <Button size="lg" className="w-full sm:w-auto" asChild>
+              <Button size="lg" className="w-full sm:w-auto whitespace-nowrap shadow-[var(--shadow-glow-accent)]" asChild>
                 <Link href="/tools">
-                  Explore 200+ Tools
+                  Explore All Tools
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -111,59 +174,67 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
               </Button>
             </motion.div>
 
-            {/* Stats Row */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="flex gap-8 mt-16 pt-8 border-t border-[var(--border-subtle)] w-full"
+              className="flex flex-wrap gap-6 sm:gap-10 mt-16 pt-8 border-t border-[var(--border-subtle)] w-full"
             >
-              {STATS.map((stat, i) => (
-                <div key={i} className="flex flex-col">
-                  <span className="font-mono text-xl text-[var(--text-primary)] font-semibold">{stat.value}</span>
-                  <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">{stat.label}</span>
-                </div>
-              ))}
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl text-[var(--text-primary)] font-semibold">{toolCount}+</span>
+                <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">Browser Tools</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl text-[var(--success)] font-semibold">100%</span>
+                <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">Client-Side</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl text-[var(--text-primary)] font-semibold">0</span>
+                <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">Server Uploads</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-2xl text-[var(--warning)] font-semibold">24/7</span>
+                <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mt-1">Available</span>
+              </div>
             </motion.div>
           </div>
 
-          {/* Right: Live Widget Preview */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
-            className="relative lg:h-[600px] w-full flex items-center justify-center z-10"
+            className="relative lg:h-[600px] w-full flex items-center justify-center"
           >
-            {/* Abstract UI Window */}
             <div className="w-full max-w-[500px] aspect-[4/5] bg-[var(--bg-elevated)] rounded-[var(--radius-2xl)] border border-[var(--border-subtle)] shadow-[var(--shadow-lg)] overflow-hidden flex flex-col relative">
-              {/* Window Header */}
               <div className="h-12 border-b border-[var(--border-subtle)] flex items-center px-4 gap-2 bg-[var(--bg-overlay)]">
                 <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                 <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                 <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
+                <span className="ml-4 text-[11px] text-[var(--text-muted)] font-mono">toolhub — browser-supercomputer</span>
               </div>
-              
-              {/* Mock App Content */}
+
               <div className="flex-1 p-6 flex flex-col">
                 <div className="flex gap-4 mb-8">
                   {['compress', 'resize', 'convert'].map(tab => (
-                    <button 
+                    <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`text-sm font-medium capitalize pb-2 border-b-2 transition-colors ${activeTab === tab ? 'border-[var(--accent)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+                      className={`text-sm font-medium capitalize pb-2 border-b-2 transition-colors ${
+                        activeTab === tab ? 'border-[var(--accent)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+                      }`}
                     >
                       {tab}
                     </button>
                   ))}
                 </div>
 
-                <div className="flex-1 border-2 border-dashed border-[var(--border-subtle)] rounded-[var(--radius-xl)] bg-[var(--bg-overlay)] flex flex-col items-center justify-center gap-4 transition-colors hover:border-[var(--accent-hover)] hover:bg-[var(--accent-soft)] cursor-pointer">
-                  <div className="w-16 h-16 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center">
-                    <Play className="w-6 h-6 text-[var(--text-secondary)] ml-1" />
+                <div className="flex-1 border-2 border-dashed border-[var(--border-subtle)] rounded-[var(--radius-xl)] bg-[var(--bg-overlay)] flex flex-col items-center justify-center gap-4 transition-colors hover:border-[var(--accent-hover)] hover:bg-[var(--accent-soft)] cursor-pointer group">
+                  <div className="w-16 h-16 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center group-hover:border-[var(--accent)]/30 group-hover:bg-[var(--accent)]/5 transition-all">
+                    <Upload className="w-6 h-6 text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors" />
                   </div>
                   <div className="text-center">
-                    <p className="text-sm font-medium text-[var(--text-primary)]">Drop image here</p>
-                    <p className="text-xs text-[var(--text-muted)] mt-1">or click to browse</p>
+                    <p className="text-sm font-medium text-[var(--text-primary)]">Drop file here</p>
+                    <p className="text-xs text-[var(--text-muted)] mt-1">100% client-side processing</p>
                   </div>
                 </div>
 
@@ -177,17 +248,69 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
               </div>
             </div>
           </motion.div>
-
         </div>
       </section>
 
-      {/* Features Grid */}
+      {/* ===== 2. HOW IT WORKS ===== */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--accent)] mb-6">
+            <Zap className="w-3.5 h-3.5" /> How It Works
+          </span>
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl text-[var(--text-primary)] mb-4">
+            Three clicks. Zero servers.
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            No accounts, no upload queues, no privacy trade-offs.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {STEPS.map((step, i) => (
+            <motion.div
+              key={step.num}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.12 }}
+              className="relative bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-8 hover:border-[var(--accent)]/30 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.06)] transition-all duration-500 group"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-[40px] font-mono font-bold text-[var(--text-muted)] leading-none group-hover:text-[var(--accent)] transition-colors">{step.num}</span>
+                <div className="h-px flex-1 bg-[var(--border-subtle)] group-hover:bg-[var(--accent)]/30 transition-colors" />
+              </div>
+              <div className="w-12 h-12 rounded-[var(--radius-lg)] bg-[var(--bg-overlay)] border border-[var(--border-subtle)] flex items-center justify-center mb-5 group-hover:bg-[var(--accent)]/10 group-hover:border-[var(--accent)]/30 transition-all">
+                <step.icon className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors" />
+              </div>
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">{step.title}</h3>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-center gap-3 mt-12 text-sm text-[var(--text-muted)]"
+        >
+          <ShieldCheck className="w-4 h-4 text-[var(--success)]" />
+          <span>No sign-up required. All tools are free to start.</span>
+        </motion.div>
+      </section>
+
+      {/* ===== 3. FEATURES ===== */}
       <section className="border-y border-[var(--border-subtle)] bg-[var(--bg-overlay)]">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border-subtle)]">
             {FEATURES.map((feat, i) => (
               <div key={i} className="py-12 px-8 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-[var(--radius-lg)] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center mb-6 text-[var(--text-primary)]">
+                <div className="w-12 h-12 rounded-[var(--radius-lg)] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center mb-6 text-[var(--text-primary)] transition-all group-hover:bg-[var(--accent)]/10 group-hover:border-[var(--accent)]/30">
                   <feat.icon className="w-5 h-5" />
                 </div>
                 <h3 className="text-[18px] font-medium text-[var(--text-primary)] mb-3">{feat.title}</h3>
@@ -198,21 +321,273 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
         </div>
       </section>
 
-      {/* Conditional India Utilities Section */}
+      {/* ===== 4. CATEGORY SHOWCASE ===== */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto border-t border-[var(--border-subtle)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--accent)] mb-6">
+            <Layers className="w-3.5 h-3.5" /> Everything You Need
+          </span>
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl text-[var(--text-primary)] mb-4">
+            {toolCount} tools, 25 categories
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            From PDF wrangling to AI generation — one platform does it all.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {CATEGORIES.map((cat, i) => {
+            const count = toolsRegistry.filter(t => t.category === cat.label || t.category === cat.id).length;
+            return (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <Link
+                  href={`/tools?category=${cat.label}`}
+                  className="group flex flex-col items-start p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[var(--accent)]/30 hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.06)] transition-all duration-300 h-full"
+                >
+                  <div className="w-10 h-10 rounded-[var(--radius-lg)] bg-[var(--bg-overlay)] border border-[var(--border-subtle)] flex items-center justify-center mb-4 group-hover:bg-[var(--accent)]/10 group-hover:border-[var(--accent)]/30 transition-all">
+                    <cat.icon className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent)] transition-colors">{cat.label}</h3>
+                  <p className="text-xs text-[var(--text-muted)] mb-3 leading-relaxed">{cat.desc}</p>
+                  <span className="text-[11px] font-mono text-[var(--accent)] mt-auto">{count} tools &rarr;</span>
+                </Link>
+              </motion.div>
+            );
+          })}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 7 * 0.06 }}
+          >
+            <Link
+              href="/tools"
+              className="group flex flex-col items-center justify-center p-5 bg-[var(--bg-overlay)] border border-dashed border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[var(--accent)]/30 transition-all duration-300 h-full text-center"
+            >
+              <span className="text-2xl mb-2">+{toolCount - CATEGORIES.reduce((s, c) => s + toolsRegistry.filter(t => t.category === c.label || t.category === c.id).length, 0)}</span>
+              <span className="text-xs text-[var(--text-muted)]">More categories</span>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ===== 5. USE CASES ===== */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto border-t border-[var(--border-subtle)] bg-[var(--bg-overlay)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--accent)] mb-6">
+            <Users className="w-3.5 h-3.5" /> Built for Everyone
+          </span>
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl text-[var(--text-primary)] mb-4">
+            One platform. Every workflow.
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Whether you design, develop, create, or run a business.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {USE_CASES.map((uc, i) => (
+            <motion.div
+              key={uc.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-2xl)] p-6 hover:border-[var(--accent)]/20 transition-all duration-300"
+            >
+              <h3 className="text-base font-semibold text-[var(--text-primary)] mb-4">{uc.title}</h3>
+              <ul className="space-y-3">
+                {uc.items.map((item, j) => (
+                  <li key={j} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+                    <Check className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={uc.slug}
+                className="inline-flex items-center gap-1.5 mt-5 text-sm font-medium text-[var(--accent)] hover:underline"
+              >
+                Explore tools <MoveRight className="w-3.5 h-3.5" />
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== 6. WHY TOOLHUB ===== */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-overlay)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--accent)] mb-6">
+            <Star className="w-3.5 h-3.5" /> Why ToolHub
+          </span>
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl text-[var(--text-primary)] mb-4">
+            Built different by design.
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] max-w-xl mx-auto">
+            Every detail engineered for speed, privacy, and delight.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {WHY_CHOOSE.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+              className="group p-6 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[var(--accent)]/20 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.05)] transition-all duration-300"
+            >
+              <div className="w-10 h-10 rounded-[var(--radius-lg)] bg-[var(--bg-overlay)] border border-[var(--border-subtle)] flex items-center justify-center mb-4 group-hover:bg-[var(--accent)]/10 group-hover:border-[var(--accent)]/30 transition-all">
+                <item.icon className="w-5 h-5 text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors" />
+              </div>
+              <h3 className="text-base font-semibold text-[var(--text-primary)] mb-2">{item.title}</h3>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== 7. POPULAR TOOLS ===== */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto border-t border-[var(--border-subtle)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="flex items-center justify-between mb-12"
+        >
+          <div>
+            <h2 className="font-[family-name:var(--font-serif)] text-4xl text-[var(--text-primary)]">Most Used Tools</h2>
+            <p className="text-sm text-[var(--text-secondary)] mt-2">The utilities our users reach for every day.</p>
+          </div>
+          <Link href="/tools" className="text-sm font-medium text-[var(--accent)] hover:underline hidden sm:flex items-center gap-1">
+            View all <ChevronRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {popularTools.map((tool, i) => {
+            const theme = getCategoryTheme(tool.category);
+            const Icon = theme.icon;
+            return (
+              <motion.div
+                key={tool.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.04 }}
+              >
+                <Link
+                  href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
+                  className="group block h-full"
+                >
+                  <div className={`h-full p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-all duration-300 shadow-sm hover:shadow-[var(--shadow-md)] hover:border-[var(--border-default)] hover:-translate-y-1 ${theme.gradientHover}`}>
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`w-8 h-8 rounded-full ${theme.bgTint} flex items-center justify-center`}>
+                        <Icon className={`w-4 h-4 ${theme.iconColor}`} />
+                      </div>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] border border-[var(--border-subtle)] px-2 py-0.5 rounded">
+                        {tool.category}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors flex items-center gap-2">
+                      {tool.name}
+                      <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all text-[var(--accent)]" />
+                    </h3>
+                    <p className="text-sm text-[var(--text-secondary)] line-clamp-2 mb-4">
+                      {tool.description}
+                    </p>
+                    <div className="h-1.5 w-full bg-[var(--bg-overlay)] rounded-full overflow-hidden">
+                      <div className={`h-full ${theme.bgTint.replace('/10', '')} opacity-50`} style={{ width: `${50 + (tool.slug.length % 31)}%` }} />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-10 text-center sm:hidden"
+        >
+          <Link href="/tools" className="inline-flex items-center gap-1 text-sm font-medium text-[var(--accent)] hover:underline">
+            View all tools <ChevronRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* ===== 8. STATS BAR ===== */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto border-t border-[var(--border-subtle)] bg-[var(--bg-overlay)]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { value: `${toolCount}+`, label: 'Browser Tools', sub: 'And counting every week' },
+            { value: '25', label: 'Categories', sub: 'From PDF to AI generation' },
+            { value: '100%', label: 'Client-Side', sub: 'Zero data leaves your device' },
+            { value: 'Free', label: 'To Start', sub: 'No credit card required' },
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="text-center"
+            >
+              <div className="font-mono text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-1">{stat.value}</div>
+              <div className="text-sm font-medium text-[var(--text-secondary)]">{stat.label}</div>
+              <div className="text-[11px] text-[var(--text-muted)] mt-1">{stat.sub}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== 9. INDIA SECTION (conditional) ===== */}
       {showIndia && (
-        <section className="relative pt-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
-          {/* Saffron Top Gradient */}
+        <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
           <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FF6B35]/50 to-transparent" />
           <div className="absolute top-0 inset-x-0 h-[100px] bg-gradient-to-b from-[#FF6B35]/[0.03] to-transparent pointer-events-none" />
-          
-          <div className="flex flex-col items-center text-center mb-12">
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            className="flex flex-col items-center text-center mb-12"
+          >
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF6B35]/10 border border-[#FF6B35]/20 text-xs font-mono text-[#FF6B35] mb-6">
+              🇮🇳 Made for India
+            </span>
             <h2 className="font-[family-name:var(--font-serif)] text-4xl text-[var(--text-primary)] mb-3">
-              Built for Bharat <span className="inline-block ml-2">🇮🇳</span>
+              Built for Bharat
             </h2>
             <p className="text-lg text-[var(--text-secondary)]">
-              The only tools platform that speaks your government's language.
+              The only tools platform that speaks your government&apos;s language.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -220,87 +595,64 @@ export function HomeClient({ isIndia = false }: { isIndia?: boolean }) {
               { id: 'aadhaar', title: 'Aadhaar Crop & Mask', desc: 'Securely crop and mask Aadhaar numbers locally', slug: 'aadhaar-wallet-cropper' },
               { id: 'pan', title: 'PAN Card Resizer', desc: '200×200px, under 200KB for NSDL/UTIITSL', slug: 'pan-card-resizer' },
               { id: 'gst', title: 'GST Invoice Generator', desc: 'Format perfectly per GST Act 2017 rules', slug: 'gst-invoice-generator' },
-            ].map((item) => (
-              <Link 
-                key={item.id} 
-                href={`/indian-utilities/${item.slug}`}
-                className="group p-6 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[#FF6B35]/30 hover:bg-[#FF6B35]/[0.02] transition-colors"
+            ].map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
               >
-                <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 group-hover:text-[#FF6B35] transition-colors">{item.title}</h3>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
-              </Link>
+                <Link
+                  href={`/indian-utilities/${item.slug}`}
+                  className="group block p-6 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] hover:border-[#FF6B35]/30 hover:bg-[#FF6B35]/[0.02] transition-colors"
+                >
+                  <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 group-hover:text-[#FF6B35] transition-colors">{item.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </section>
       )}
 
-      {/* Popular Tools */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="font-[family-name:var(--font-serif)] text-4xl text-[var(--text-primary)]">Popular Utilities</h2>
-          <Link href="/tools" className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center transition-colors">
-            View directory <ChevronRight className="w-4 h-4 ml-1" />
-          </Link>
+      {/* ===== 10. FINAL CTA ===== */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto border-t border-[var(--border-subtle)]">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[60%] h-[80%] rounded-full bg-[var(--accent)]/5 blur-[100px]" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {popularTools.map((tool) => {
-            const isImage = tool.category.includes('Image');
-            const isPdf = tool.category.includes('PDF');
-            const isText = tool.category.includes('Text');
-            const isAudio = tool.category.includes('Audio');
-            const isVideo = tool.category.includes('Video');
-            const isAI = tool.category.includes('AI');
-            const isIndia = tool.category.includes('India');
-            
-            let gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-orange-500/5';
-            let iconColor = 'text-[var(--text-muted)]';
-            let bgTint = 'bg-[var(--bg-overlay)]';
-            
-            if (isImage) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-purple-500/5'; iconColor = 'text-purple-500'; bgTint = 'bg-purple-500/10'; }
-            else if (isPdf) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-amber-500/5'; iconColor = 'text-amber-500'; bgTint = 'bg-amber-500/10'; }
-            else if (isText) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-teal-500/5'; iconColor = 'text-teal-500'; bgTint = 'bg-teal-500/10'; }
-            else if (isAudio) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-pink-500/5'; iconColor = 'text-pink-500'; bgTint = 'bg-pink-500/10'; }
-            else if (isVideo) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-blue-500/5'; iconColor = 'text-blue-500'; bgTint = 'bg-blue-500/10'; }
-            else if (isAI) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-indigo-500/5'; iconColor = 'text-indigo-500'; bgTint = 'bg-indigo-500/10'; }
-            else if (isIndia) { gradientHover = 'hover:bg-gradient-to-br hover:from-[var(--bg-elevated)] hover:to-[#FF6B35]/5'; iconColor = 'text-[#FF6B35]'; bgTint = 'bg-[#FF6B35]/10'; }
-
-            return (
-              <Link 
-                key={tool.id} 
-                href={`/${tool.category.toLowerCase().replace(/\s+/g, '-')}/${tool.slug}`}
-                className="group block h-full"
-              >
-                <div className={`h-full p-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-all duration-300 shadow-sm hover:shadow-[var(--shadow-md)] hover:border-[var(--border-default)] hover:-translate-y-1 ${gradientHover}`}>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-8 h-8 rounded-full ${bgTint} flex items-center justify-center`}>
-                      {isImage ? <ImageIcon className={`w-4 h-4 ${iconColor}`} /> :
-                       isPdf ? <FileText className={`w-4 h-4 ${iconColor}`} /> :
-                       isText ? <Type className={`w-4 h-4 ${iconColor}`} /> :
-                       isAudio ? <Mic className={`w-4 h-4 ${iconColor}`} /> :
-                       isVideo ? <Video className={`w-4 h-4 ${iconColor}`} /> :
-                       isAI ? <Cpu className={`w-4 h-4 ${iconColor}`} /> :
-                       <ArrowLeftRight className={`w-4 h-4 ${iconColor}`} />}
-                    </div>
-                    <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider bg-[var(--bg-overlay)] border border-[var(--border-subtle)] px-2 py-0.5 rounded">
-                      {tool.category}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-medium text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors flex items-center gap-2">
-                    {tool.name}
-                    <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all text-[var(--accent)]" />
-                  </h3>
-                  <p className="text-sm text-[var(--text-secondary)] line-clamp-2 mb-4">
-                    {tool.description}
-                  </p>
-                  <div className="h-1.5 w-full bg-[var(--bg-overlay)] rounded-full overflow-hidden">
-                    <div className={`h-full ${bgTint.replace('/10', '')} opacity-50`} style={{ width: `${Math.floor(Math.random() * 60) + 20}%` }} />
-                  </div>
-                </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative z-10 max-w-3xl mx-auto text-center"
+        >
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent)] to-purple-600 flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(var(--accent-rgb),0.2)]">
+            <Crown className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl text-[var(--text-primary)] mb-4">
+            Start building. Nothing to install.
+          </h2>
+          <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-lg mx-auto">
+            {toolCount}+ tools. Free to use. Pro plan for unlimited access.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button size="lg" className="w-full sm:w-auto shadow-[var(--shadow-glow-accent)]" asChild>
+              <Link href="/tools">
+                Explore All Tools <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
-            );
-          })}
-        </div>
+            </Button>
+            <Button variant="secondary" size="lg" className="w-full sm:w-auto" asChild>
+              <Link href="/pricing">
+                See Pricing <MoveRight className="w-4 h-4 ml-1.5" />
+              </Link>
+            </Button>
+          </div>
+          <p className="text-xs text-[var(--text-muted)] mt-6">
+            No credit card required. No data ever leaves your browser.
+          </p>
+        </motion.div>
       </section>
 
     </div>

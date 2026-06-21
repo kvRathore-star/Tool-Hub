@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { Upload, Download, Sparkles, Move, Scale, RotateCw } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiFaceSwap() {
   const [sourceImg, setSourceImg] = useState<string | null>(null);
@@ -113,10 +114,7 @@ export default function AiFaceSwap() {
     const canvas = canvasRef.current;
     if (!canvas || !targetImg) return;
     
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = `faceswap_${Date.now()}.png`;
-    link.click();
+    downloadOrShare(canvas.toDataURL('image/png'), `faceswap_${Date.now()}.png`);
     toast.success("Swapped artwork downloaded!");
   };
 
@@ -157,33 +155,33 @@ export default function AiFaceSwap() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Source Face</label>
-              <div className="relative border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-center hover:bg-zinc-50 dark:hover:bg-zinc-850 transition-colors flex flex-col items-center">
+              <div className="relative border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-center hover:bg-zinc-50 dark:hover:bg-[var(--bg-surface)] transition-colors flex flex-col items-center">
                 {sourceImg ? (
                   <img src={sourceImg} alt="Face Source" className="w-12 h-12 object-cover rounded-full" />
                 ) : (
                   <Upload className="w-6 h-6 text-zinc-400 mb-1" />
                 )}
-                <span className="text-[10px] text-zinc-450 mt-1">{sourceImg ? "Ready" : "Upload"}</span>
+                <span className="text-[10px] text-[var(--text-muted)] mt-1">{sourceImg ? "Ready" : "Upload"}</span>
                 <input type="file" accept="image/*" onChange={handleSourceUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Target Background</label>
-              <div className="relative border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-center hover:bg-zinc-50 dark:hover:bg-zinc-850 transition-colors flex flex-col items-center">
+              <div className="relative border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-center hover:bg-zinc-50 dark:hover:bg-[var(--bg-surface)] transition-colors flex flex-col items-center">
                 {targetImg ? (
                   <img src={targetImg} alt="Target Source" className="w-12 h-12 object-cover rounded-lg" />
                 ) : (
                   <Upload className="w-6 h-6 text-zinc-400 mb-1" />
                 )}
-                <span className="text-[10px] text-zinc-450 mt-1">{targetImg ? "Ready" : "Upload"}</span>
+                <span className="text-[10px] text-[var(--text-muted)] mt-1">{targetImg ? "Ready" : "Upload"}</span>
                 <input type="file" accept="image/*" onChange={handleTargetUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
               </div>
             </div>
           </div>
 
           {sourceImg && targetImg && (
-            <div className="space-y-4 border-t border-zinc-150 dark:border-zinc-850 pt-4 animate-in slide-in-from-top-2 duration-300">
+            <div className="space-y-4 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)] pt-4 animate-in slide-in-from-top-2 duration-300">
               <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Fine-Tune Alignment</h4>
               
               <div className="space-y-1">
@@ -250,7 +248,7 @@ export default function AiFaceSwap() {
           <div className="flex-1 flex items-center justify-center bg-zinc-50 dark:bg-black/35 rounded-xl border border-zinc-200 dark:border-zinc-800/50 p-4 overflow-hidden">
             <canvas
               ref={canvasRef}
-              className="max-w-full max-h-[400px] object-contain rounded-lg shadow-md border border-zinc-250 dark:border-zinc-850"
+              className="max-w-full max-h-[400px] object-contain rounded-lg shadow-md border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
             />
           </div>
         </div>

@@ -178,7 +178,7 @@ export default function SaasPricingCalculator() {
                 <input 
                   type="number" value={targetMrr} 
                   onChange={e => setTargetMrr(Math.max(100, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white font-bold outline-none focus:border-zinc-350 text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white font-bold outline-none focus:border-[var(--border-subtle)] text-sm"
                 />
                 <span className="absolute right-4 top-3.5 text-zinc-400 font-bold text-xs">USD</span>
               </div>
@@ -233,7 +233,7 @@ export default function SaasPricingCalculator() {
 
           {/* Core Metrics Breakdown */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-4">
-            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800">
               Economics Analysis
             </h3>
             
@@ -259,7 +259,7 @@ export default function SaasPricingCalculator() {
 
           {/* Growth Simulator Output */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-4">
-            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800 flex items-center justify-between">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800 flex items-center justify-between">
               <span>12-Month Projections</span>
               <span className="text-[10px] text-zinc-400 font-normal">Assumes 30% of OpEx allocated to CAC acquisition</span>
             </h3>
@@ -267,7 +267,7 @@ export default function SaasPricingCalculator() {
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left text-zinc-500 dark:text-zinc-400">
                 <thead>
-                  <tr className="border-b border-zinc-150 dark:border-zinc-800 text-zinc-400 font-semibold">
+                  <tr className="border-b border-[var(--border-subtle)] dark:border-zinc-800 text-zinc-400 font-semibold">
                     <th className="py-2">Month</th>
                     <th className="py-2">End Users</th>
                     <th className="py-2 text-rose-500">Churned</th>
@@ -283,7 +283,7 @@ export default function SaasPricingCalculator() {
                       <td className="py-2.5 font-bold text-zinc-900 dark:text-white">{proj.endCust.toLocaleString()}</td>
                       <td className="py-2.5 text-rose-400">-{proj.churned}</td>
                       <td className="py-2.5 font-semibold text-zinc-900 dark:text-zinc-200">${Math.round(proj.mrr).toLocaleString()}</td>
-                      <td className="py-2.5 text-zinc-450">${Math.round(proj.arr).toLocaleString()}</td>
+                      <td className="py-2.5 text-[var(--text-muted)]">${Math.round(proj.arr).toLocaleString()}</td>
                       <td className="py-2.5 font-bold text-emerald-500 text-right">${Math.round(proj.grossProfit).toLocaleString()}</td>
                     </tr>
                   ))}

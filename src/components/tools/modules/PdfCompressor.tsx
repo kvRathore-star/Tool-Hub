@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader } from '../FileUploader';
 import { PDFDocument } from 'pdf-lib';
 import { downloadOrShare } from '@/utils/nativeShare';
@@ -49,7 +50,7 @@ export default function PdfCompressor() {
       setOutputSize(blob.size);
     } catch (e) {
       console.error("PDF Compression failed", e);
-      alert("Failed to compress PDF. The file might be encrypted or corrupted.");
+      toast.error("Failed to compress PDF. The file might be encrypted or corrupted.");
     } finally {
       setIsProcessing(false);
     }

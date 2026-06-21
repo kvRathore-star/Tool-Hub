@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader } from '../FileUploader';
 import { PDFDocument, rgb } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -191,7 +192,7 @@ export default function EsignPdf() {
       setOutputUrl(url);
     } catch (e) {
       console.error("PDF Sign failed", e);
-      alert("Failed to sign PDF.");
+      toast.error("Failed to sign PDF.");
     } finally {
       setIsProcessing(false);
     }

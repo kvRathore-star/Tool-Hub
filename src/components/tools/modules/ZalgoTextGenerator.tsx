@@ -158,7 +158,7 @@ export default function ZalgoTextGenerator() {
 
           <button
             onClick={loadSample}
-            className="w-full bg-zinc-150 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white font-bold py-3 rounded-xl transition-all active:scale-95 text-sm"
+            className="w-full bg-[var(--bg-overlay)] dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white font-bold py-3 rounded-xl transition-all active:scale-95 text-sm"
           >
             💡 Load Sample Text
           </button>

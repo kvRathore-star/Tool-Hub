@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Barcode, Download, RefreshCw } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import JsBarcode from 'jsbarcode';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function BarcodeGenerator() {
   const [value, setValue] = useState('123456789012');
@@ -53,18 +54,14 @@ export default function BarcodeGenerator() {
     const blob = new Blob([coloredSvg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `barcode_${format}_${value}.svg`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `barcode_${format}_${value}.svg`);
     toast.success('Barcode SVG downloaded!');
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Barcode className="w-5 h-5 text-indigo-500" />
           Multi-Format Barcode Generator
         </h2>
@@ -120,7 +117,7 @@ export default function BarcodeGenerator() {
 
         {/* Output Panel */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl flex flex-col justify-between items-center min-h-[250px]">
-          <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-850 rounded-xl">
+          <div className="flex-1 flex items-center justify-center w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-[var(--border-subtle)] rounded-xl">
             <svg ref={svgRef} className="max-w-full h-auto" />
           </div>
 

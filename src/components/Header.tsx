@@ -1,103 +1,45 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowRight, Search, Zap } from "lucide-react";
+import { ChevronDown, ArrowRight, Search, Zap, Menu, X, Sun, Moon, Sparkles, Layout, Home, CornerDownLeft } from "lucide-react";
 import { CommandMenu } from "./CommandMenu";
 import { Button } from "./ui/button";
+import { toolsRegistry } from "@/registry/tools";
 
-const MEGAMENU_COLUMNS = [
-  {
-    title: "🖼 Image",
-    tools: [
-      { name: "Compress", href: "/image/image-compressor" },
-      { name: "Resize", href: "/image/image-resizer" },
-      { name: "BG Remove", href: "/image/background-remover" },
-      { name: "Upscale", href: "/image/ai-image-upscaler" },
-      { name: "HEIC→JPG", href: "/image/heic-to-jpg" },
-    ],
-    allCount: 21,
-    allHref: "/tools?category=Image"
-  },
-  {
-    title: "📄 PDF",
-    tools: [
-      { name: "Compress", href: "/pdf/pdf-compressor" },
-      { name: "Merge", href: "/pdf/pdf-merger" },
-      { name: "Split", href: "/pdf/pdf-splitter" },
-      { name: "to Word", href: "/pdf/pdf-to-word" },
-      { name: "to Excel", href: "/pdf/pdf-to-excel" },
-    ],
-    allCount: 16,
-    allHref: "/tools?category=PDF"
-  },
-  {
-    title: "✍ Text",
-    tools: [
-      { name: "AI Write", href: "/text/ai-writing-assistant" },
-      { name: "Grammar", href: "/extension/grammar-checker-extension" },
-      { name: "Paraphrase", href: "/text/ai-paraphrasing-tool" },
-      { name: "Summarize", href: "/text/text-summarizer" },
-      { name: "Translate", href: "/text/ai-translator" },
-    ],
-    allCount: 15,
-    allHref: "/tools?category=Text"
-  },
-  {
-    title: "🎵 Audio",
-    tools: [
-      { name: "Transcribe", href: "/transcription/video-to-text-transcription" },
-      { name: "Convert", href: "/audio/mp3-converter" },
-      { name: "Cut/Trim", href: "/audio/audio-cutter" },
-      { name: "TTS", href: "/audio/text-to-speech-tts" },
-      { name: "Noise Rmv", href: "/audio/audio-noise-reduction" },
-    ],
-    allCount: 8,
-    allHref: "/tools?category=Audio"
-  },
-  {
-    title: "🤖 AI Tools",
-    tools: [
-      { name: "AI Chat Hub", href: "/ai/ai-chat-hub" },
-      { name: "Image Gen", href: "/image/ai-image-generator" },
-      { name: "PDF Chat", href: "/ai/ai-document-chat" },
-      { name: "Code Gen", href: "/ai/ai-code-generator" },
-      { name: "Video Summarize", href: "/video/ai-video-summarizer" },
-    ],
-    allCount: 12,
-    allHref: "/tools?category=AI"
-  },
-  {
-    title: "📹 Video",
-    tools: [
-      { name: "Compress", href: "/video/video-compressor" },
-      { name: "to GIF", href: "/video/video-to-gif" },
-      { name: "Trim", href: "/video/video-trimmer" },
-      { name: "Subtitle", href: "/video/subtitle-generator" },
-    ],
-    allCount: 11,
-    allHref: "/tools?category=Video"
-  },
-  {
-    title: "🔄 Convert",
-    tools: [
-      { name: "MP4→MP3", href: "/converter/mp4-to-mp3" },
-      { name: "YT DL", href: "/downloader/youtube-downloader" },
-      { name: "TikTok", href: "/downloader/tiktok-video-downloader" },
-      { name: "SoundCloud", href: "/downloader/soundcloud-downloader" },
-    ],
-    allCount: 22,
-    allHref: "/tools?category=Converter"
-  }
+const MENU_COLUMN_DEFS = [
+  { title: "🖼 Image", category: "Image", allHref: "/tools?category=Image", slugs: ["image-compressor", "image-resizer", "background-remover", "ai-image-upscaler", "heic-to-jpg"] },
+  { title: "📄 PDF", category: "PDF", allHref: "/tools?category=PDF", slugs: ["pdf-compressor", "pdf-merger", "pdf-splitter", "pdf-to-word", "pdf-to-excel"] },
+  { title: "✍ Text", category: "Text", allHref: "/tools?category=Text", slugs: ["ai-writing-assistant", "grammar-checker-extension", "ai-paraphrasing-tool", "text-summarizer", "ai-translator"] },
+  { title: "🎵 Audio", category: "Audio", allHref: "/tools?category=Audio", slugs: ["text-to-speech-tts", "audio-cutter", "ai-audio-enhancer", "speech-to-text", "ai-music-generator"] },
+  { title: "🤖 AI Tools", category: "AI", allHref: "/tools?category=AI", slugs: ["ai-chat-hub", "ai-image-generator", "ai-document-chat", "ai-code-generator", "ai-video-summarizer"] },
+  { title: "📹 Video", category: "Video", allHref: "/tools?category=Video", slugs: ["video-compressor", "video-to-gif", "video-trimmer", "subtitle-generator"] },
+  { title: "🔄 Convert", category: "Converter", allHref: "/tools?category=Converter", slugs: ["mp4-to-mp3", "youtube-downloader", "tiktok-video-downloader", "soundcloud-downloader"] },
 ];
+
+function buildMegamenuColumns() {
+  return MENU_COLUMN_DEFS.map(({ title, category, allHref, slugs }) => {
+    const tools = slugs
+      .map(slug => toolsRegistry.find(t => t.slug === slug))
+      .filter(Boolean)
+      .map(t => ({ name: t!.name, href: `/${category.toLowerCase().replace(/\s+/g, '-')}/${t!.slug}` }));
+    const allCount = toolsRegistry.filter(t => t.category === category).length;
+    return { title, tools, allCount, allHref };
+  });
+}
 
 export function Header() {
   const [mounted, setMounted] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
+  const { theme, setTheme } = useTheme();
+
+  const MEGAMENU_COLUMNS = useMemo(() => buildMegamenuColumns(), []);
 
   useEffect(() => {
     setMounted(true);
@@ -114,15 +56,33 @@ export function Header() {
       if (e.key === "Escape") {
         setMegaMenuOpen(false);
       }
-      // Extremely basic arrow navigation capture to prevent scroll
       if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) {
         e.preventDefault();
-        // A full roving tabindex system would be ideal here for production
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [megaMenuOpen]);
+
+  // Close mobile menu on Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const MOBILE_NAV_LINKS = [
+    { label: "AI Hub", href: "/ai-hub" },
+    { label: "Tools", href: "/tools" },
+    { label: "Extension", href: "/extension" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "API", href: "/api" },
+    { label: "Sign in", href: "/login" },
+  ];
 
   return (
     <header className={`sticky top-0 z-[1000] w-full h-[60px] border-b border-[var(--border-subtle)] transition-all duration-300 ${isScrolled ? 'bg-[var(--bg-elevated)]/80 backdrop-blur-md' : 'bg-[var(--bg-elevated)]'}`}>
@@ -175,113 +135,118 @@ export function Header() {
                     transition={{ duration: 0.22, ease: [0, 0, 0.2, 1] }}
                     className="absolute left-0 top-[100%] mt-4 w-[1000px] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-b-[var(--radius-xl)] shadow-[var(--shadow-lg)] overflow-hidden z-[1000]"
                   >
-                    {/* Inline Search Bar */}
-                    <div className="p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-overlay)] flex items-center justify-between">
+                    {/* Inline Search — opens CommandMenu */}
+                    <button
+                      onClick={() => {
+                        setMegaMenuOpen(false);
+                        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+                      }}
+                      className="w-full p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-overlay)] flex items-center justify-between hover:bg-[var(--bg-surface)] transition-colors cursor-pointer text-left"
+                    >
                       <div className="flex items-center gap-2 flex-1">
                         <Search className="w-4 h-4 text-[var(--text-muted)]" />
-                        <input 
-                          autoFocus
-                          type="text" 
-                          placeholder="Search tools..." 
-                          className="bg-transparent border-none outline-none text-[var(--text-primary)] text-sm w-full placeholder:text-[var(--text-muted)]"
-                        />
+                        <span className="text-[var(--text-muted)] text-sm">Search tools...</span>
                       </div>
-                      <div className="text-[10px] font-mono bg-[var(--bg-surface)] px-2 py-1 rounded text-[var(--text-muted)] border border-[var(--border-subtle)]">
-                        ⌘K to search
-                      </div>
-                    </div>
+                      <kbd className="text-[10px] font-mono bg-[var(--bg-surface)] px-2 py-1 rounded text-[var(--text-muted)] border border-[var(--border-subtle)]">
+                        ⌘K
+                      </kbd>
+                    </button>
 
-                    <div className="p-6 grid grid-cols-5 gap-6">
+                    <div className="p-6">
                       {/* Top Row: 5 columns */}
-                      {MEGAMENU_COLUMNS.slice(0, 5).map((col, idx) => (
+                      <div className="grid grid-cols-5 gap-6">
+                        {MEGAMENU_COLUMNS.slice(0, 5).map((col, idx) => (
+                          <motion.div 
+                            key={col.title}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: idx * 0.03 }}
+                            className="flex flex-col"
+                          >
+                            <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em] mb-3 flex items-center gap-2">
+                              {col.title}
+                              <div className="h-[1px] flex-1 bg-[var(--border-subtle)]" />
+                            </h4>
+                            <ul className="space-y-1 flex-1">
+                              {col.tools.map((t) => (
+                                <li key={t.name}>
+                                  <Link
+                                    href={t.href}
+                                    className="block py-1.5 pl-2 text-[14px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-l-2 hover:border-[var(--accent)] transition-all border-l-2 border-transparent focus:outline-none focus:text-[var(--text-primary)] focus:border-[var(--accent)]"
+                                    onClick={() => setMegaMenuOpen(false)}
+                                  >
+                                    {t.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            <Link 
+                              href={col.allHref}
+                              className="mt-3 pl-2 text-[12px] font-medium text-[var(--accent)] hover:underline flex items-center gap-1"
+                              onClick={() => setMegaMenuOpen(false)}
+                            >
+                              → All {col.allCount}
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {/* Bottom Row: Video, Convert, India */}
+                      <div className="grid grid-cols-5 gap-6 mt-6 pt-6 border-t border-[var(--border-subtle)]">
+                        {MEGAMENU_COLUMNS.slice(5, 7).map((col, idx) => (
+                          <motion.div 
+                            key={col.title}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: (idx + 5) * 0.03 }}
+                            className="flex flex-col"
+                          >
+                            <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em] mb-3 flex items-center gap-2">
+                              {col.title}
+                              <div className="h-[1px] flex-1 bg-[var(--border-subtle)]" />
+                            </h4>
+                            <ul className="space-y-1 flex-1">
+                              {col.tools.map((t) => (
+                                <li key={t.name}>
+                                  <Link
+                                    href={t.href}
+                                    className="block py-1.5 pl-2 text-[14px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-l-2 hover:border-[var(--accent)] transition-all border-l-2 border-transparent"
+                                    onClick={() => setMegaMenuOpen(false)}
+                                  >
+                                    {t.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            <Link 
+                              href={col.allHref}
+                              className="mt-3 pl-2 text-[12px] font-medium text-[var(--accent)] hover:underline flex items-center gap-1"
+                              onClick={() => setMegaMenuOpen(false)}
+                            >
+                              → All {col.allCount}
+                            </Link>
+                          </motion.div>
+                        ))}
+
+                        {/* India Section Spans 3 columns */}
                         <motion.div 
-                          key={col.title}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          transition={{ delay: idx * 0.03 }}
-                          className="flex flex-col"
+                          transition={{ delay: 7 * 0.03 }}
+                          className="col-span-3 relative overflow-hidden rounded-xl bg-gradient-to-br from-[rgba(255,107,53,0.05)] to-transparent border border-[var(--border-subtle)] p-4"
                         >
-                          <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em] mb-3 flex items-center gap-2">
-                            {col.title}
-                            <div className="h-[1px] flex-1 bg-[var(--border-subtle)]" />
+                          <div className="absolute top-0 left-0 w-1 h-full bg-[var(--india)]" />
+                          <h4 className="text-[13px] font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                            <span className="text-lg">🇮🇳</span> India Utilities
                           </h4>
-                          <ul className="space-y-1 flex-1">
-                            {col.tools.map((t) => (
-                              <li key={t.name}>
-                                <Link
-                                  href={t.href}
-                                  className="block py-1.5 pl-2 text-[14px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-l-2 hover:border-[var(--accent)] transition-all border-l-2 border-transparent focus:outline-none focus:text-[var(--text-primary)] focus:border-[var(--accent)]"
-                                  onClick={() => setMegaMenuOpen(false)}
-                                >
-                                  {t.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <Link 
-                            href={col.allHref}
-                            className="mt-3 pl-2 text-[12px] font-medium text-[var(--accent)] hover:underline flex items-center gap-1"
-                            onClick={() => setMegaMenuOpen(false)}
-                          >
-                            → All {col.allCount}
-                          </Link>
+                          <div className="grid grid-cols-2 gap-y-2 gap-x-4">
+                            <Link href="/indian-utilities/passport-photo-india" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Passport Photo Maker</Link>
+                            <Link href="/indian-utilities/aadhaar-wallet-cropper" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Aadhaar Crop & Mask</Link>
+                            <Link href="/indian-utilities/pan-card-resizer" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>PAN Card Resizer</Link>
+                            <Link href="/indian-utilities/gst-invoice-generator" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>GST Invoice Gen</Link>
+                          </div>
                         </motion.div>
-                      ))}
-
-                      {/* Bottom Row inside Grid: Video, Convert, India */}
-                      {MEGAMENU_COLUMNS.slice(5, 7).map((col, idx) => (
-                        <motion.div 
-                          key={col.title}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: (idx + 5) * 0.03 }}
-                          className="flex flex-col border-t border-[var(--border-subtle)] pt-6 mt-2"
-                        >
-                          <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em] mb-3 flex items-center gap-2">
-                            {col.title}
-                            <div className="h-[1px] flex-1 bg-[var(--border-subtle)]" />
-                          </h4>
-                          <ul className="space-y-1 flex-1">
-                            {col.tools.map((t) => (
-                              <li key={t.name}>
-                                <Link
-                                  href={t.href}
-                                  className="block py-1.5 pl-2 text-[14px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-l-2 hover:border-[var(--accent)] transition-all border-l-2 border-transparent"
-                                  onClick={() => setMegaMenuOpen(false)}
-                                >
-                                  {t.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <Link 
-                            href={col.allHref}
-                            className="mt-3 pl-2 text-[12px] font-medium text-[var(--accent)] hover:underline flex items-center gap-1"
-                            onClick={() => setMegaMenuOpen(false)}
-                          >
-                            → All {col.allCount}
-                          </Link>
-                        </motion.div>
-                      ))}
-
-                      {/* India Section Spans 3 columns */}
-                      <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 7 * 0.03 }}
-                        className="col-span-3 border-t border-[var(--border-subtle)] pt-6 mt-2 relative overflow-hidden rounded-xl bg-gradient-to-br from-[rgba(255,107,53,0.05)] to-transparent border border-[var(--border-subtle)] p-4"
-                      >
-                        <div className="absolute top-0 left-0 w-1 h-full bg-[var(--india)]" />
-                        <h4 className="text-[13px] font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
-                          <span className="text-lg">🇮🇳</span> India Utilities
-                        </h4>
-                        <div className="grid grid-cols-2 gap-y-2 gap-x-4">
-                          <Link href="/indian-utilities/passport-photo-india" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Passport Photo Maker</Link>
-                          <Link href="/indian-utilities/aadhaar-wallet-cropper" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>Aadhaar Crop & Mask</Link>
-                          <Link href="/indian-utilities/pan-card-resizer" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>PAN Card Resizer</Link>
-                          <Link href="/indian-utilities/gst-invoice-generator" className="text-[13px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors block" onClick={() => setMegaMenuOpen(false)}>GST Invoice Gen</Link>
-                        </div>
-                      </motion.div>
+                      </div>
                     </div>
 
                     {/* Most Used Ticker */}
@@ -317,8 +282,26 @@ export function Header() {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <CommandMenu />
+
+          {/* Theme toggle */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-all cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {mounted ? (theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />) : <div className="w-4 h-4" />}
+          </button>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex md:hidden items-center justify-center w-9 h-9 rounded-[var(--radius-md)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-all cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
 
           <div className="hidden sm:flex items-center gap-3">
             {/* Free Uses Badge */}
@@ -346,6 +329,91 @@ export function Header() {
         </div>
 
       </div>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-[60px] bottom-0 z-[999] md:hidden bg-[var(--bg-base)] border-t border-[var(--border-subtle)] overflow-y-auto"
+          >
+            <div className="p-4 space-y-1">
+              {/* Search shortcut */}
+              <div className="mb-4">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-secondary)] bg-[var(--bg-overlay)] rounded-[var(--radius-lg)] border border-[var(--border-subtle)]"
+                >
+                  <Search className="w-4 h-4 text-[var(--text-muted)]" />
+                  <span>Search tools...</span>
+                  <kbd className="ml-auto font-mono text-[10px] text-[var(--text-muted)] bg-[var(--bg-elevated)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)]">⌘K</kbd>
+                </button>
+              </div>
+
+              {/* Nav links */}
+              {MOBILE_NAV_LINKS.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] rounded-[var(--radius-md)] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+
+              {/* Category shortcuts */}
+              <div className="pt-4 mt-4 border-t border-[var(--border-subtle)]">
+                <h4 className="px-4 text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                  Categories
+                </h4>
+                <div className="grid grid-cols-2 gap-1">
+                  {MEGAMENU_COLUMNS.map((col) => (
+                    <Link
+                      key={col.title}
+                      href={col.allHref}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] rounded-[var(--radius-md)] transition-colors"
+                    >
+                      {col.title}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/tools?category=indian-utilities"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--india)] hover:bg-[var(--bg-surface)] rounded-[var(--radius-md)] transition-colors"
+                  >
+                    🇮🇳 India
+                  </Link>
+                </div>
+              </div>
+
+              {/* Free uses badge (mobile) */}
+              <div className="flex items-center justify-center gap-1.5 px-3 py-2 mx-4 mt-4 mb-1 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-overlay)]">
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-[12px] font-mono text-[var(--text-secondary)]"><strong className="text-[var(--text-primary)]">5</strong> free uses</span>
+              </div>
+
+              {/* Pro CTA */}
+              <div className="pt-2 pb-6">
+                <Link
+                  href="/pricing"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block mx-4 text-center px-4 py-3 text-sm font-medium text-white bg-[var(--accent)] hover:bg-[var(--accent-hover)] rounded-[var(--radius-lg)] transition-colors"
+                >
+                  Get Pro
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

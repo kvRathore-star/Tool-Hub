@@ -123,7 +123,7 @@ export default function UrlShortener() {
                 <button
                   onClick={copyToClipboard}
                   className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-md transition-colors flex items-center gap-2"
-                  title="Copy to clipboard"
+                  title="Copy to clipboard" aria-label="Copy"
                 >
                   {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                 </button>

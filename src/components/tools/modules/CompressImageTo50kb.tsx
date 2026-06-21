@@ -5,6 +5,7 @@ import { FileUploader } from '../FileUploader';
 import imageCompression from 'browser-image-compression';
 import { Download, RefreshCw, AlertTriangle, ShieldCheck, Zap } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function CompressImageTo50kb() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -82,10 +83,7 @@ export default function CompressImageTo50kb() {
 
   const handleDownload = () => {
     if (!compressedUrl) return;
-    const a = document.createElement('a');
-    a.href = compressedUrl;
-    a.download = `compressed-50kb-${imageFile?.name || 'photo.jpg'}`;
-    a.click();
+    downloadOrShare(compressedUrl, `compressed-50kb-${imageFile?.name || 'photo.jpg'}`);
   };
 
   const reset = () => {
@@ -118,11 +116,11 @@ export default function CompressImageTo50kb() {
       <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100">Original Photo</h3>
-          <p className="text-xs text-zinc-550">File Weight: {(imageFile.size / 1024).toFixed(1)} KB</p>
+          <p className="text-xs text-[var(--text-secondary)]">File Weight: {(imageFile.size / 1024).toFixed(1)} KB</p>
         </div>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
         >
           Change Photo
         </button>
@@ -144,7 +142,7 @@ export default function CompressImageTo50kb() {
           <button
             onClick={handleCompress}
             disabled={isProcessing}
-            className="w-full mt-6 bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full mt-6 bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
           >
             {isProcessing ? (
               <RefreshCw className="w-5 h-5 animate-spin" />

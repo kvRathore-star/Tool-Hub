@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { FileUploader } from '../FileUploader';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function SubtitleGenerator() {
   const [file, setFile] = useState<File | null>(null);
@@ -31,11 +32,7 @@ Please configure the backend to get real SRT output.`);
   const downloadSrt = () => {
     const blob = new Blob([output], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${file?.name}.srt`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `${file?.name}.srt`);
   };
 
   if (!file) {
@@ -63,7 +60,7 @@ Please configure the backend to get real SRT output.`);
             disabled={isProcessing}
             className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-95 disabled:opacity-50"
           >
-            {isProcessing ? "Transcribing..." : "Generate .SRT"}
+            {isProcessing ? <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" /> Transcribing...</> : "Generate .SRT"}
           </button>
         </div>
 
@@ -79,7 +76,7 @@ Please configure the backend to get real SRT output.`);
             readOnly
             value={output}
             placeholder="SRT format will appear here..."
-          />
+           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && processSubtitles()}/>
         </div>
       </div>
     </div>

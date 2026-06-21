@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
 import { Download, Sliders, RefreshCw, Key, FileText, Globe, Wifi, User } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function QrCodeGenerator() {
   const [qrType, setQrType] = useState<'text' | 'url' | 'wifi' | 'contact'>('url');
@@ -108,11 +109,7 @@ export default function QrCodeGenerator() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'qrcode.png';
-    a.click();
+    downloadOrShare(canvas.toDataURL('image/png'), 'qrcode.png');
     toast.success('QR code downloaded!');
   };
 
@@ -139,7 +136,7 @@ export default function QrCodeGenerator() {
           <Key className="w-6 h-6 text-indigo-500" />
           Dynamic QR Code Generator
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Generate high-resolution QR codes for text, website links, Wi-Fi credentials, or digital contact cards. Custom colors and center logo support.
         </p>
       </div>
@@ -159,8 +156,8 @@ export default function QrCodeGenerator() {
               onClick={() => setQrType(tab.id as any)}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
                 qrType === tab.id
-                  ? 'bg-indigo-650 text-white shadow-sm'
-                  : 'text-zinc-650 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                  ? 'bg-[var(--accent)] text-white shadow-sm'
+                  : 'text-[var(--text-secondary)] dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -288,7 +285,7 @@ export default function QrCodeGenerator() {
           {/* Logo upload */}
           <div className="space-y-1 text-xs">
             <span className="text-zinc-500 font-bold block mb-1">Center Logo Overlay</span>
-            <label className="w-full py-2.5 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-350 border border-zinc-200 dark:border-zinc-700 font-bold rounded-xl text-center cursor-pointer block">
+            <label className="w-full py-2.5 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-700 dark:text-[var(--text-muted)] border border-zinc-200 dark:border-zinc-700 font-bold rounded-xl text-center cursor-pointer block">
               Choose Logo File
               <input type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
             </label>
@@ -305,7 +302,7 @@ export default function QrCodeGenerator() {
           <div className="flex flex-col gap-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
             <button
               onClick={reset}
-              className="w-full py-2.5 bg-zinc-105 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-[var(--bg-overlay)] dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition-colors cursor-pointer"
             >
               Reset Parameters
             </button>

@@ -40,7 +40,7 @@ export default function DiffChecker() {
           <Split className="w-6 h-6 text-indigo-500" />
           Text Diff Checker
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Compare two versions of text side-by-side or inline to find additions, deletions, and modifications. Computed locally.
         </p>
       </div>
@@ -56,6 +56,7 @@ export default function DiffChecker() {
                 setOriginal(e.target.value);
                 setDiffs(null);
               }}
+              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleDiffCheck()}
               placeholder="Paste the source version of your text..."
               className="w-full h-48 bg-zinc-50 dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-xs font-mono text-zinc-900 dark:text-white outline-none resize-none focus:border-indigo-500"
             />
@@ -80,14 +81,17 @@ export default function DiffChecker() {
           <button
             onClick={handleDiffCheck}
             disabled={isProcessing}
-            className="flex-1 bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-850 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs"
+            className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-[var(--accent)] text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs"
           >
             <ArrowLeftRight className="w-4 h-4" />
-            {isProcessing ? 'Comparing Texts...' : 'Compare Text Diffs'}
+            {isProcessing ? <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+                Comparing Texts...
+              </> : 'Compare Text Diffs'}
           </button>
           <button
             onClick={handleClear}
-            className="px-5 py-3.5 bg-zinc-105 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-xs"
+            className="px-5 py-3.5 bg-[var(--bg-overlay)] dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-xs"
           >
             <Trash2 className="w-4 h-4" />
             Clear
@@ -121,7 +125,7 @@ export default function DiffChecker() {
                 return (
                   <span 
                     key={idx} 
-                    className="bg-rose-500/20 text-rose-650 dark:text-rose-400 line-through font-bold border-b border-rose-500/35 px-1 py-0.5 rounded"
+                    className="bg-rose-500/20 text-[var(--danger)] dark:text-rose-400 line-through font-bold border-b border-rose-500/35 px-1 py-0.5 rounded"
                     title="Deleted"
                   >
                     {textVal}

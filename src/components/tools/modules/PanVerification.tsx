@@ -91,7 +91,7 @@ export default function PanVerification() {
           <Shield className="w-6 h-6 text-indigo-500" />
           PAN Card Format Verifier
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Perform a privacy-first, client-side validation of Permanent Account Number (PAN) formats, extract entity type, and visualize its structure.
         </p>
       </div>
@@ -116,13 +116,14 @@ export default function PanVerification() {
         <div className="flex gap-4">
           <button
             onClick={handleVerify}
-            className="flex-1 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+            className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
           >
             Verify Format
           </button>
           <button
             onClick={resetForm}
-            className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+            className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+            aria-label="Reset"
           >
             <RefreshCw className="w-5 h-5" />
           </button>
@@ -188,7 +189,7 @@ export default function PanVerification() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-white/5 text-xs text-zinc-650 dark:text-zinc-400 space-y-2">
+                <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-white/5 text-xs text-[var(--text-secondary)] dark:text-zinc-400 space-y-2">
                   <div className="flex items-center gap-1.5 font-bold text-zinc-800 dark:text-zinc-200">
                     <Info className="w-4 h-4 text-indigo-500" />
                     How to verify actual active status?
@@ -211,7 +212,7 @@ export default function PanVerification() {
                 <AlertTriangle className="w-5 h-5 text-rose-500 mt-0.5 shrink-0" />
                 <div>
                   <h4 className="font-bold text-rose-400">Invalid Format</h4>
-                  <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-0.5">
+                  <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-0.5">
                     {validationResult.error}
                   </p>
                 </div>

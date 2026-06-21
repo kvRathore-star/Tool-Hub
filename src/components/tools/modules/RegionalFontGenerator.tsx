@@ -102,7 +102,7 @@ export default function RegionalFontGenerator() {
           <Type className="w-6 h-6 text-indigo-500" />
           Hindi & Regional Font Stylizer
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Convert regional text (Hindi, Tamil, Telugu, etc.) or English names into decorative fonts and royal status styles suitable for bio, social media profiles, and messages.
         </p>
       </div>
@@ -143,7 +143,7 @@ export default function RegionalFontGenerator() {
                       className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 flex items-center justify-between gap-4"
                     >
                       <div className="space-y-1">
-                        <span className="text-[10px] text-zinc-550 block">{item.name}</span>
+                        <span className="text-[10px] text-[var(--text-secondary)] block">{item.name}</span>
                         <span className="text-base font-medium text-zinc-900 dark:text-zinc-100">{output}</span>
                       </div>
                       <button
@@ -151,7 +151,7 @@ export default function RegionalFontGenerator() {
                         className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                           isCopied
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600'
+                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600'
                         }`}
                       >
                         {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -180,7 +180,7 @@ export default function RegionalFontGenerator() {
                       className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 flex items-center justify-between gap-4"
                     >
                       <div className="space-y-1">
-                        <span className="text-[10px] text-zinc-550 block">{font.name}</span>
+                        <span className="text-[10px] text-[var(--text-secondary)] block">{font.name}</span>
                         <span className="text-base font-medium text-zinc-900 dark:text-zinc-100">{output}</span>
                       </div>
                       <button
@@ -188,7 +188,7 @@ export default function RegionalFontGenerator() {
                         className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                           isCopied
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600'
+                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600'
                         }`}
                       >
                         {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}

@@ -200,7 +200,7 @@ export default function LogoMaker() {
                 <button
                   key={idx}
                   onClick={() => loadPreset(preset)}
-                  className="px-3 py-1.5 text-xs font-bold bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-750 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 text-xs font-bold bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60 rounded-xl hover:bg-zinc-100 dark:hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
                 >
                   {preset.name}
                 </button>
@@ -218,7 +218,7 @@ export default function LogoMaker() {
                 type="text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white outline-none text-sm focus:border-zinc-350"
+                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white outline-none text-sm focus:border-[var(--border-subtle)]"
               />
             </div>
 
@@ -228,7 +228,7 @@ export default function LogoMaker() {
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white outline-none text-sm focus:border-zinc-350"
+                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white outline-none text-sm focus:border-[var(--border-subtle)]"
               />
             </div>
 
@@ -322,7 +322,7 @@ export default function LogoMaker() {
         </div>
 
         {/* Live Canvas Preview Panel */}
-        <div className="lg:col-span-7 flex flex-col justify-between bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-zinc-850 p-6 rounded-2xl min-h-[450px]">
+        <div className="lg:col-span-7 flex flex-col justify-between bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-[var(--border-subtle)] p-6 rounded-2xl min-h-[450px]">
           <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-4">
              <span className="text-xs font-bold text-zinc-400">CANVAS PREVIEW (500 x 500)</span>
           </div>
@@ -353,7 +353,7 @@ export default function LogoMaker() {
           <div className="grid grid-cols-2 gap-4 mt-6">
             <button 
               onClick={downloadPNG}
-              className="bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-sm"
+              className="bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-[var(--bg-elevated)] text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-sm"
             >
               <Download className="w-4 h-4" />
               Download PNG
@@ -361,7 +361,7 @@ export default function LogoMaker() {
             
             <button 
               onClick={downloadSVG}
-              className="bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-sm"
+              className="bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-sm"
             >
               <Download className="w-4 h-4" />
               Download Vector SVG

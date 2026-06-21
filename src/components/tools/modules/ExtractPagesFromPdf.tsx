@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { PDFDocument } from 'pdf-lib';
 import { FileText, Download, Scissors } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ExtractPagesFromPdf() {
   const [file, setFile] = useState<File | null>(null);
@@ -63,12 +64,7 @@ export default function ExtractPagesFromPdf() {
       const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = file.name.replace('.pdf', '_extracted.pdf');
-      a.click();
-      
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, file.name.replace('.pdf', '_extracted.pdf'));
       toast.success(`Extracted ${indicesToKeep.length} pages!`, { id: 'extract' });
     } catch (error) {
       console.error(error);

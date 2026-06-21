@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { RotateCcw, RotateCw, Download } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function RotateImage() {
   const [image, setImage] = useState<string | null>(null);
@@ -48,10 +49,7 @@ export default function RotateImage() {
       ctx.drawImage(img, -w / 2, -h / 2);
       
       const outUrl = canvas.toDataURL('image/png');
-      const a = document.createElement('a');
-      a.href = outUrl;
-      a.download = 'rotated.png';
-      a.click();
+      downloadOrShare(outUrl, 'rotated.png');
       toast.success('Downloaded rotated image!');
     };
   };

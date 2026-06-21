@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader, UploadedFile } from '@/components/FileUploader';
 import imageCompression from 'browser-image-compression';
 import JSZip from 'jszip';
@@ -81,7 +82,7 @@ export default function ImageBulkConverter() {
       setOutputUrl(url);
     } catch (e) {
       console.error("Batch conversion failed", e);
-      alert("An error occurred during batch processing.");
+      toast.error("An error occurred during batch processing.");
     } finally {
       setIsProcessing(false);
     }

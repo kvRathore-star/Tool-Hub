@@ -63,7 +63,7 @@ export default function IpAnonymizer() {
             </div>
           </div>
 
-          <button onClick={anonymizeIp} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
+          <button onClick={anonymizeIp} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
             <RefreshCw className="w-4 h-4" /> Anonymize IP
           </button>
         </div>

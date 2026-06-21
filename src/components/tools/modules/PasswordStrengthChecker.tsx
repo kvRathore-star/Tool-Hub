@@ -100,7 +100,7 @@ export default function PasswordStrengthChecker() {
             <div className="text-center text-zinc-500 m-auto">
               <ShieldCheck className="w-10 h-10 mx-auto mb-2 text-zinc-700" />
               <p className="text-xs">Diagnostics display is idle.</p>
-              <p className="text-[10px] text-zinc-650">Enter a password to run the ZXCVBN strength check.</p>
+              <p className="text-[10px] text-[var(--text-secondary)]">Enter a password to run the ZXCVBN strength check.</p>
             </div>
           )}
         </div>

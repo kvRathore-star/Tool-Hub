@@ -78,9 +78,9 @@ export function useAiProvider() {
         return await fetchGroqCompletion(messages, apiKey, temperature);
       }
       throw new Error("Unsupported provider");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("AI Error:", error);
-      throw new Error(error.message || "Failed to generate AI response.");
+      throw new Error(error instanceof Error ? error.message : "Failed to generate AI response.");
     }
   };
 
@@ -113,11 +113,11 @@ async function fetchOpenAICompletion(messages: AiMessage[], apiKey: string, temp
   });
 
   if (!res.ok) {
-    const error: any = await res.json();
+    const error: { error?: { message?: string } } = await res.json();
     throw new Error(error.error?.message || "OpenAI API Error");
   }
 
-  const data: any = await res.json();
+  const data: { choices: { message: { content: string } }[] } = await res.json();
   return data.choices[0].message.content;
 }
 
@@ -136,11 +136,11 @@ async function fetchGroqCompletion(messages: AiMessage[], apiKey: string, temper
   });
 
   if (!res.ok) {
-    const error: any = await res.json();
+    const error: { error?: { message?: string } } = await res.json();
     throw new Error(error.error?.message || "Groq API Error");
   }
 
-  const data: any = await res.json();
+  const data: { choices: { message: { content: string } }[] } = await res.json();
   return data.choices[0].message.content;
 }
 
@@ -165,10 +165,10 @@ async function fetchGeminiCompletion(messages: AiMessage[], apiKey: string, temp
   });
 
   if (!res.ok) {
-    const error: any = await res.json();
+    const error: { error?: { message?: string } } = await res.json();
     throw new Error(error.error?.message || "Gemini API Error");
   }
 
-  const data: any = await res.json();
+  const data: { candidates: { content: { parts: { text: string }[] } }[] } = await res.json();
   return data.candidates[0].content.parts[0].text;
 }

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { toast } from 'react-hot-toast';
 import { parseStringPromise } from 'xml2js';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function XmlToCsv() {
   const [xmlInput, setXmlInput] = useState('');
@@ -89,13 +90,7 @@ export default function XmlToCsv() {
     if (!csvOutput) return;
     const blob = new Blob([csvOutput], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'converted.csv');
   };
 
   return (

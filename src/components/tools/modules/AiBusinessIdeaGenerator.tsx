@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useAiProvider } from '@/hooks/useAiProvider';
 import AiSettings from '../AiSettings';
 import { Clipboard, Download, Sparkles } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiBusinessIdeaGenerator() {
   const { isConfigured, generateCompletion } = useAiProvider();
@@ -39,11 +40,7 @@ export default function AiBusinessIdeaGenerator() {
   const handleDownload = () => {
     const blob = new Blob([outputText], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = "business_ideas_" + new Date().toISOString().slice(0,10) + ".txt";
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, "business_ideas_" + new Date().toISOString().slice(0,10) + ".txt");
   };
 
   return (
@@ -65,7 +62,7 @@ export default function AiBusinessIdeaGenerator() {
               <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Your Skills, Passions, or Industry Interest</label>
               <textarea
                 value={interests}
-                onChange={e => setInterests(e.target.value)}
+                onChange={e => setInterests(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleGenerate()}
                 placeholder="e.g., Software engineering, writing, online teaching, photography..."
                 className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-32 outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm resize-none"
               />
@@ -125,14 +122,14 @@ export default function AiBusinessIdeaGenerator() {
                 <button 
                   onClick={handleCopy} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Copy to Clipboard"
+                  title="Copy to Clipboard" aria-label="Copy"
                 >
                   <Clipboard className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={handleDownload} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Download as File"
+                  title="Download as File" aria-label="Download"
                 >
                   <Download className="w-4 h-4" />
                 </button>

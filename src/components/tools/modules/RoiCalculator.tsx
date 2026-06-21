@@ -33,7 +33,7 @@ export default function RoiCalculator() {
           <div className="space-y-4">
             <div>
               <span className="text-xs text-zinc-400">Net Return Gain</span>
-              <p className="text-xl font-bold text-zinc-850 dark:text-white">$${gain.toFixed(2)}</p>
+              <p className="text-xl font-bold text-[var(--text-secondary)] dark:text-white">$${gain.toFixed(2)}</p>
             </div>
           </div>
 

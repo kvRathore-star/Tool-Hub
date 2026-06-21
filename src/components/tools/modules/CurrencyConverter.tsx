@@ -155,7 +155,7 @@ export default function CurrencyConverter() {
           <button 
             onClick={fetchRates} 
             disabled={loading}
-            className="p-2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 rounded-lg text-zinc-700 dark:text-zinc-250 transition-colors disabled:opacity-50 flex items-center gap-1 cursor-pointer"
+            className="p-2 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 rounded-lg text-zinc-700 dark:text-[var(--text-secondary)] transition-colors disabled:opacity-50 flex items-center gap-1 cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -176,7 +176,7 @@ export default function CurrencyConverter() {
                 onChange={e => setAmount(e.target.value)} 
                 min="0.01" 
                 step="any"
-                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 focus:border-zinc-450 dark:focus:border-zinc-700 rounded-xl px-4 py-3.5 text-zinc-900 dark:text-white text-lg font-bold outline-none transition-colors"
+                className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 focus:border-[var(--border-subtle)] dark:focus:border-zinc-700 rounded-xl px-4 py-3.5 text-zinc-900 dark:text-white text-lg font-bold outline-none transition-colors"
                 required
               />
             </div>
@@ -186,7 +186,8 @@ export default function CurrencyConverter() {
               <button 
                 type="button" 
                 onClick={handleSwap} 
-                className="p-3 bg-zinc-150 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-750 transition-all text-zinc-600 dark:text-zinc-300 shadow-md active:scale-95"
+                className="p-3 bg-[var(--bg-overlay)] dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-[var(--bg-elevated)] transition-all text-zinc-600 dark:text-zinc-300 shadow-md active:scale-95"
+                aria-label="Swap"
               >
                 <ArrowUpDown className="w-5 h-5" />
               </button>
@@ -221,7 +222,7 @@ export default function CurrencyConverter() {
                 type="button" 
                 onClick={handleSwap} 
                 className="p-3 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all text-zinc-600 dark:text-zinc-300 shadow-sm hover:shadow-md cursor-pointer active:scale-95"
-                title="Swap Currencies"
+                title="Swap Currencies" aria-label="Swap"
               >
                 <ArrowUpDown className="w-4 h-4 rotate-90" />
               </button>
@@ -261,7 +262,7 @@ export default function CurrencyConverter() {
 
           {/* Results Box */}
           {finalResult > 0 && (
-            <div className="bg-zinc-50 dark:bg-black/35 border border-zinc-250/50 dark:border-zinc-800/80 rounded-2xl p-6 space-y-4 animate-in fade-in duration-300">
+            <div className="bg-zinc-50 dark:bg-black/35 border border-[var(--border-subtle)]/50 dark:border-zinc-800/80 rounded-2xl p-6 space-y-4 animate-in fade-in duration-300">
               <div className="space-y-1">
                 <span className="text-sm font-semibold text-zinc-400">
                   {parseFloat(amount).toLocaleString()} {fromCurrency} =
@@ -320,7 +321,7 @@ export default function CurrencyConverter() {
                 {history.map((entry, idx) => (
                   <div key={idx} className="flex items-center justify-between text-xs p-2.5 bg-zinc-50 dark:bg-zinc-800/30 rounded-xl border border-zinc-100 dark:border-zinc-800/30">
                     <div className="space-y-0.5">
-                      <div className="font-bold text-zinc-800 dark:text-zinc-250">
+                      <div className="font-bold text-zinc-800 dark:text-[var(--text-secondary)]">
                         {entry.amount.toLocaleString()} {entry.from} ➔ {entry.result.toLocaleString(undefined, { maximumFractionDigits: 2 })} {entry.to}
                       </div>
                       <div className="text-[10px] text-zinc-400">Rate: { (entry.result / entry.amount).toFixed(4) }</div>

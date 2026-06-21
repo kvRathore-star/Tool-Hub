@@ -74,7 +74,7 @@ export default function SpeedTest() {
             <div className="text-center space-y-2 animate-in zoom-in-95">
               <span className="text-xs text-zinc-500 font-bold uppercase block">Download Speed</span>
               <div className="text-6xl font-black text-emerald-500">{speedMbps}</div>
-              <span className="text-sm font-bold text-zinc-450">Mbps</span>
+              <span className="text-sm font-bold text-[var(--text-muted)]">Mbps</span>
             </div>
           ) : (
             <div className="text-center text-zinc-500">
@@ -87,23 +87,23 @@ export default function SpeedTest() {
         {/* Info panel */}
         <div className="space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
-            <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-zinc-850 pb-2">Network Diagnostics</span>
+            <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-[var(--border-subtle)] pb-2">Network Diagnostics</span>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+              <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                 <span className="text-[10px] text-zinc-500 block uppercase">Latency (Ping)</span>
-                <p className="text-lg font-mono font-bold text-zinc-850 dark:text-zinc-150">
+                <p className="text-lg font-mono font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]">
                   {latencyMs !== null ? `${latencyMs} ms` : '--'}
                 </p>
               </div>
-              <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-zinc-850">
+              <div className="bg-zinc-50 dark:bg-black/10 p-3 rounded-xl border border-[var(--border-subtle)]">
                 <span className="text-[10px] text-zinc-500 block uppercase">Server Node</span>
-                <p className="text-xs font-bold text-zinc-850 dark:text-zinc-150">Fastest CDN (Auto)</p>
+                <p className="text-xs font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]">Fastest CDN (Auto)</p>
               </div>
             </div>
           </div>
 
-          <button onClick={startTest} disabled={isRunning} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-4 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <button onClick={startTest} disabled={isRunning} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-4 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
             <RefreshCw className="w-4 h-4" /> Start Speed Diagnosis
           </button>
         </div>

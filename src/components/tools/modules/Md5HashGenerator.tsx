@@ -33,7 +33,7 @@ export default function Md5HashGenerator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Key className="w-5 h-5 text-indigo-500" />
           MD5 & Cryptographic Hash Generator
         </h2>
@@ -52,7 +52,7 @@ export default function Md5HashGenerator() {
               className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-64 outline-none text-xs resize-none font-mono"
             />
           </div>
-          <button onClick={generateHashes} className="w-full mt-4 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <button onClick={generateHashes} className="w-full mt-4 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
             <Shield className="w-4 h-4" /> Compute Hashes
           </button>
         </div>

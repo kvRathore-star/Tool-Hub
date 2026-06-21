@@ -70,7 +70,7 @@ ${inputText}`;
              <label className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Paste Article Text</label>
              <textarea
                value={inputText}
-               onChange={(e) => setInputText(e.target.value)}
+               onChange={(e) => setInputText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSummarize()}
                placeholder="Paste a long article, document, or essay here..."
                className="w-full h-[250px] bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 text-zinc-900 dark:text-white placeholder:text-zinc-400 outline-none resize-none focus:border-indigo-500 transition-colors"
              />

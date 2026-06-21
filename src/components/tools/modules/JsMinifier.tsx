@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Copy, Download, Zap } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function JsMinifier() {
   const [input, setInput] = useState('');
@@ -55,11 +56,7 @@ export default function JsMinifier() {
     if (!output) return;
     const blob = new Blob([output], { type: 'text/javascript' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'minified.js';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'minified.js');
   };
 
   return (
@@ -96,8 +93,8 @@ export default function JsMinifier() {
               <span className="text-xs text-zinc-400 font-bold uppercase">Minified Output</span>
               {output && (
                 <div className="flex gap-2">
-                  <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
-                  <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Download className="w-4 h-4" /></button>
+                  <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
+                  <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Download"><Download className="w-4 h-4" /></button>
                 </div>
               )}
             </div>

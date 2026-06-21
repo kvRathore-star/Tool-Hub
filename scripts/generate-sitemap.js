@@ -1,74 +1,106 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'https://toolhub.com';
-const OUT_DIR = path.join(__dirname, '../out');
+const BASE_URL = 'https://gotoolhub.com';
+const TOOLS_REGISTRY_PATH = path.join(__dirname, '../src/registry/tools.ts');
 const PUBLIC_DIR = path.join(__dirname, '../public');
 
-function walkDir(dir, relativePath = '') {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  const urls = [];
+function parseToolsRegistry() {
+  const content = fs.readFileSync(TOOLS_REGISTRY_PATH, 'utf-8');
 
-  for (const entry of entries) {
-    if (entry.name.startsWith('.')) continue;
-    if (entry.name === '_next') continue;
+  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+  const categoryRegex = /category:\s*['"]([^'"]+)['"]/g;
+  const nameRegex = /name:\s*['"]([^'"]+)['"]/g;
 
-    const fullPath = path.join(dir, entry.name);
-    const entryRelative = relativePath ? `${relativePath}/${entry.name}` : entry.name;
+  const slugs = [];
+  const categories = [];
+  const names = [];
 
-    if (entry.isDirectory()) {
-      urls.push(...walkDir(fullPath, entryRelative));
-    } else if (entry.name === 'index.html') {
-      urls.push(relativePath || '');
-    } else if (entry.name.endsWith('.html') && entry.name !== '404.html') {
-      const name = entry.name.replace(/\.html$/, '');
-      urls.push(relativePath ? `${relativePath}/${name}` : name);
-    }
+  let m;
+  while ((m = slugRegex.exec(content)) !== null) slugs.push(m[1]);
+  while ((m = categoryRegex.exec(content)) !== null) categories.push(m[1]);
+  while ((m = nameRegex.exec(content)) !== null) names.push(m[1]);
+
+  const tools = [];
+  const count = Math.min(slugs.length, categories.length, names.length);
+
+  for (let i = 0; i < count; i++) {
+    tools.push({
+      name: names[i],
+      slug: slugs[i],
+      category: categories[i],
+    });
   }
 
-  return urls;
+  return tools;
+}
+
+function slugify(text) {
+  return text.toLowerCase().replace(/\s+/g, '-');
 }
 
 function generateSitemap() {
-  console.log('Generating sitemap...');
+  console.log('Generating sitemap from tools registry...');
 
-  if (!fs.existsSync(OUT_DIR)) {
-    console.warn('No out/ directory found. Skipping sitemap generation.');
-    return;
+  const tools = parseToolsRegistry();
+
+  const seen = new Set();
+  const uniqueTools = [];
+  for (const tool of tools) {
+    const key = tool.slug;
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueTools.push(tool);
+    }
   }
 
-  const urls = walkDir(OUT_DIR);
   const staticPages = [
     '', 'about', 'ai-hub', 'api', 'blog', 'careers', 'changelog',
     'contact', 'dashboard', 'extension', 'pricing', 'privacy',
     'product', 'roadmap', 'status', 'terms', 'tools',
   ];
 
-  const allUrls = [...new Set([...staticPages, ...urls])].sort();
+  const uniqueCategories = [...new Set(uniqueTools.map(t => slugify(t.category)))];
+
+  const allUrls = [];
+
+  // Static pages
+  for (const page of staticPages) {
+    allUrls.push({ loc: page ? `${BASE_URL}/${page}` : BASE_URL, changefreq: 'daily', priority: page === '' ? '1.0' : '0.8' });
+  }
+
+  // Category pages
+  for (const category of uniqueCategories.sort()) {
+    allUrls.push({ loc: `${BASE_URL}/${category}`, changefreq: 'weekly', priority: '0.7' });
+  }
+
+  // Tool pages
+  for (const tool of uniqueTools) {
+    const categorySlug = slugify(tool.category);
+    allUrls.push({ loc: `${BASE_URL}/${categorySlug}/${tool.slug}`, changefreq: 'weekly', priority: '0.6' });
+  }
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
   xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
-  xml += `  <url>\n    <loc>${BASE_URL}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
-
   for (const url of allUrls) {
-    if (!url) continue;
     xml += `  <url>\n`;
-    xml += `    <loc>${BASE_URL}/${url}</loc>\n`;
-    xml += `    <changefreq>weekly</changefreq>\n`;
-    xml += `    <priority>0.8</priority>\n`;
+    xml += `    <loc>${url.loc}</loc>\n`;
+    xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
+    xml += `    <priority>${url.priority}</priority>\n`;
     xml += `  </url>\n`;
   }
 
   xml += `</urlset>\n`;
 
-  [PUBLIC_DIR, OUT_DIR].forEach(dir => {
-    if (fs.existsSync(dir)) {
-      fs.writeFileSync(path.join(dir, 'sitemap.xml'), xml, 'utf-8');
-    }
-  });
+  if (!fs.existsSync(PUBLIC_DIR)) {
+    fs.mkdirSync(PUBLIC_DIR, { recursive: true });
+  }
 
-  console.log(`Sitemap generated with ${allUrls.length + 1} URLs`);
+  const outputPath = path.join(PUBLIC_DIR, 'sitemap.xml');
+  fs.writeFileSync(outputPath, xml, 'utf-8');
+
+  console.log(`Sitemap generated at ${outputPath} with ${allUrls.length} URLs`);
 }
 
 generateSitemap();

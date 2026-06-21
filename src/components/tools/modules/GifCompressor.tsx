@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { toast } from "react-hot-toast";
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { FileDown, Upload, Download, Loader2 } from 'lucide-react';
@@ -51,7 +52,7 @@ export default function GifCompressor() {
       await ffmpeg.deleteFile(outputName);
     } catch (e) {
       console.error(e);
-      alert('Failed to compress GIF.');
+      toast.error("Failed to compress GIF.");
     } finally {
       setIsProcessing(false);
     }

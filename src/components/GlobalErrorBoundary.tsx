@@ -1,9 +1,10 @@
 "use client";
 
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
 
-function FallbackComponent({ error, resetErrorBoundary }: any) {
+function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
+  const message = error instanceof Error ? error.message : "An unexpected memory limit or processing error occurred locally on your device.";
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-red-950/20 border border-red-500/20 rounded-2xl w-full">
       <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mb-4 text-red-500">
@@ -11,7 +12,7 @@ function FallbackComponent({ error, resetErrorBoundary }: any) {
       </div>
       <h3 className="text-xl font-bold text-red-500 mb-2">Tool Engine Crashed</h3>
       <p className="text-zinc-400 text-center mb-6 max-w-md text-sm">
-        {error.message || "An unexpected memory limit or processing error occurred locally on your device."}
+        {message}
       </p>
       <button
         onClick={resetErrorBoundary}

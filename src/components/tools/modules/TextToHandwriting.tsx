@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FileText, Download, RefreshCw } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function TextToHandwriting() {
   const [text, setText] = useState('This is a simulated handwritten note. Write your text here to convert it into a handwritten sheet format.');
@@ -81,17 +82,14 @@ export default function TextToHandwriting() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'handwritten_note.png';
-    a.click();
+    downloadOrShare(url, 'handwritten_note.png');
     toast.success('Handwritten sheet downloaded!');
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <FileText className="w-5 h-5 text-indigo-500" />
           Text to Handwriting Canvas Sheet Generator
         </h2>

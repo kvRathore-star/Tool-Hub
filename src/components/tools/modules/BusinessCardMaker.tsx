@@ -228,13 +228,13 @@ export default function BusinessCardMaker() {
           <div className="flex gap-4">
             <button 
               onClick={() => setActiveSide('front')} 
-              className={`flex-1 py-3 rounded-xl font-bold text-sm cursor-pointer ${activeSide === 'front' ? 'bg-indigo-650 text-white' : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 hover:bg-zinc-100'}`}
+              className={`flex-1 py-3 rounded-xl font-bold text-sm cursor-pointer ${activeSide === 'front' ? 'bg-[var(--accent)] text-white' : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 hover:bg-zinc-100'}`}
             >
               Front Side
             </button>
             <button 
               onClick={() => setActiveSide('back')} 
-              className={`flex-1 py-3 rounded-xl font-bold text-sm cursor-pointer ${activeSide === 'back' ? 'bg-indigo-650 text-white' : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 hover:bg-zinc-100'}`}
+              className={`flex-1 py-3 rounded-xl font-bold text-sm cursor-pointer ${activeSide === 'back' ? 'bg-[var(--accent)] text-white' : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 hover:bg-zinc-100'}`}
             >
               Back Side (Details)
             </button>
@@ -248,7 +248,7 @@ export default function BusinessCardMaker() {
                 <button
                   key={idx}
                   onClick={() => setSelectedTemplate(tpl)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-xl border cursor-pointer hover:bg-zinc-105 transition-all ${selectedTemplate.name === tpl.name ? 'border-indigo-500 bg-indigo-500/10 text-indigo-500 font-bold' : 'border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-500'}`}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-xl border cursor-pointer hover:bg-[var(--bg-overlay)] transition-all ${selectedTemplate.name === tpl.name ? 'border-indigo-500 bg-indigo-500/10 text-indigo-500 font-bold' : 'border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-500'}`}
                 >
                   {tpl.name}
                 </button>
@@ -305,7 +305,7 @@ export default function BusinessCardMaker() {
                 type="file" 
                 accept="image/*" 
                 onChange={handleLogoUpload} 
-                className="w-full text-xs text-zinc-400 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2 cursor-pointer focus:border-zinc-350" 
+                className="w-full text-xs text-zinc-400 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2 cursor-pointer focus:border-[var(--border-subtle)]" 
               />
             </div>
           </div>
@@ -313,7 +313,7 @@ export default function BusinessCardMaker() {
         </div>
 
         {/* Preview Panel */}
-        <div className="lg:col-span-7 flex flex-col justify-between bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-zinc-850 p-6 rounded-2xl min-h-[450px]">
+        <div className="lg:col-span-7 flex flex-col justify-between bg-zinc-50 dark:bg-black/45 border border-zinc-200 dark:border-[var(--border-subtle)] p-6 rounded-2xl min-h-[450px]">
           <div className="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-3 mb-4">
              <span className="text-xs font-bold text-zinc-400">BUSINESS CARD CANVAS (3.5&quot; x 2.0&quot; aspect ratio)</span>
              <span className="text-xs font-bold text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded uppercase">{activeSide} view</span>
@@ -335,7 +335,7 @@ export default function BusinessCardMaker() {
           <div className="grid grid-cols-2 gap-4 mt-6">
             <button 
               onClick={downloadPNG}
-              className="bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-xs"
+              className="bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-[var(--bg-elevated)] text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-xs"
             >
               <Download className="w-4 h-4" />
               Download Side PNG
@@ -343,7 +343,7 @@ export default function BusinessCardMaker() {
             
             <button 
               onClick={downloadPDF}
-              className="bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-xs"
+              className="bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 cursor-pointer text-xs"
             >
               <FileText className="w-4 h-4" />
               Download Print PDF

@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { toPng, toJpeg, toSvg } from 'html-to-image';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function HtmlToImage() {
   const [htmlContent, setHtmlContent] = useState('<div style="padding: 20px; background: linear-gradient(45deg, #FF6B6B, #4ECDC4); border-radius: 10px; color: white; font-family: sans-serif; text-align: center;"><h1>Hello World</h1><p>Edit this HTML to generate an image!</p></div>');
@@ -31,10 +32,7 @@ export default function HtmlToImage() {
         dataUrl = await toSvg(container);
       }
       
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = `rendered.${format}`;
-      a.click();
+      downloadOrShare(dataUrl, `rendered.${format}`);
       toast.success(`Downloaded as ${format.toUpperCase()}!`, { id: 'html' });
     } catch (err) {
       toast.error('Failed to render HTML.', { id: 'html' });

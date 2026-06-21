@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { CreditCard, ShieldCheck, RefreshCw, Copy, Download } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 interface CardInfo {
   number: string;
@@ -135,11 +136,7 @@ export default function CreditCardGenerator() {
   const exportToJson = () => {
     const blob = new Blob([JSON.stringify(generatedCards, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `test_cards_${brand}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `test_cards_${brand}.json`);
   };
 
   return (
@@ -154,7 +151,7 @@ export default function CreditCardGenerator() {
       </div>
       
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-8 rounded-2xl shadow-xl space-y-8">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <CreditCard className="w-5 h-5 text-indigo-500" />
           Luhn Card Generator & Validator
         </h2>

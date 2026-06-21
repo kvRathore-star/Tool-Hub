@@ -92,7 +92,7 @@ export default function PomodoroTimer() {
               Start Session
             </button>
           )}
-          <button onClick={() => changeMode(mode)} className="bg-zinc-800 hover:bg-zinc-750 text-white font-bold p-3 rounded-xl cursor-pointer transition-colors shadow">
+          <button onClick={() => changeMode(mode)} className="bg-zinc-800 hover:bg-[var(--bg-elevated)] text-white font-bold p-3 rounded-xl cursor-pointer transition-colors shadow">
             <RotateCcw className="w-5 h-5" />
           </button>
         </div>

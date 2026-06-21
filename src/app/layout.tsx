@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import { Suspense } from "react";
-import { DebugSanityRunner } from "@/components/DebugSanityRunner";
-import { AnalyticsProvider } from "@/components/AnalyticsProvider";
-import { PremiumProvider } from "@/context/PremiumContext";
+import { PageTransition } from "@/components/PageTransition";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { toolsRegistry } from "@/registry/tools";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,6 +24,8 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
 });
 
+const toolCount = toolsRegistry.length;
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://gotoolhub.com'),
   title: {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s | ToolHub",
   },
   description:
-    "200+ free, privacy-first web tools. PDF compression, image editing, text processing, and more — all processed in your browser. Nothing uploaded, ever.",
+    `${toolCount}+ free, privacy-first web tools. PDF compression, image editing, text processing, and more — all processed in your browser. Nothing uploaded, ever.`,
   keywords: [
     "web tools",
     "pdf compressor",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "ToolHub",
     title: "ToolHub — Privacy-First Web Tools",
     description:
-      "200+ free web tools. Everything processed in your browser.",
+      `${toolCount}+ free web tools. Everything processed in your browser.`,
   },
   twitter: {
     card: "summary_large_image",
@@ -69,19 +69,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased dark`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col transition-colors duration-300">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-white focus:rounded-xl focus:text-sm focus:font-medium"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <Header />
 
-          <main className="flex-1">
-            <PremiumProvider>
+          <main id="main-content" className="flex-1">
+            <PageTransition>
               {children}
-            </PremiumProvider>
+            </PageTransition>
           </main>
-          
-          <Suspense fallback={null}>
-            <AnalyticsProvider />
-            {process.env.NODE_ENV === 'development' && <DebugSanityRunner />}
-          </Suspense>
 
           <Toaster 
             position="bottom-center"

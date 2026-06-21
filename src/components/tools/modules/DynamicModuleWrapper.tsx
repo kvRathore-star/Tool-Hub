@@ -4,19 +4,19 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 const SkeletonLoader = () => (
-  <div className="w-full bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-200 dark:border-white/5 p-8 animate-pulse flex flex-col items-center justify-center min-h-[400px]">
-    <div className="w-16 h-16 rounded-full bg-zinc-100 dark:bg-zinc-800/80 mb-6"></div>
-    <div className="h-6 bg-zinc-100 dark:bg-zinc-800/80 rounded-md w-1/3 mb-4"></div>
-    <div className="h-4 bg-zinc-100 dark:bg-zinc-800/80 rounded-md w-1/2 mb-8"></div>
-    <div className="w-full h-12 bg-zinc-100 dark:bg-zinc-800/80 rounded-xl mb-4"></div>
-    <div className="w-full h-12 bg-zinc-100 dark:bg-zinc-800/80 rounded-xl"></div>
-    <div className="mt-8 text-sm text-zinc-500 font-medium animate-bounce">
+  <div className="w-full bg-[var(--bg-overlay)] rounded-[var(--radius-2xl)] border border-[var(--border-subtle)] p-8 animate-pulse flex flex-col items-center justify-center min-h-[400px]">
+    <div className="w-16 h-16 rounded-full bg-[var(--bg-elevated)] mb-6"></div>
+    <div className="h-6 bg-[var(--bg-elevated)] rounded-md w-1/3 mb-4"></div>
+    <div className="h-4 bg-[var(--bg-elevated)] rounded-md w-1/2 mb-8"></div>
+    <div className="w-full h-12 bg-[var(--bg-elevated)] rounded-[var(--radius-lg)] mb-4"></div>
+    <div className="w-full h-12 bg-[var(--bg-elevated)] rounded-[var(--radius-lg)]"></div>
+    <div className="mt-8 text-sm text-[var(--text-muted)] font-medium animate-bounce">
       Spinning up client-side modules...
     </div>
   </div>
 );
 
-const MODULE_REGISTRY: Record<string, any> = {
+const MODULE_REGISTRY: Record<string, React.ComponentType> = {
   'passport-photo-india': dynamic(() => import('@/components/tools/modules/PassportPhotoIndia'), { 
     ssr: false, 
     loading: () => <SkeletonLoader /> 

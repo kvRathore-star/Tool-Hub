@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { toast } from "react-hot-toast";
 import { FileUploader, UploadedFile } from '@/components/FileUploader';
 import { PDFDocument } from 'pdf-lib';
 import { downloadOrShare } from '@/utils/nativeShare';
@@ -43,7 +44,7 @@ export default function PdfMerger() {
 
   const processMerge = async () => {
     if (files.length < 2) {
-      alert("Please upload at least 2 PDF files to merge.");
+      toast.error("Please upload at least 2 PDF files to merge.");
       return;
     }
     
@@ -66,7 +67,7 @@ export default function PdfMerger() {
       setOutputUrl(url);
     } catch (e) {
       console.error("PDF Merge failed", e);
-      alert("Failed to merge PDFs. One of the files might be encrypted or corrupted.");
+      toast.error("Failed to merge PDFs. One of the files might be encrypted or corrupted.");
     } finally {
       setIsProcessing(false);
     }

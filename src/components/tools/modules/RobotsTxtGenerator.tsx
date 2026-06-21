@@ -41,7 +41,7 @@ export default function RobotsTxtGenerator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <ShieldAlert className="w-5 h-5 text-indigo-500" />
           Robots.txt Generator
         </h2>
@@ -63,7 +63,7 @@ export default function RobotsTxtGenerator() {
             />
           </div>
 
-          <div className="border-t border-zinc-850 pt-3 space-y-3">
+          <div className="border-t border-[var(--border-subtle)] pt-3 space-y-3">
             <span className="text-xs text-zinc-400 font-bold uppercase block">Block Paths (Disallow)</span>
             <div className="flex gap-2">
               <input 
@@ -78,7 +78,7 @@ export default function RobotsTxtGenerator() {
             
             <div className="space-y-1.5 max-h-[150px] overflow-y-auto">
               {disallows.map((path, idx) => (
-                <div key={idx} className="flex justify-between items-center text-[10px] bg-zinc-50 dark:bg-black/10 p-2 rounded-xl border border-zinc-850">
+                <div key={idx} className="flex justify-between items-center text-[10px] bg-zinc-50 dark:bg-black/10 p-2 rounded-xl border border-[var(--border-subtle)]">
                   <span className="font-mono text-zinc-300">Disallow: {path}</span>
                   <button onClick={() => removeDisallow(idx)} className="text-[10px] text-rose-500 hover:underline">Remove</button>
                 </div>
@@ -92,7 +92,7 @@ export default function RobotsTxtGenerator() {
           <div className="space-y-2 flex-1 flex flex-col">
             <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
               <span className="text-xs text-zinc-400 font-bold uppercase">Generated Robots.txt</span>
-              <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
+              <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
             </div>
             <textarea
               value={buildRobotsTxt()}

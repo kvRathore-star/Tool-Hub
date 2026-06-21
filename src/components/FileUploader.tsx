@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, type DragEvent, type ClipboardEvent } from "react";
+import { toast } from "react-hot-toast";
 import { cn, formatBytes } from "@/lib/utils";
 import { Upload, Clipboard, Link, X, FileIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,7 @@ export function FileUploader({
 
       for (const file of newFiles) {
         if (file.size > maxSize) {
+          toast.error(`${file.name} exceeds the ${formatBytes(maxSize)} limit.`);
           continue;
         }
 

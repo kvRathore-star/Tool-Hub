@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function WebpToJpg() {
   const [image, setImage] = useState<string | null>(null);
@@ -29,10 +30,7 @@ export default function WebpToJpg() {
       ctx.drawImage(img, 0, 0);
       
       const jpgUrl = canvas.toDataURL('image/jpeg', 0.9);
-      const a = document.createElement('a');
-      a.href = jpgUrl;
-      a.download = 'converted.jpg';
-      a.click();
+      downloadOrShare(jpgUrl, 'converted.jpg');
       toast.success('Converted & Downloaded!');
     };
   };

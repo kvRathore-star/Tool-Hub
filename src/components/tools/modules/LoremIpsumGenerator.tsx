@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, Download, Sliders, RefreshCw, FileText } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 const LOREM_WORDS = [
   "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "sed", "do",
@@ -99,11 +100,7 @@ export default function LoremIpsumGenerator() {
     if (!generatedText) return;
     const blob = new Blob([generatedText], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'lorem_ipsum.txt';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'lorem_ipsum.txt');
   };
 
   return (
@@ -113,7 +110,7 @@ export default function LoremIpsumGenerator() {
           <FileText className="w-6 h-6 text-indigo-500" />
           Lorem Ipsum Generator
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Generate standard pseudo-Latin placeholder text for graphics, web designs, layout prototyping, and documents.
         </p>
       </div>
@@ -128,7 +125,7 @@ export default function LoremIpsumGenerator() {
 
           {/* Type selector */}
           <div className="space-y-3">
-            <span className="text-xs font-bold text-zinc-550 block">Generate By</span>
+            <span className="text-xs font-bold text-[var(--text-secondary)] block">Generate By</span>
             <div className="grid grid-cols-3 gap-2 text-xs">
               {(['paragraphs', 'sentences', 'words'] as const).map((t) => (
                 <button
@@ -136,8 +133,8 @@ export default function LoremIpsumGenerator() {
                   onClick={() => setType(t)}
                   className={`py-2 px-3 rounded-lg font-bold border transition-all cursor-pointer ${
                     type === t
-                      ? 'bg-indigo-650 border-indigo-600 text-white'
-                      : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-750 dark:text-zinc-400'
+                      ? 'bg-[var(--accent)] border-indigo-600 text-white'
+                      : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400'
                   }`}
                 >
                   {t.charAt(0).toUpperCase() + t.slice(1)}
@@ -148,7 +145,7 @@ export default function LoremIpsumGenerator() {
 
           {/* Count input */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Count</span>
               <span className="text-indigo-400 font-bold">{count}</span>
             </div>
@@ -164,24 +161,24 @@ export default function LoremIpsumGenerator() {
 
           {/* Checkboxes */}
           <div className="space-y-3 pt-2 text-xs">
-            <label className="flex items-center justify-between text-zinc-650 dark:text-zinc-400">
+            <label className="flex items-center justify-between text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Start with "Lorem ipsum..."</span>
               <input
                 type="checkbox"
                 checked={startWithLorem}
                 onChange={(e) => setStartWithLorem(e.target.checked)}
-                className="w-4 h-4 rounded border-zinc-305 text-indigo-650 accent-indigo-500 focus:ring-indigo-500"
+                className="w-4 h-4 rounded border-[var(--border-subtle)] text-[var(--accent)] accent-indigo-500 focus:ring-indigo-500"
               />
             </label>
 
             {type === 'paragraphs' && (
-              <label className="flex items-center justify-between text-zinc-650 dark:text-zinc-400">
+              <label className="flex items-center justify-between text-[var(--text-secondary)] dark:text-zinc-400">
                 <span>Wrap in HTML &lt;p&gt; tags</span>
                 <input
                   type="checkbox"
                   checked={includeTags}
                   onChange={(e) => setIncludeTags(e.target.checked)}
-                  className="w-4 h-4 rounded border-zinc-305 text-indigo-650 accent-indigo-500 focus:ring-indigo-500"
+                  className="w-4 h-4 rounded border-[var(--border-subtle)] text-[var(--accent)] accent-indigo-500 focus:ring-indigo-500"
                 />
               </label>
             )}
@@ -189,7 +186,7 @@ export default function LoremIpsumGenerator() {
 
           <button
             onClick={generateLorem}
-            className="w-full py-3 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs"
+            className="w-full py-3 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs"
           >
             <RefreshCw className="w-4 h-4" />
             Regenerate Placeholder
@@ -209,14 +206,14 @@ export default function LoremIpsumGenerator() {
             <div className="flex gap-3 mt-6 print:hidden">
               <button
                 onClick={handleCopy}
-                className="flex-1 py-3 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 text-xs cursor-pointer"
+                className="flex-1 py-3 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 text-xs cursor-pointer"
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 Copy Text
               </button>
               <button
                 onClick={handleDownload}
-                className="px-6 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-xs cursor-pointer"
+                className="px-6 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-xs cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 Download .TXT

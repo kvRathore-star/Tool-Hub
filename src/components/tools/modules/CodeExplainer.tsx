@@ -66,7 +66,7 @@ ${inputText}
           </div>
           <textarea
             value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
+            onChange={(e) => setInputText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleExplain()}
             placeholder="Paste any confusing code block here (React, Python, Go, C++, etc.)..."
             className="flex-1 w-full p-6 bg-transparent outline-none resize-none font-mono text-sm leading-relaxed text-zinc-300 placeholder:text-zinc-600"
             spellCheck="false"
@@ -77,7 +77,10 @@ ${inputText}
                disabled={isProcessing || !inputText.trim()}
                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg shadow-lg transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50"
              >
-               {isProcessing ? 'Analyzing Code...' : 'Explain this Code'}
+               {isProcessing ? <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+                Analyzing Code...
+              </> : 'Explain this Code'}
              </button>
           </div>
         </div>

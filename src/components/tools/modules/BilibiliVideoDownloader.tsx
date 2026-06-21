@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Download, RefreshCw, Video } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function BilibiliVideoDownloader() {
   const [url, setUrl] = useState('');
@@ -29,11 +30,7 @@ export default function BilibiliVideoDownloader() {
           // Generate simulated download
           const blob = new Blob(['BILIBILI_MOCK_PAYLOAD'], { type: 'video/mp4' });
           const outUrl = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = outUrl;
-          a.download = 'bilibili_video.mp4';
-          a.click();
-          URL.revokeObjectURL(outUrl);
+          downloadOrShare(outUrl, 'bilibili_video.mp4');
           toast.success('Bilibili video saved successfully!');
         }, 600);
       }, 500);
@@ -47,10 +44,10 @@ export default function BilibiliVideoDownloader() {
         <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Bilibili Video Downloader</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-xs text-zinc-450">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-xs text-[var(--text-muted)]">
         <div className="md:col-span-7 space-y-4">
           <div className="space-y-2">
-            <span className="text-[10px] text-zinc-450 font-bold uppercase">Bilibili Link</span>
+            <span className="text-[10px] text-[var(--text-muted)] font-bold uppercase">Bilibili Link</span>
             <input 
               type="text" 
               value={url}
@@ -63,14 +60,14 @@ export default function BilibiliVideoDownloader() {
           <button 
             onClick={startDownloadSim} 
             disabled={isDownloading}
-            className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
             {isDownloading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
             {isDownloading ? `Parsing Bilibili headers (${progress}%)...` : 'Download Video (MP4)'}
           </button>
         </div>
 
-        <div className="md:col-span-5 bg-zinc-50 dark:bg-black/20 rounded-2xl p-5 border border-zinc-850 flex flex-col justify-center">
+        <div className="md:col-span-5 bg-zinc-50 dark:bg-black/20 rounded-2xl p-5 border border-[var(--border-subtle)] flex flex-col justify-center">
           <h4 className="font-bold text-zinc-300 uppercase">Educational Note</h4>
           <p className="mt-2 text-[10px] leading-relaxed text-zinc-500">
             This tool parses Bilibili watch schemas and packages stream resources for offline client download.

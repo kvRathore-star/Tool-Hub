@@ -75,7 +75,7 @@ export default function ReverseTextGenerator() {
               className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-indigo-400 font-mono text-sm h-40 outline-none resize-none"
             />
           </div>
-          <button onClick={handleCopy} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <button onClick={handleCopy} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
             Copy Reversed Text
           </button>
         </div>

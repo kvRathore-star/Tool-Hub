@@ -102,7 +102,7 @@ export default function IndianAgeCalculator() {
           <Calendar className="w-6 h-6 text-indigo-500" />
           Indian Age Calculator (DD/MM/YYYY)
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Calculate your exact age in years, months, and days and verify your eligibility for school, licenses, voting, and senior benefits.
         </p>
       </div>
@@ -113,7 +113,7 @@ export default function IndianAgeCalculator() {
             <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">Date of Birth</h3>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-[10px] text-zinc-550 block mb-1">Day</label>
+                <label className="text-[10px] text-[var(--text-secondary)] block mb-1">Day</label>
                 <select
                   value={day}
                   onChange={e => setDay(e.target.value)}
@@ -126,7 +126,7 @@ export default function IndianAgeCalculator() {
               </div>
 
               <div>
-                <label className="text-[10px] text-zinc-550 block mb-1">Month</label>
+                <label className="text-[10px] text-[var(--text-secondary)] block mb-1">Month</label>
                 <select
                   value={month}
                   onChange={e => setMonth(e.target.value)}
@@ -139,7 +139,7 @@ export default function IndianAgeCalculator() {
               </div>
 
               <div>
-                <label className="text-[10px] text-zinc-550 block mb-1">Year</label>
+                <label className="text-[10px] text-[var(--text-secondary)] block mb-1">Year</label>
                 <select
                   value={year}
                   onChange={e => setYear(e.target.value)}
@@ -166,13 +166,14 @@ export default function IndianAgeCalculator() {
           <div className="flex gap-4">
             <button
               onClick={handleCalculate}
-              className="flex-1 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
               Calculate Age
             </button>
             <button
               onClick={handleReset}
-              className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+              className="px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all cursor-pointer"
+              aria-label="Reset"
             >
               <RefreshCw className="w-5 h-5" />
             </button>
@@ -234,7 +235,7 @@ export default function IndianAgeCalculator() {
                       </span>
                     )}
                   </div>
-                  <p className="text-zinc-550 leading-relaxed">{rule.desc}</p>
+                  <p className="text-[var(--text-secondary)] leading-relaxed">{rule.desc}</p>
                 </div>
               );
             })}

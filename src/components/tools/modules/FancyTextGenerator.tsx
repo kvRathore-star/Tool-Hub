@@ -103,7 +103,7 @@ export default function FancyTextGenerator() {
           <Type className="w-6 h-6 text-indigo-500" />
           Fancy Font & Text Stylizer
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Type your text to generate stylized fonts, bubble letters, cursive scripts, and brackets. Copy instantly for Instagram, X, or Discord.
         </p>
       </div>
@@ -136,14 +136,14 @@ export default function FancyTextGenerator() {
                     <div key={key} className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-xl flex items-center justify-between gap-4">
                       <div className="space-y-1">
                         <span className="text-[10px] text-zinc-500 block">{font.name}</span>
-                        <span className="text-base font-medium text-zinc-900 dark:text-zinc-150">{output}</span>
+                        <span className="text-base font-medium text-zinc-900 dark:text-[var(--text-primary)]">{output}</span>
                       </div>
                       <button
                         onClick={() => handleCopy(output, key)}
                         className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                           isCopied
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300'
+                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300'
                         }`}
                       >
                         {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -169,14 +169,14 @@ export default function FancyTextGenerator() {
                     <div key={key} className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 rounded-xl flex items-center justify-between gap-4">
                       <div className="space-y-1">
                         <span className="text-[10px] text-zinc-500 block">{decor.name}</span>
-                        <span className="text-base font-medium text-zinc-900 dark:text-zinc-150">{output}</span>
+                        <span className="text-base font-medium text-zinc-900 dark:text-[var(--text-primary)]">{output}</span>
                       </div>
                       <button
                         onClick={() => handleCopy(output, key)}
                         className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                           isCopied
                             ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300'
+                            : 'bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-[var(--text-secondary)] dark:text-zinc-400 hover:border-zinc-300'
                         }`}
                       >
                         {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}

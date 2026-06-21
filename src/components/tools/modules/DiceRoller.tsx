@@ -37,12 +37,12 @@ export default function DiceRoller() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center space-y-12 py-10 bg-zinc-50 dark:bg-black/30 rounded-2xl border border-zinc-850">
+      <div className="flex flex-col items-center justify-center space-y-12 py-10 bg-zinc-50 dark:bg-black/30 rounded-2xl border border-[var(--border-subtle)]">
         <div className="flex flex-wrap justify-center gap-8 min-h-[120px] items-center">
           {dices.map((val, idx) => (
             <div 
               key={idx}
-              className={`w-16 h-16 bg-white dark:bg-zinc-850 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl shadow-lg flex items-center justify-center text-3xl font-black text-indigo-500 transition-all duration-500 ${
+              className={`w-16 h-16 bg-white dark:bg-[var(--bg-surface)] border-2 border-zinc-200 dark:border-zinc-700 rounded-xl shadow-lg flex items-center justify-center text-3xl font-black text-indigo-500 transition-all duration-500 ${
                 isRolling ? 'rotate-180 scale-95 opacity-50 animate-bounce' : ''
               }`}
             >
@@ -52,11 +52,11 @@ export default function DiceRoller() {
         </div>
 
         <div className="text-center">
-          <p className="text-xs text-zinc-450 font-bold mb-4">Total Sum: {dices.reduce((a, b) => a + b, 0)}</p>
+          <p className="text-xs text-[var(--text-muted)] font-bold mb-4">Total Sum: {dices.reduce((a, b) => a + b, 0)}</p>
           <button 
             onClick={rollDices} 
             disabled={isRolling}
-            className="bg-indigo-650 hover:bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl text-xs flex items-center gap-2 cursor-pointer shadow-lg disabled:opacity-50"
+            className="bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold px-8 py-3 rounded-xl text-xs flex items-center gap-2 cursor-pointer shadow-lg disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${isRolling ? 'animate-spin' : ''}`} />
             Roll Dices

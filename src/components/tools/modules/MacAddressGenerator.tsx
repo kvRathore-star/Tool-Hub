@@ -43,7 +43,7 @@ export default function MacAddressGenerator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Layers className="w-5 h-5 text-indigo-500" />
           MAC Address List Generator
         </h2>
@@ -95,7 +95,7 @@ export default function MacAddressGenerator() {
           <div className="space-y-2 flex-1 flex flex-col">
             <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
               <span className="text-xs text-zinc-400 font-bold uppercase">MAC Addresses</span>
-              {list.length > 0 && <button onClick={handleCopy} className="p-1.5 text-zinc-550 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>}
+              {list.length > 0 && <button onClick={handleCopy} className="p-1.5 text-[var(--text-secondary)] hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>}
             </div>
             <textarea readOnly value={list.join('\n')} placeholder="Addresses will appear here..." className="w-full flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs outline-none h-48 resize-none mt-2" />
           </div>

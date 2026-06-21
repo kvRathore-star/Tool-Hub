@@ -59,18 +59,18 @@ export default function Stopwatch() {
 
           <div className="flex gap-4">
             {isActive ? (
-              <button onClick={handlePause} className="bg-amber-600 hover:bg-amber-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+              <button onClick={handlePause} className="bg-amber-600 hover:bg-amber-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Pause">
                 <Pause className="w-5 h-5" />
               </button>
             ) : (
-              <button onClick={handleStart} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+              <button onClick={handleStart} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Start">
                 <Play className="w-5 h-5" />
               </button>
             )}
-            <button onClick={handleLap} disabled={!isActive} className="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-400 font-bold p-3 rounded-full cursor-pointer transition-colors shadow disabled:opacity-30">
+            <button onClick={handleLap} disabled={!isActive} className="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-400 font-bold p-3 rounded-full cursor-pointer transition-colors shadow disabled:opacity-30" aria-label="Lap">
               <Flag className="w-5 h-5" />
             </button>
-            <button onClick={handleReset} className="bg-zinc-850 hover:bg-zinc-850 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+            <button onClick={handleReset} className="bg-[var(--bg-surface)] hover:bg-[var(--bg-surface)] text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Reset">
               <RotateCcw className="w-5 h-5" />
             </button>
           </div>
@@ -78,11 +78,11 @@ export default function Stopwatch() {
 
         {/* Laps List */}
         <div className="space-y-4 flex flex-col justify-between max-h-[300px]">
-          <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-zinc-850 pb-2">Split Laps Record</span>
+          <span className="text-xs text-zinc-400 font-bold uppercase block border-b border-[var(--border-subtle)] pb-2">Split Laps Record</span>
           {laps.length > 0 ? (
             <div className="space-y-2 overflow-y-auto pr-1 flex-1">
               {laps.map((lap, idx) => (
-                <div key={idx} className="flex justify-between items-center text-xs bg-zinc-50 dark:bg-black/10 p-2.5 rounded-xl border border-zinc-850">
+                <div key={idx} className="flex justify-between items-center text-xs bg-zinc-50 dark:bg-black/10 p-2.5 rounded-xl border border-[var(--border-subtle)]">
                   <span className="text-zinc-500">Lap {idx + 1}</span>
                   <span className="font-mono font-bold text-zinc-900 dark:text-white">{formatTime(lap)}</span>
                 </div>

@@ -790,13 +790,13 @@ export default function AiThumbnailMaker() {
             <div className="grid grid-cols-2 gap-2">
               <button 
                 onClick={addTextElement}
-                className="flex items-center justify-center gap-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs cursor-pointer"
+                className="flex items-center justify-center gap-1.5 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-2 rounded-xl text-xs cursor-pointer"
               >
                 <Type className="w-3.5 h-3.5" />
                 Add Text
               </button>
               <label 
-                className="flex items-center justify-center gap-1.5 bg-zinc-150 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-200 font-bold py-2 rounded-xl text-xs cursor-pointer text-center"
+                className="flex items-center justify-center gap-1.5 bg-[var(--bg-overlay)] dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-200 font-bold py-2 rounded-xl text-xs cursor-pointer text-center"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Overlay
@@ -845,7 +845,7 @@ export default function AiThumbnailMaker() {
                 <button 
                   onClick={deleteSelectedElement}
                   className="p-1.5 text-rose-500 hover:bg-rose-500/10 rounded-lg cursor-pointer"
-                  title="Remove Element"
+                  title="Remove Element" aria-label="Remove Element"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

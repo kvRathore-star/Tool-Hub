@@ -132,7 +132,7 @@ export default function VoterIdHelper() {
           <ClipboardList className="w-6 h-6 text-indigo-500" />
           Voter ID Registration Helper (ECI)
         </h2>
-        <p className="text-sm text-zinc-650 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] dark:text-zinc-400 mt-1">
           Interactive guide and checklist builder for Election Commission of India (ECI) Forms 6, 7, and 8. Select a form to get started.
         </p>
       </div>
@@ -148,7 +148,7 @@ export default function VoterIdHelper() {
             }}
             className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
               selectedForm === key
-                ? 'bg-indigo-650 text-white shadow-sm'
+                ? 'bg-[var(--accent)] text-white shadow-sm'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
           >
@@ -177,7 +177,7 @@ export default function VoterIdHelper() {
             </h4>
             <ul className="space-y-2.5">
               {currentGuide.eligibility.map((item, index) => (
-                <li key={index} className="flex items-start gap-2.5 text-sm text-zinc-650 dark:text-zinc-400">
+                <li key={index} className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)] dark:text-zinc-400">
                   <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 shrink-0" />
                   <span>{item}</span>
                 </li>
@@ -191,14 +191,14 @@ export default function VoterIdHelper() {
               href={currentGuide.nvspLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl text-center transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl text-center transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               Apply Online via Voter Portal
               <ExternalLink className="w-4 h-4" />
             </a>
             <button
               onClick={handlePrint}
-              className="px-5 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="px-5 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               Print Checklist
@@ -220,7 +220,7 @@ export default function VoterIdHelper() {
           <div className="space-y-6">
             {currentGuide.documents.map((cat, catIdx) => (
               <div key={catIdx} className="space-y-2">
-                <span className="text-xs font-bold text-zinc-650 dark:text-zinc-400 block">
+                <span className="text-xs font-bold text-[var(--text-secondary)] dark:text-zinc-400 block">
                   {cat.category}
                 </span>
                 <div className="space-y-2">
@@ -262,7 +262,7 @@ export default function VoterIdHelper() {
           <Info className="w-4 h-4 text-indigo-500" />
           General Submission Flow
         </h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-zinc-650 dark:text-zinc-400">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-[var(--text-secondary)] dark:text-zinc-400">
           <div className="p-4 bg-zinc-50 dark:bg-black/35 rounded-xl border border-zinc-200 dark:border-white/5 space-y-1">
             <span className="font-bold text-zinc-800 dark:text-zinc-200 block">1. Form Submission</span>
             <span>Fill and submit the online application on voters.eci.gov.in or Voter Helpline Mobile App.</span>

@@ -61,7 +61,7 @@ export default function SecureNoteSharer() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Shield className="w-5 h-5 text-indigo-500" />
           AES Self-Destructing Secure Note Sharer
         </h2>
@@ -75,7 +75,7 @@ export default function SecureNoteSharer() {
           
           <textarea
             value={note}
-            onChange={e => setNote(e.target.value)}
+            onChange={e => setNote(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && createSecureNote()}
             placeholder="Type your sensitive message here..."
             className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-32 outline-none text-xs resize-none"
           />
@@ -91,16 +91,16 @@ export default function SecureNoteSharer() {
             />
           </div>
 
-          <button onClick={createSecureNote} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <button onClick={createSecureNote} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
             <Key className="w-4 h-4" /> Generate Secret Link
           </button>
 
           {shareLink && (
-            <div className="space-y-2 pt-2 border-t border-zinc-850 animate-in">
+            <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)] animate-in">
               <span className="text-[10px] text-zinc-400 font-bold uppercase block">Shareable link</span>
               <div className="flex gap-2">
                 <input readOnly type="text" value={shareLink} className="flex-1 bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 text-[10px] text-zinc-300 outline-none" />
-                <button onClick={() => { navigator.clipboard.writeText(shareLink); toast.success('Link copied!'); }} className="bg-zinc-800 px-3 py-2 rounded-xl text-xs text-white cursor-pointer"><Copy className="w-4 h-4" /></button>
+                <button onClick={() => { navigator.clipboard.writeText(shareLink); toast.success('Link copied!'); }} className="bg-zinc-800 px-3 py-2 rounded-xl text-xs text-white cursor-pointer" aria-label="Copy"><Copy className="w-4 h-4" /></button>
               </div>
             </div>
           )}

@@ -100,15 +100,15 @@ export default function OnlineTimer() {
 
           <div className="flex gap-4">
             {isActive ? (
-              <button onClick={handlePause} className="bg-amber-600 hover:bg-amber-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+              <button onClick={handlePause} className="bg-amber-600 hover:bg-amber-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Pause">
                 <Pause className="w-5 h-5" />
               </button>
             ) : (
-              <button onClick={handleStart} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+              <button onClick={handleStart} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Start">
                 <Play className="w-5 h-5" />
               </button>
             )}
-            <button onClick={handleReset} className="bg-zinc-850 hover:bg-zinc-800 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow">
+            <button onClick={handleReset} className="bg-[var(--bg-surface)] hover:bg-zinc-800 text-white font-bold p-3 rounded-full cursor-pointer transition-colors shadow" aria-label="Reset">
               <RotateCcw className="w-5 h-5" />
             </button>
           </div>
@@ -133,7 +133,7 @@ export default function OnlineTimer() {
             </div>
           </div>
 
-          <div className="space-y-2 pt-2 border-t border-zinc-850">
+          <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)]">
             <span className="text-xs text-zinc-400 font-bold uppercase block">Quick Presets</span>
             <div className="flex flex-wrap gap-2">
               {[1, 5, 10, 15, 30, 60].map(mins => (

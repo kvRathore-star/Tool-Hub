@@ -51,7 +51,7 @@ export default function SipCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-xs text-zinc-400">Total Invested</span>
-                <p className="text-lg font-bold text-zinc-850 dark:text-zinc-150">₹${totalInvested.toLocaleString('en-IN')}</p>
+                <p className="text-lg font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]">₹${totalInvested.toLocaleString('en-IN')}</p>
               </div>
               <div>
                 <span className="text-xs text-zinc-400">Wealth Gain</span>

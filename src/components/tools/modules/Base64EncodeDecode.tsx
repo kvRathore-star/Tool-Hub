@@ -193,7 +193,7 @@ export default function Base64EncodeDecode() {
             URL-Safe Base64
           </label>
 
-          <label className="flex items-center gap-2 cursor-pointer bg-zinc-200 dark:bg-zinc-850 hover:bg-zinc-300 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-4 py-2 rounded-xl text-sm font-medium transition-colors">
+          <label className="flex items-center gap-2 cursor-pointer bg-zinc-200 dark:bg-[var(--bg-surface)] hover:bg-zinc-300 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-4 py-2 rounded-xl text-sm font-medium transition-colors">
             📁 File Import
             <input
               type="file"

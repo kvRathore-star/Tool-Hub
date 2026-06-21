@@ -101,7 +101,7 @@ export default function ToDoList() {
               <option value="medium">Medium Priority</option>
               <option value="low">Low Priority</option>
             </select>
-            <button onClick={addItem} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-xl text-xs flex items-center justify-center cursor-pointer">
+            <button onClick={addItem} className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-xl text-xs flex items-center justify-center cursor-pointer" aria-label="Add">
               <Plus className="w-4 h-4" />
             </button>
           </div>
@@ -111,13 +111,13 @@ export default function ToDoList() {
         <div className="space-y-2 pt-2">
           {items.length > 0 ? (
             items.map(item => (
-              <div key={item.id} className="flex justify-between items-center bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-zinc-850 hover:border-zinc-700 transition-all">
+              <div key={item.id} className="flex justify-between items-center bg-zinc-50 dark:bg-black/10 p-3.5 rounded-xl border border-[var(--border-subtle)] hover:border-zinc-700 transition-all">
                 <label className="flex items-center gap-3 cursor-pointer text-xs flex-1 select-none">
                   <input 
                     type="checkbox" 
                     checked={item.completed} 
                     onChange={() => toggleItem(item.id)}
-                    className="rounded text-indigo-650" 
+                    className="rounded text-[var(--accent)]" 
                   />
                   <span className={`text-zinc-900 dark:text-zinc-200 ${item.completed ? 'line-through text-zinc-500' : ''}`}>
                     {item.text}
@@ -133,7 +133,7 @@ export default function ToDoList() {
                   </span>
                 </label>
 
-                <button onClick={() => deleteItem(item.id)} className="p-1.5 text-zinc-500 hover:text-rose-500 rounded-lg cursor-pointer">
+                <button onClick={() => deleteItem(item.id)} className="p-1.5 text-zinc-500 hover:text-rose-500 rounded-lg cursor-pointer" aria-label="Delete">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>

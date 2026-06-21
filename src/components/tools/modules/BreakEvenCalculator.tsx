@@ -43,7 +43,7 @@ export default function BreakEvenCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-xs text-zinc-400">Contribution Margin</span>
-                <p className="text-lg font-bold text-zinc-850 dark:text-white">{contributionMargin.toFixed(2)}</p>
+                <p className="text-lg font-bold text-[var(--text-secondary)] dark:text-white">{contributionMargin.toFixed(2)}</p>
               </div>
               <div>
                 <span className="text-xs text-zinc-400">Break-Even Units</span>

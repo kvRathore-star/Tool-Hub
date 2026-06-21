@@ -28,12 +28,12 @@ export default function InvisibleTextGenerator() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs">
         <div className="space-y-4 flex flex-col justify-center">
-          <span className="text-[10px] text-zinc-400 font-bold uppercase block border-b border-zinc-850 pb-2">Generate Payload size</span>
+          <span className="text-[10px] text-zinc-400 font-bold uppercase block border-b border-[var(--border-subtle)] pb-2">Generate Payload size</span>
           
           <div className="grid grid-cols-3 gap-2">
-            <button onClick={() => generateInvisible(5)} className="py-2.5 bg-zinc-800 text-zinc-350 rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">5 Bytes</button>
-            <button onClick={() => generateInvisible(20)} className="py-2.5 bg-zinc-800 text-zinc-350 rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">20 Bytes</button>
-            <button onClick={() => generateInvisible(100)} className="py-2.5 bg-zinc-800 text-zinc-350 rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">100 Bytes</button>
+            <button onClick={() => generateInvisible(5)} className="py-2.5 bg-zinc-800 text-[var(--text-muted)] rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">5 Bytes</button>
+            <button onClick={() => generateInvisible(20)} className="py-2.5 bg-zinc-800 text-[var(--text-muted)] rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">20 Bytes</button>
+            <button onClick={() => generateInvisible(100)} className="py-2.5 bg-zinc-800 text-[var(--text-muted)] rounded-lg hover:bg-zinc-700 font-bold cursor-pointer">100 Bytes</button>
           </div>
           
           <p className="text-[10px] text-zinc-500 leading-relaxed">
@@ -49,7 +49,7 @@ export default function InvisibleTextGenerator() {
               <span className="text-[9px] text-zinc-600 block mt-1">(Select text block above to verify clipboard content size)</span>
             </div>
           </div>
-          <button onClick={handleCopy} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <button onClick={handleCopy} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
             Copy Invisible Bytes
           </button>
         </div>

@@ -54,7 +54,7 @@ export default function EmployeeTurnoverCalculator() {
       
       {/* Title */}
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Users className="w-5 h-5 text-indigo-500" />
           Employee Turnover & Retention Calculator
         </h2>
@@ -65,7 +65,7 @@ export default function EmployeeTurnoverCalculator() {
         
         {/* Input Panel */}
         <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-6">
-          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider border-b border-zinc-105 dark:border-zinc-800 pb-2">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider border-b border-[var(--border-subtle)] dark:border-zinc-800 pb-2">
             Workforce Details
           </h3>
 
@@ -77,7 +77,7 @@ export default function EmployeeTurnoverCalculator() {
                 <input 
                   type="number" value={startingEmployees} 
                   onChange={e => setStartingEmployees(Math.max(1, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-205 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
                 />
               </div>
 
@@ -87,7 +87,7 @@ export default function EmployeeTurnoverCalculator() {
                 <input 
                   type="number" value={endingEmployees} 
                   onChange={e => setEndingEmployees(Math.max(1, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-205 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@ export default function EmployeeTurnoverCalculator() {
                 <input 
                   type="number" value={voluntaryDepartures} 
                   onChange={e => setVoluntaryDepartures(Math.max(0, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-205 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
                 />
               </div>
 
@@ -109,7 +109,7 @@ export default function EmployeeTurnoverCalculator() {
                 <input 
                   type="number" value={involuntaryDepartures} 
                   onChange={e => setInvoluntaryDepartures(Math.max(0, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-205 dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl px-3.5 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function EmployeeTurnoverCalculator() {
                 <input 
                   type="number" value={avgAnnualSalary} 
                   onChange={e => setAvgAnnualSalary(Math.max(1000, parseInt(e.target.value) || 0))}
-                  className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-205 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
+                  className="w-full bg-zinc-50 dark:bg-black/50 border border-[var(--border-subtle)] dark:border-zinc-800 rounded-xl px-4 py-2.5 text-zinc-900 dark:text-white font-bold outline-none text-sm"
                 />
                 <span className="absolute right-4 top-3 text-zinc-400 text-xs">$</span>
               </div>
@@ -192,7 +192,7 @@ export default function EmployeeTurnoverCalculator() {
           {/* Replacement Cost Breakdown */}
           {totalReplacementCost > 0 && (
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-4">
-              <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800">
+              <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800">
                 Turnover Financial Breakdown
               </h3>
               
@@ -201,7 +201,7 @@ export default function EmployeeTurnoverCalculator() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-zinc-500">Recruiting & Agencies (40%)</span>
-                    <span className="text-zinc-900 dark:text-zinc-250">${Math.round(directRecruitmentCost).toLocaleString()}</span>
+                    <span className="text-zinc-900 dark:text-[var(--text-secondary)]">${Math.round(directRecruitmentCost).toLocaleString()}</span>
                   </div>
                   <div className="w-full bg-zinc-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                     <div className="bg-indigo-500 h-full rounded-full" style={{ width: '40%' }} />
@@ -212,7 +212,7 @@ export default function EmployeeTurnoverCalculator() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-zinc-500">Onboarding & Ramp-up Training (25%)</span>
-                    <span className="text-zinc-900 dark:text-zinc-250">${Math.round(trainingOnboardingCost).toLocaleString()}</span>
+                    <span className="text-zinc-900 dark:text-[var(--text-secondary)]">${Math.round(trainingOnboardingCost).toLocaleString()}</span>
                   </div>
                   <div className="w-full bg-zinc-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                     <div className="bg-amber-400 h-full rounded-full" style={{ width: '25%' }} />
@@ -223,7 +223,7 @@ export default function EmployeeTurnoverCalculator() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-zinc-500">Lost Productivity & Vacancy Costs (35%)</span>
-                    <span className="text-zinc-900 dark:text-zinc-250">${Math.round(lostProductivityCost).toLocaleString()}</span>
+                    <span className="text-zinc-900 dark:text-[var(--text-secondary)]">${Math.round(lostProductivityCost).toLocaleString()}</span>
                   </div>
                   <div className="w-full bg-zinc-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                     <div className="bg-rose-500 h-full rounded-full" style={{ width: '35%' }} />
@@ -235,7 +235,7 @@ export default function EmployeeTurnoverCalculator() {
 
           {/* Actionable Recommendations */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl p-6 shadow-xl space-y-3">
-            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-zinc-150 dark:border-zinc-800 flex items-center gap-1">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider pb-2 border-b border-[var(--border-subtle)] dark:border-zinc-800 flex items-center gap-1">
               <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
               Culture & Retention Advisory
             </h3>

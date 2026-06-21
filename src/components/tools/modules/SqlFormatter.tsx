@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { AlignLeft, Copy, Download, Check } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { format } from 'sql-formatter';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function SqlFormatter() {
   const [input, setInput] = useState('');
@@ -41,18 +42,14 @@ export default function SqlFormatter() {
     if (!output) return;
     const blob = new Blob([output], { type: 'text/sql' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'formatted.sql';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, 'formatted.sql');
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
             <AlignLeft className="w-5 h-5 text-indigo-500" />
             SQL Query Formatter
           </h2>
@@ -106,8 +103,8 @@ export default function SqlFormatter() {
               <span className="text-xs text-zinc-400 font-bold uppercase">Formatted SQL Output</span>
               {output && (
                 <div className="flex gap-2">
-                  <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
-                  <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Download className="w-4 h-4" /></button>
+                  <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
+                  <button onClick={handleDownload} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Download"><Download className="w-4 h-4" /></button>
                 </div>
               )}
             </div>

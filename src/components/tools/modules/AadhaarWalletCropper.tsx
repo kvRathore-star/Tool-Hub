@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { Shield, Download, RefreshCw, Upload, Crop } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AadhaarWalletCropper() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -88,16 +89,13 @@ export default function AadhaarWalletCropper() {
 
   const downloadCard = () => {
     if (!croppedUrl) return;
-    const a = document.createElement('a');
-    a.href = croppedUrl;
-    a.download = `aadhaar_card_${side}.jpg`;
-    a.click();
+    downloadOrShare(croppedUrl, `aadhaar_card_${side}.jpg`);
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Crop className="w-5 h-5 text-indigo-500" />
           Aadhaar Card Wallet Cropper
         </h2>
@@ -129,7 +127,7 @@ export default function AadhaarWalletCropper() {
             <div className="border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl p-12 flex flex-col items-center justify-center bg-zinc-50 dark:bg-black/20 text-center">
               <Upload className="w-10 h-10 text-zinc-400 mb-2" />
               <p className="text-xs text-zinc-400">Upload scan of your ID card</p>
-              <label className="bg-indigo-650 hover:bg-indigo-600 px-4 py-2 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4">
+              <label className="bg-[var(--accent)] hover:bg-indigo-600 px-4 py-2 rounded-xl text-xs text-white font-bold cursor-pointer transition-colors shadow mt-4">
                 Choose ID Image
                 <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
               </label>

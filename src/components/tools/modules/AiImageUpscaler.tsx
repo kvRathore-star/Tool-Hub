@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FileUploader } from '../FileUploader';
 import { Eye, Download, ShieldCheck, Zap, Sliders, Maximize2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiImageUpscaler() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -133,10 +134,7 @@ export default function AiImageUpscaler() {
 
   const handleDownload = () => {
     if (!upscaledUrl) return;
-    const a = document.createElement('a');
-    a.href = upscaledUrl;
-    a.download = `upscaled-${factor}x-${imageFile?.name || 'photo.png'}`;
-    a.click();
+    downloadOrShare(upscaledUrl, `upscaled-${factor}x-${imageFile?.name || 'photo.png'}`);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -174,11 +172,11 @@ export default function AiImageUpscaler() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-zinc-200 dark:border-white/5">
         <div>
           <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{imageFile.name}</h3>
-          <p className="text-xs text-zinc-550">Original dimensions</p>
+          <p className="text-xs text-[var(--text-secondary)]">Original dimensions</p>
         </div>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
         >
           Change Photo
         </button>
@@ -204,8 +202,8 @@ export default function AiImageUpscaler() {
                   }}
                   className={`py-3 rounded-xl font-bold transition-all cursor-pointer ${
                     factor === f
-                      ? 'bg-indigo-650 text-white shadow-lg'
-                      : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400 hover:bg-zinc-250 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
+                      ? 'bg-[var(--accent)] text-white shadow-lg'
+                      : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
                   }`}
                 >
                   {f}x
@@ -217,14 +215,14 @@ export default function AiImageUpscaler() {
           <button
             onClick={processUpscale}
             disabled={isProcessing}
-            className="w-full bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-850 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+            className="w-full bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-[var(--accent)] text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
           >
             {isProcessing ? 'Upscaling Image...' : 'Enhance & Scale'}
           </button>
         </div>
 
         {/* Workspace */}
-        <div className="lg:col-span-2 bg-zinc-950 border border-zinc-850 rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
+        <div className="lg:col-span-2 bg-zinc-950 border border-[var(--border-subtle)] rounded-2xl overflow-hidden min-h-[350px] flex flex-col justify-between p-6">
           <div className="flex-1 flex justify-center items-center">
             {upscaledUrl ? (
               <div

@@ -126,7 +126,7 @@ export default function ReceiptGenerator() {
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
             <FileText className="w-5 h-5 text-indigo-500" />
             Receipt Generator & PDF Builder
           </h2>
@@ -134,7 +134,7 @@ export default function ReceiptGenerator() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-xs text-zinc-450">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-xs text-[var(--text-muted)]">
         {/* Workspace */}
         <div className="lg:col-span-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-6 rounded-2xl shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-zinc-900 dark:text-white uppercase border-b border-zinc-800 pb-2">Details</h3>
@@ -166,7 +166,7 @@ export default function ReceiptGenerator() {
             </div>
           </div>
 
-          <div className="border-t border-zinc-850 pt-3 space-y-3">
+          <div className="border-t border-[var(--border-subtle)] pt-3 space-y-3">
             <span className="text-[10px] text-zinc-400 font-bold uppercase block">Add Line Item</span>
             <input type="text" value={newItemName} onChange={e => setNewItemName(e.target.value)} placeholder="Consultation Fees" className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 outline-none" />
             <div className="grid grid-cols-2 gap-4">
@@ -179,7 +179,7 @@ export default function ReceiptGenerator() {
                 <input type="number" min="0" value={newItemRate} onChange={e => setNewItemRate(Math.max(0, parseFloat(e.target.value) || 0))} className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-lg px-2 py-1 outline-none" />
               </div>
             </div>
-            <button onClick={addItem} className="w-full bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
+            <button onClick={addItem} className="w-full bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1 cursor-pointer">
               <Plus className="w-4 h-4" /> Add Item
             </button>
           </div>
@@ -190,7 +190,7 @@ export default function ReceiptGenerator() {
           <div className="space-y-4 flex-1">
             <div className="flex justify-between items-start border-b border-zinc-800 pb-3">
               <div>
-                <h4 className="text-base font-black text-zinc-150">{businessName}</h4>
+                <h4 className="text-base font-black text-[var(--text-primary)]">{businessName}</h4>
                 <p className="text-[10px] text-zinc-500 mt-1">Receipt: {receiptNumber} | {date}</p>
               </div>
               <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 py-1 rounded text-[9px] font-bold tracking-wider">PAID</span>
@@ -205,7 +205,7 @@ export default function ReceiptGenerator() {
               </div>
 
               {items.map(item => (
-                <div key={item.id} className="grid grid-cols-12 items-center text-zinc-300 py-1 border-b border-zinc-850/50">
+                <div key={item.id} className="grid grid-cols-12 items-center text-zinc-300 py-1 border-b border-[var(--border-subtle)]/50">
                   <span className="col-span-6 truncate font-medium">{item.name}</span>
                   <span className="col-span-2 text-center">{item.qty}</span>
                   <span className="col-span-2 text-right">${item.rate.toFixed(2)}</span>
@@ -215,11 +215,11 @@ export default function ReceiptGenerator() {
             </div>
 
             <div className="flex flex-col items-end pt-4 space-y-2 text-xs">
-              <div className="flex justify-between w-48 text-zinc-450">
+              <div className="flex justify-between w-48 text-[var(--text-muted)]">
                 <span>Subtotal:</span>
                 <span>${getSubtotal().toFixed(2)}</span>
               </div>
-              <div className="flex justify-between w-48 text-zinc-450">
+              <div className="flex justify-between w-48 text-[var(--text-muted)]">
                 <span>Tax ({taxPercent}%):</span>
                 <span>${getTax().toFixed(2)}</span>
               </div>

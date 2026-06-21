@@ -1,1008 +1,1488 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://toolhub.com</loc>
+    <loc>https://gotoolhub.com</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/tiktok-video-downloader/1</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/about</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ad-blocker-extension/2</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/ai-hub</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/youtube-downloader/3</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/api</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/instagram-video-downloader/4</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/blog</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/youtube-video-downloader-extension/5</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/careers</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/facebook-video-downloader/6</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/changelog</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-translator/7</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/contact</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/grammar-checker-extension/8</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/dashboard</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-to-word/9</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/extension</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-image-generator/10</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/pricing</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/speed-test/11</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/privacy</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/twitter-video-downloader/12</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/product</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/spotify-mp3-downloader/13</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/roadmap</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/compress-image-to-50kb/14</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/status</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/currency-converter/15</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/terms</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/logo-maker/16</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://gotoolhub.com/tools</loc>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/mp4-to-mp3/17</loc>
+    <loc>https://gotoolhub.com/ai</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-compressor/18</loc>
+    <loc>https://gotoolhub.com/audio</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/word-to-pdf/19</loc>
+    <loc>https://gotoolhub.com/branding</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-writing-assistant/20</loc>
+    <loc>https://gotoolhub.com/converter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/percentage-calculator/21</loc>
+    <loc>https://gotoolhub.com/design</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/jpg-to-pdf/22</loc>
+    <loc>https://gotoolhub.com/developer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/word-to-pdf/23</loc>
+    <loc>https://gotoolhub.com/downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/online-timer/24</loc>
+    <loc>https://gotoolhub.com/extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/plagiarism-checker/25</loc>
+    <loc>https://gotoolhub.com/finance</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/age-calculator/26</loc>
+    <loc>https://gotoolhub.com/health</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/heic-to-jpg/27</loc>
+    <loc>https://gotoolhub.com/hr</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-to-jpg/28</loc>
+    <loc>https://gotoolhub.com/image</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-to-ppt/29</loc>
+    <loc>https://gotoolhub.com/indian-utilities</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/fancy-text-generator/30</loc>
+    <loc>https://gotoolhub.com/marketing</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/stopwatch/31</loc>
+    <loc>https://gotoolhub.com/pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/reddit-video-downloader/32</loc>
+    <loc>https://gotoolhub.com/privacy</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/background-remover/33</loc>
+    <loc>https://gotoolhub.com/productivity</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/webp-to-jpg/34</loc>
+    <loc>https://gotoolhub.com/seo</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/wheel-of-names/35</loc>
+    <loc>https://gotoolhub.com/text</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-compressor/36</loc>
+    <loc>https://gotoolhub.com/transcription</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/object-remover/37</loc>
+    <loc>https://gotoolhub.com/utility</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ppt-to-pdf/38</loc>
+    <loc>https://gotoolhub.com/video</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/temporary-email-generator/39</loc>
+    <loc>https://gotoolhub.com/image/add-text-to-photo</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/screen-recorder-extension/40</loc>
+    <loc>https://gotoolhub.com/image/batch-image-editor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-merger/41</loc>
+    <loc>https://gotoolhub.com/developer/brand-kit</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/qr-code-generator/42</loc>
+    <loc>https://gotoolhub.com/video/gif-compressor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/to-do-list/43</loc>
+    <loc>https://gotoolhub.com/video/image-to-gif</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/excel-to-pdf/44</loc>
+    <loc>https://gotoolhub.com/video/mp4-to-gif</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/emi-calculator/45</loc>
+    <loc>https://gotoolhub.com/video/webm-to-gif</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/character-counter/46</loc>
+    <loc>https://gotoolhub.com/video/mov-to-gif</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/video-to-text-transcription/47</loc>
+    <loc>https://gotoolhub.com/video/video-to-mp3</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/word-counter/48</loc>
+    <loc>https://gotoolhub.com/audio/mp3-to-ogg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/crop-image/49</loc>
+    <loc>https://gotoolhub.com/audio/wav-compressor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/social-media-post-maker/50</loc>
+    <loc>https://gotoolhub.com/video/crop-video</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/mkv-to-mp4/51</loc>
+    <loc>https://gotoolhub.com/developer/json-to-xml</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/text-to-speech-(tts)/52</loc>
+    <loc>https://gotoolhub.com/converter/time-converter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-paraphrasing-tool/53</loc>
+    <loc>https://gotoolhub.com/converter/pst-to-est</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/random-number-generator/54</loc>
+    <loc>https://gotoolhub.com/converter/cst-to-est</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/url-shortener/55</loc>
+    <loc>https://gotoolhub.com/converter/lbs-to-kg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/text-summarizer/56</loc>
+    <loc>https://gotoolhub.com/converter/kg-to-lbs</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/passport-photo-maker/57</loc>
+    <loc>https://gotoolhub.com/converter/feet-to-meters</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-to-excel/58</loc>
+    <loc>https://gotoolhub.com/converter/archive-converter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/unlock-pdf/59</loc>
+    <loc>https://gotoolhub.com/pdf/flatten-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-enhancer/60</loc>
+    <loc>https://gotoolhub.com/pdf/crop-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/sip-calculator/61</loc>
+    <loc>https://gotoolhub.com/pdf/organize-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/bmi-calculator/62</loc>
+    <loc>https://gotoolhub.com/pdf/extract-pages-from-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pinterest-image-downloader/63</loc>
+    <loc>https://gotoolhub.com/pdf/heic-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/audio-to-text-transcription/64</loc>
+    <loc>https://gotoolhub.com/downloader/tiktok-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/soundcloud-downloader/65</loc>
+    <loc>https://gotoolhub.com/extension/ad-blocker-extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/meme-generator/66</loc>
+    <loc>https://gotoolhub.com/downloader/youtube-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/mov-to-mp4/67</loc>
+    <loc>https://gotoolhub.com/downloader/instagram-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/resume-builder/68</loc>
+    <loc>https://gotoolhub.com/extension/youtube-video-downloader-extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-image-upscaler/69</loc>
+    <loc>https://gotoolhub.com/downloader/facebook-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/gst-calculator/70</loc>
+    <loc>https://gotoolhub.com/ai/ai-translator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-resizer/71</loc>
+    <loc>https://gotoolhub.com/extension/grammar-checker-extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/password-generator/72</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-to-word</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/diff-checker/73</loc>
+    <loc>https://gotoolhub.com/ai/ai-image-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/webm-to-mp4/74</loc>
+    <loc>https://gotoolhub.com/utility/speed-test</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-object-remover/75</loc>
+    <loc>https://gotoolhub.com/downloader/twitter-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ip-address-lookup/76</loc>
+    <loc>https://gotoolhub.com/downloader/soundcloud-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/brand-name-generator/77</loc>
+    <loc>https://gotoolhub.com/image/compress-image-to-50kb</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-content-humanizer/78</loc>
+    <loc>https://gotoolhub.com/finance/currency-converter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/photo-retoucher/79</loc>
+    <loc>https://gotoolhub.com/branding/logo-maker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-splitter/80</loc>
+    <loc>https://gotoolhub.com/converter/mp4-to-mp3</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-upscaler-(ai)/81</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-compressor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/twitch-clip-downloader/82</loc>
+    <loc>https://gotoolhub.com/pdf/word-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/color-picker-extension/83</loc>
+    <loc>https://gotoolhub.com/ai/ai-writing-assistant</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/font-generator/84</loc>
+    <loc>https://gotoolhub.com/finance/percentage-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/salary-calculator/85</loc>
+    <loc>https://gotoolhub.com/pdf/jpg-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/audio-cutter/86</loc>
+    <loc>https://gotoolhub.com/productivity/online-timer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pomodoro-timer/87</loc>
+    <loc>https://gotoolhub.com/text/plagiarism-checker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/random-password-generator/88</loc>
+    <loc>https://gotoolhub.com/utility/age-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-video-summarizer/89</loc>
+    <loc>https://gotoolhub.com/image/heic-to-jpg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/youtube-transcript-generator/90</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-to-jpg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-audio-enhancer/91</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-to-ppt</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/epub-to-pdf/92</loc>
+    <loc>https://gotoolhub.com/text/fancy-text-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/color-picker/93</loc>
+    <loc>https://gotoolhub.com/productivity/stopwatch</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-voice-cloning/94</loc>
+    <loc>https://gotoolhub.com/downloader/reddit-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-essay-writer/95</loc>
+    <loc>https://gotoolhub.com/image/background-remover</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/protect-pdf/96</loc>
+    <loc>https://gotoolhub.com/image/webp-to-jpg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/invoice-generator/97</loc>
+    <loc>https://gotoolhub.com/utility/wheel-of-names</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/business-card-maker/98</loc>
+    <loc>https://gotoolhub.com/image/image-compressor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/regex-tester/99</loc>
+    <loc>https://gotoolhub.com/image/object-remover</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-avatar-generator/100</loc>
+    <loc>https://gotoolhub.com/pdf/ppt-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/dice-roller/101</loc>
+    <loc>https://gotoolhub.com/privacy/temporary-email-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/profit-margin-calculator/102</loc>
+    <loc>https://gotoolhub.com/extension/screen-recorder-extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/credit-card-generator/103</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-merger</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/speech-to-text/104</loc>
+    <loc>https://gotoolhub.com/utility/qr-code-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/vimeo-video-downloader/105</loc>
+    <loc>https://gotoolhub.com/productivity/to-do-list</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-to-epub/106</loc>
+    <loc>https://gotoolhub.com/pdf/excel-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/coin-flipper/107</loc>
+    <loc>https://gotoolhub.com/finance/emi-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-colorizer/108</loc>
+    <loc>https://gotoolhub.com/text/character-counter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/exif-data-remover/109</loc>
+    <loc>https://gotoolhub.com/transcription/video-to-text-transcription</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/avi-to-mp4/110</loc>
+    <loc>https://gotoolhub.com/text/word-counter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/video-compressor/111</loc>
+    <loc>https://gotoolhub.com/image/crop-image</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-face-swap/112</loc>
+    <loc>https://gotoolhub.com/branding/social-media-post-maker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/json-formatter/113</loc>
+    <loc>https://gotoolhub.com/converter/mkv-to-mp4</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/xml-sitemap-generator/114</loc>
+    <loc>https://gotoolhub.com/audio/text-to-speech-tts</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/meeting-minutes-generator/115</loc>
+    <loc>https://gotoolhub.com/ai/ai-paraphrasing-tool</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-cover-letter-generator/116</loc>
+    <loc>https://gotoolhub.com/utility/random-number-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-excel-formula-generator/117</loc>
+    <loc>https://gotoolhub.com/utility/url-shortener</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-product-description-generator/118</loc>
+    <loc>https://gotoolhub.com/text/text-summarizer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-story-generator/119</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-to-excel</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-presentation-generator/120</loc>
+    <loc>https://gotoolhub.com/pdf/unlock-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/json-to-csv/121</loc>
+    <loc>https://gotoolhub.com/image/image-enhancer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/watermark-pdf/122</loc>
+    <loc>https://gotoolhub.com/finance/sip-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-page-delete/123</loc>
+    <loc>https://gotoolhub.com/health/bmi-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/png-to-svg/124</loc>
+    <loc>https://gotoolhub.com/downloader/pinterest-image-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/email-signature-generator/125</loc>
+    <loc>https://gotoolhub.com/transcription/audio-to-text-transcription</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-music-generator/126</loc>
+    <loc>https://gotoolhub.com/image/meme-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/lorem-ipsum-generator/127</loc>
+    <loc>https://gotoolhub.com/converter/mov-to-mp4</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/margin-calculator/128</loc>
+    <loc>https://gotoolhub.com/utility/resume-builder</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/morse-code-translator/129</loc>
+    <loc>https://gotoolhub.com/ai/ai-image-upscaler</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/cursive-text-generator/130</loc>
+    <loc>https://gotoolhub.com/finance/gst-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/roi-calculator/131</loc>
+    <loc>https://gotoolhub.com/image/image-resizer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/vat-calculator/132</loc>
+    <loc>https://gotoolhub.com/utility/password-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/bilibili-video-downloader/133</loc>
+    <loc>https://gotoolhub.com/developer/diff-checker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/password-strength-checker/134</loc>
+    <loc>https://gotoolhub.com/converter/webm-to-mp4</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/js-minifier/135</loc>
+    <loc>https://gotoolhub.com/utility/ip-address-lookup</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/base64-encode/decode/136</loc>
+    <loc>https://gotoolhub.com/branding/brand-name-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/text-to-handwriting/137</loc>
+    <loc>https://gotoolhub.com/ai/ai-content-humanizer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/receipt-generator/138</loc>
+    <loc>https://gotoolhub.com/image/photo-retoucher</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-thumbnail-maker/139</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-splitter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/secure-note-sharer/140</loc>
+    <loc>https://gotoolhub.com/downloader/twitch-clip-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/video-to-gif/141</loc>
+    <loc>https://gotoolhub.com/extension/color-picker-extension</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/image-to-base64/142</loc>
+    <loc>https://gotoolhub.com/text/font-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/subtitle-translator/143</loc>
+    <loc>https://gotoolhub.com/hr/salary-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/iban-validator/144</loc>
+    <loc>https://gotoolhub.com/audio/audio-cutter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-flowchart-maker/145</loc>
+    <loc>https://gotoolhub.com/productivity/pomodoro-timer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-code-explainer/146</loc>
+    <loc>https://gotoolhub.com/ai/ai-video-summarizer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-sql-generator/147</loc>
+    <loc>https://gotoolhub.com/transcription/youtube-transcript-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-recipe-generator/148</loc>
+    <loc>https://gotoolhub.com/ai/ai-audio-enhancer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-domain-name-generator/149</loc>
+    <loc>https://gotoolhub.com/pdf/epub-to-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-mind-map-generator/150</loc>
+    <loc>https://gotoolhub.com/design/color-picker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/csv-to-json/151</loc>
+    <loc>https://gotoolhub.com/ai/ai-voice-cloning</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/rotate-pdf/152</loc>
+    <loc>https://gotoolhub.com/ai/ai-essay-writer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/extract-images-from-pdf/153</loc>
+    <loc>https://gotoolhub.com/pdf/protect-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/sql-formatter/154</loc>
+    <loc>https://gotoolhub.com/finance/invoice-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/uuid-generator/155</loc>
+    <loc>https://gotoolhub.com/branding/business-card-maker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/hex-to-rgb-converter/156</loc>
+    <loc>https://gotoolhub.com/developer/regex-tester</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/bmr-calculator/157</loc>
+    <loc>https://gotoolhub.com/ai/ai-avatar-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/meta-tag-generator/158</loc>
+    <loc>https://gotoolhub.com/utility/dice-roller</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/text-to-binary/159</loc>
+    <loc>https://gotoolhub.com/finance/profit-margin-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/binary-to-text/160</loc>
+    <loc>https://gotoolhub.com/developer/credit-card-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/break-even-calculator/161</loc>
+    <loc>https://gotoolhub.com/audio/speech-to-text</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/conversion-rate-calculator/162</loc>
+    <loc>https://gotoolhub.com/downloader/vimeo-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/cpm-calculator/163</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-to-epub</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/roas-calculator/164</loc>
+    <loc>https://gotoolhub.com/utility/coin-flipper</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/podcast-transcription/165</loc>
+    <loc>https://gotoolhub.com/image/image-colorizer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/css-minifier/166</loc>
+    <loc>https://gotoolhub.com/privacy/exif-data-remover</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/markdown-to-html/167</loc>
+    <loc>https://gotoolhub.com/converter/avi-to-mp4</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/compare-pdf-files/168</loc>
+    <loc>https://gotoolhub.com/video/video-compressor</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/favicon-generator/169</loc>
+    <loc>https://gotoolhub.com/ai/ai-face-swap</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/case-converter/170</loc>
+    <loc>https://gotoolhub.com/developer/json-formatter</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/keyword-density-checker/171</loc>
+    <loc>https://gotoolhub.com/seo/xml-sitemap-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/base64-to-image/172</loc>
+    <loc>https://gotoolhub.com/transcription/meeting-minutes-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/flip-image/173</loc>
+    <loc>https://gotoolhub.com/ai/ai-cover-letter-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/md5-hash-generator/174</loc>
+    <loc>https://gotoolhub.com/ai/ai-excel-formula-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/html-minifier/175</loc>
+    <loc>https://gotoolhub.com/ai/ai-product-description-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/barcode-generator/176</loc>
+    <loc>https://gotoolhub.com/ai/ai-story-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-regex-generator/177</loc>
+    <loc>https://gotoolhub.com/ai/ai-presentation-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-business-idea-generator/178</loc>
+    <loc>https://gotoolhub.com/converter/json-to-csv</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-slogan-generator/179</loc>
+    <loc>https://gotoolhub.com/pdf/watermark-pdf</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ai-poem-generator/180</loc>
+    <loc>https://gotoolhub.com/pdf/pdf-page-delete</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pgp-key-generator/181</loc>
+    <loc>https://gotoolhub.com/image/png-to-svg</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/add-page-numbers-to-pdf/182</loc>
+    <loc>https://gotoolhub.com/branding/email-signature-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/html-to-markdown/183</loc>
+    <loc>https://gotoolhub.com/ai/ai-music-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/reverse-text-generator/184</loc>
+    <loc>https://gotoolhub.com/design/lorem-ipsum-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/zalgo-text-generator/185</loc>
+    <loc>https://gotoolhub.com/finance/margin-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/invisible-text-generator/186</loc>
+    <loc>https://gotoolhub.com/utility/morse-code-translator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ltv-calculator/187</loc>
+    <loc>https://gotoolhub.com/text/cursive-text-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/cac-calculator/188</loc>
+    <loc>https://gotoolhub.com/finance/roi-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/burn-rate-calculator/189</loc>
+    <loc>https://gotoolhub.com/finance/vat-calculator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/net-promoter-score-calculator/190</loc>
+    <loc>https://gotoolhub.com/downloader/bilibili-video-downloader</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/xml-to-csv/191</loc>
+    <loc>https://gotoolhub.com/privacy/password-strength-checker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/pdf-metadata-editor/192</loc>
+    <loc>https://gotoolhub.com/developer/js-minifier</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/svg-editor/193</loc>
+    <loc>https://gotoolhub.com/developer/base64-encode-decode</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/robots.txt-generator/194</loc>
+    <loc>https://gotoolhub.com/text/text-to-handwriting</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/saas-pricing-calculator/195</loc>
+    <loc>https://gotoolhub.com/finance/receipt-generator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/employee-turnover-calculator/196</loc>
+    <loc>https://gotoolhub.com/ai/ai-thumbnail-maker</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/mac-address-generator/197</loc>
+    <loc>https://gotoolhub.com/privacy/secure-note-sharer</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/ip-anonymizer/198</loc>
+    <loc>https://gotoolhub.com/video/video-to-gif</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/xml-to-json/199</loc>
+    <loc>https://gotoolhub.com/developer/image-to-base64</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://toolhub.com/braille-translator/200</loc>
+    <loc>https://gotoolhub.com/video/subtitle-translator</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/iban-validator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-flowchart-maker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-code-explainer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-sql-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-recipe-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-domain-name-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-mind-map-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/csv-to-json</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/rotate-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/extract-images-from-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/sql-formatter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/uuid-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/design/hex-to-rgb-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/health/bmr-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/seo/meta-tag-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/text-to-binary</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/binary-to-text</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/break-even-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/marketing/conversion-rate-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/marketing/cpm-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/marketing/roas-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/transcription/podcast-transcription</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/css-minifier</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/markdown-to-html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/compare-pdf-files</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/design/favicon-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/text/case-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/seo/keyword-density-checker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/base64-to-image</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/image/flip-image</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/md5-hash-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/html-minifier</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/utility/barcode-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-regex-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-business-idea-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-slogan-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-poem-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/privacy/pgp-key-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/add-page-numbers-to-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/html-to-markdown</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/text/reverse-text-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/text/zalgo-text-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/text/invisible-text-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/ltv-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/cac-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/burn-rate-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/marketing/net-promoter-score-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/xml-to-csv</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/pdf-metadata-editor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/design/svg-editor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/seo/robots-txt-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/finance/saas-pricing-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/hr/employee-turnover-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/privacy/mac-address-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/privacy/ip-anonymizer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/developer/xml-to-json</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/text/braille-translator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/passport-photo-india</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/aadhaar-wallet-cropper</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/pan-card-resizer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/kb-image-compressor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/transcription/live-transcription</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/image/image-bulk-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/esign-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/pdf-ocr</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/pdf-form-filler</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/multi-model-ai-chat</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-document-chat</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-video-subtitler</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-code-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/video/subtitle-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/svg-to-png-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/utility/unit-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-blog-title-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/video/video-watermark-adder</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-hashtag-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/prompt-library-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-chat-hub</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/gst-invoice-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/itr-filing-helper</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/ai/ai-changelog-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/extension/browser-extension</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/utility/mp3-compressor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/converter/gif-to-mp4</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/video/video-trimmer</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/aadhaar-card-masker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/pan-verification</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/ifsc-code-lookup</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/voter-id-form-helper</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/india-pincode-finder</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/hindi-regional-font-generator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/indian-age-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/indian-utilities/cgpa-to-percentage-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/pdf-to-html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/html-to-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gotoolhub.com/pdf/generic-pdf-processor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

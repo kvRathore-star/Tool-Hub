@@ -2,12 +2,16 @@
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
+interface NavigatorWithMemory extends Navigator {
+  deviceMemory?: number;
+}
+
 export function MemoryWatchdog() {
   useEffect(() => {
     const checkMemory = () => {
-      if (typeof navigator !== 'undefined' && 'deviceMemory' in navigator) {
-        const ram = (navigator as any).deviceMemory as number;
-        if (ram && ram < 4) {
+      const nav = navigator as NavigatorWithMemory;
+      if (nav.deviceMemory !== undefined) {
+        if (nav.deviceMemory < 4) {
           toast('Low-RAM Mode Activated. Processing may take longer.', {
             icon: '⚡',
             style: {

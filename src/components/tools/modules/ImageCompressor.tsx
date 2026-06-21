@@ -5,6 +5,7 @@ import { FileUploader } from '../FileUploader';
 import imageCompression from 'browser-image-compression';
 import { Download, RefreshCw, Sliders, Image as ImageIcon, Zap } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ImageCompressor() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -65,10 +66,7 @@ export default function ImageCompressor() {
 
   const handleDownload = () => {
     if (!compressedUrl) return;
-    const a = document.createElement('a');
-    a.href = compressedUrl;
-    a.download = `compressed-${imageFile?.name || 'image.jpg'}`;
-    a.click();
+    downloadOrShare(compressedUrl, `compressed-${imageFile?.name || 'image.jpg'}`);
   };
 
   const reset = () => {
@@ -107,12 +105,12 @@ export default function ImageCompressor() {
           <ImageIcon className="w-5 h-5 text-indigo-500" />
           <div>
             <h3 className="font-bold text-zinc-900 dark:text-zinc-100">{imageFile.name}</h3>
-            <p className="text-xs text-zinc-550">Original size: {(imageFile.size / 1024).toFixed(1)} KB</p>
+            <p className="text-xs text-[var(--text-secondary)]">Original size: {(imageFile.size / 1024).toFixed(1)} KB</p>
           </div>
         </div>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-250 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+          className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-[var(--bg-surface)] dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-bold rounded-lg transition-colors cursor-pointer"
         >
           Upload New Image
         </button>
@@ -128,7 +126,7 @@ export default function ImageCompressor() {
 
           {/* Quality Slider */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Image Quality</span>
               <span className="text-indigo-400 font-bold">{Math.round(quality * 100)}%</span>
             </div>
@@ -148,7 +146,7 @@ export default function ImageCompressor() {
 
           {/* Scale Slider */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-zinc-650 dark:text-zinc-400">
+            <div className="flex justify-between text-xs text-[var(--text-secondary)] dark:text-zinc-400">
               <span>Resolution Scale</span>
               <span className="text-indigo-400 font-bold">{Math.round(scale * 100)}%</span>
             </div>
@@ -169,7 +167,7 @@ export default function ImageCompressor() {
           <button
             onClick={handleCompress}
             disabled={isProcessing}
-            className="w-full bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+            className="w-full bg-[var(--accent)] hover:bg-indigo-600 disabled:bg-indigo-800/50 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
           >
             {isProcessing ? (
               <RefreshCw className="w-5 h-5 animate-spin" />
@@ -224,7 +222,7 @@ export default function ImageCompressor() {
               </div>
               <button
                 onClick={handleDownload}
-                className="bg-indigo-650 hover:bg-indigo-600 text-white font-bold px-6 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2 text-sm cursor-pointer shadow"
+                className="bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold px-6 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2 text-sm cursor-pointer shadow"
               >
                 <Download className="w-4 h-4" />
                 Download Output

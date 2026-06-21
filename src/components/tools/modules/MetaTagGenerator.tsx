@@ -40,7 +40,7 @@ export default function MetaTagGenerator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Globe className="w-5 h-5 text-indigo-500" />
           SEO Meta Tag Header Builder
         </h2>
@@ -87,7 +87,7 @@ export default function MetaTagGenerator() {
         <div className="lg:col-span-7 space-y-6">
           {/* Simulated Google Search Preview */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl space-y-3">
-            <span className="text-[10px] text-zinc-450 font-bold uppercase block border-b border-zinc-800 pb-2 flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> Google Search Result Preview</span>
+            <span className="text-[10px] text-[var(--text-muted)] font-bold uppercase block border-b border-zinc-800 pb-2 flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> Google Search Result Preview</span>
             <div className="space-y-1">
               <p className="text-sm font-bold text-indigo-400 hover:underline cursor-pointer font-serif">{title}</p>
               <p className="text-[10px] text-emerald-500 font-sans">{url}</p>
@@ -99,7 +99,7 @@ export default function MetaTagGenerator() {
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 p-5 rounded-2xl shadow-xl flex flex-col">
             <div className="flex justify-between items-center border-b border-zinc-800 pb-2 mb-2">
               <span className="text-xs text-zinc-400 font-bold uppercase">Generated Meta Tags</span>
-              <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg"><Copy className="w-4 h-4" /></button>
+              <button onClick={handleCopy} className="p-1.5 text-zinc-500 hover:text-white border border-zinc-800 rounded-lg" aria-label="Copy"><Copy className="w-4 h-4" /></button>
             </div>
             <textarea
               value={buildMeta()}

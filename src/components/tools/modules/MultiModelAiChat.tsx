@@ -115,6 +115,7 @@ export default function MultiModelAiChat() {
                 onClick={handleSend}
                 disabled={!input.trim() || isTyping}
                 className="bg-purple-600 hover:bg-purple-500 text-white p-2.5 rounded-xl transition-all disabled:opacity-50 disabled:hover:bg-purple-600 shadow-lg active:scale-95"
+                aria-label="Send"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
               </button>

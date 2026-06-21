@@ -41,6 +41,7 @@ export default function JsonToXml() {
         <button 
           onClick={convert}
           className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95"
+          aria-label="Convert"
         >
           <ArrowRight className="w-6 h-6 md:rotate-0 rotate-90" />
         </button>

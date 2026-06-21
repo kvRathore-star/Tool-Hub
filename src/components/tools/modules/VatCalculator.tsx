@@ -33,7 +33,7 @@ export default function VatCalculator() {
           <div className="space-y-4">
             <div>
               <span className="text-xs text-zinc-400">VAT Amount</span>
-              <p className="text-xl font-bold text-zinc-850 dark:text-white">$${vatAmount.toFixed(2)}</p>
+              <p className="text-xl font-bold text-[var(--text-secondary)] dark:text-white">$${vatAmount.toFixed(2)}</p>
             </div>
           </div>
 

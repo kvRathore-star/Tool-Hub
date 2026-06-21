@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Download, Sparkles, Image as ImageIcon, Link2 } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiImageGenerator() {
   const [prompt, setPrompt] = useState('');
@@ -67,11 +68,7 @@ export default function AiImageGenerator() {
       const response = await fetch(imageUrl);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `ai-image-${Date.now()}.png`;
-      link.click();
-      URL.revokeObjectURL(blobUrl);
+      downloadOrShare(blobUrl, `ai-image-${Date.now()}.png`);
     } catch (e) {
       toast.error('Failed to download image. Try copying the link instead.');
     }
@@ -162,14 +159,14 @@ export default function AiImageGenerator() {
                 <button
                   onClick={handleCopyLink}
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Copy Direct Link"
+                  title="Copy Direct Link" aria-label="Copy link"
                 >
                   <Link2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleDownload}
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Download Image"
+                  title="Download Image" aria-label="Download"
                 >
                   <Download className="w-4 h-4" />
                 </button>

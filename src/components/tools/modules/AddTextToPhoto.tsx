@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import { Type, Upload, Download, Settings2 } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AddTextToPhoto() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -58,10 +59,7 @@ export default function AddTextToPhoto() {
 
   const downloadImage = () => {
     if (canvasRef.current) {
-      const link = document.createElement('a');
-      link.download = 'image-with-text.png';
-      link.href = canvasRef.current.toDataURL('image/png');
-      link.click();
+      downloadOrShare(canvasRef.current.toDataURL('image/png'), 'image-with-text.png');
     }
   };
 

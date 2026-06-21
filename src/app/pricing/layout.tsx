@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { toolsRegistry } from "@/registry/tools";
+
+const toolCount = toolsRegistry.length;
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "ToolHub Pro — ₹299/month (or $14.99/mo) for unlimited access to 200+ browser-based tools. PDF, image, AI, video, audio tools. Free tier available.",
+  description: `ToolHub Pro — ₹299/month (or $14.99/mo) for unlimited access to ${toolCount}+ browser-based tools. PDF, image, AI, video, audio tools. Free tier available.`,
   openGraph: {
     title: "ToolHub Pricing — Simple & Transparent",
-    description: "ToolHub Pro — ₹299/month (or $14.99/mo) for unlimited access to 200+ browser-based tools. PDF, image, AI, video, audio tools. Free tier available.",
+    description: `ToolHub Pro — ₹299/month (or $14.99/mo) for unlimited access to ${toolCount}+ browser-based tools. PDF, image, AI, video, audio tools. Free tier available.`,
   }
 };
 

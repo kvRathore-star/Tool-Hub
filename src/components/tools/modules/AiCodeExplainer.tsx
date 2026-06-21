@@ -58,7 +58,7 @@ ${code}`;
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white">AI Code Explainer</h3>
             </div>
             
-            <p className="text-xs text-zinc-450 mb-4">Paste complex scripts or logical algorithms to generate step-by-step breakdowns of implementation flows.</p>
+            <p className="text-xs text-[var(--text-muted)] mb-4">Paste complex scripts or logical algorithms to generate step-by-step breakdowns of implementation flows.</p>
             
             <textarea
               value={code}
@@ -71,7 +71,7 @@ ${code}`;
           <button 
             onClick={explainCode}
             disabled={isProcessing}
-            className="mt-6 w-full py-4 rounded-xl font-bold text-white bg-indigo-650 hover:bg-indigo-600 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+            className="mt-6 w-full py-4 rounded-xl font-bold text-white bg-[var(--accent)] hover:bg-indigo-600 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-md"
           >
             {isProcessing ? (
               <>
@@ -95,7 +95,7 @@ ${code}`;
               <button 
                 onClick={handleCopy} 
                 className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                title="Copy to Clipboard"
+                title="Copy to Clipboard" aria-label="Copy"
               >
                 <Clipboard className="w-4 h-4" />
               </button>
@@ -104,7 +104,7 @@ ${code}`;
 
           <div className="flex-1 flex flex-col">
             {explanation ? (
-              <div className="flex-1 p-4 rounded-xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-zinc-800/50 text-zinc-850 dark:text-zinc-200 whitespace-pre-wrap font-sans text-xs leading-relaxed overflow-y-auto max-h-[500px]">
+              <div className="flex-1 p-4 rounded-xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-zinc-800/50 text-[var(--text-secondary)] dark:text-zinc-200 whitespace-pre-wrap font-sans text-xs leading-relaxed overflow-y-auto max-h-[500px]">
                 {explanation}
               </div>
             ) : (

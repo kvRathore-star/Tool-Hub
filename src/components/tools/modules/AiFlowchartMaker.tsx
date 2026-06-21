@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useAiProvider } from '@/hooks/useAiProvider';
 import AiSettings from '../AiSettings';
 import { Clipboard, Download, Sparkles, Network } from 'lucide-react';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function AiFlowchartMaker() {
   const { isConfigured, generateCompletion } = useAiProvider();
@@ -71,11 +72,7 @@ export default function AiFlowchartMaker() {
   const handleDownload = () => {
     const blob = new Blob([mermaidCode], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `flowchart_${new Date().toISOString().slice(0,10)}.mmd`;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadOrShare(url, `flowchart_${new Date().toISOString().slice(0,10)}.mmd`);
   };
 
   return (
@@ -95,7 +92,7 @@ export default function AiFlowchartMaker() {
               <label className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Process Description</label>
               <textarea
                 value={description}
-                onChange={e => setDescription(e.target.value)}
+                onChange={e => setDescription(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleGenerate()}
                 placeholder="e.g. Order checkout flow: User inputs payment -> validation check -> if valid, bill user & send receipt -> if invalid, show error message..."
                 className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-zinc-900 dark:text-white h-44 outline-none focus:border-zinc-300 dark:focus:border-zinc-700 transition-colors text-sm resize-none"
               />
@@ -143,14 +140,14 @@ export default function AiFlowchartMaker() {
                 <button 
                   onClick={handleCopy} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Copy Mermaid Code"
+                  title="Copy Mermaid Code" aria-label="Copy"
                 >
                   <Clipboard className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={handleDownload} 
                   className="p-2 text-zinc-500 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                  title="Download Mermaid File"
+                  title="Download Mermaid File" aria-label="Download"
                 >
                   <Download className="w-4 h-4" />
                 </button>

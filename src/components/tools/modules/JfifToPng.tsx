@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef } from 'react';
 import { toast } from 'react-hot-toast';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function JfifToPng() {
   const [image, setImage] = useState<string | null>(null);
@@ -28,10 +29,7 @@ export default function JfifToPng() {
       ctx.drawImage(img, 0, 0);
       
       const pngUrl = canvas.toDataURL('image/png');
-      const a = document.createElement('a');
-      a.href = pngUrl;
-      a.download = 'converted.png';
-      a.click();
+      downloadOrShare(pngUrl, 'converted.png');
       toast.success('Converted & Downloaded!');
     };
   };

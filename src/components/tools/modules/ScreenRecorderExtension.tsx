@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Eye, Download, Video, Sparkles } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import JSZip from 'jszip';
+import { downloadOrShare } from '@/utils/nativeShare';
 
 export default function ScreenRecorderExtension() {
   const [activeTab, setActiveTab] = useState<'manifest' | 'popupHtml' | 'popupJs'>('manifest');
@@ -82,11 +83,7 @@ document.getElementById('stopBtn').addEventListener('click', () => {
 
       const content = await zip.generateAsync({ type: "blob" });
       const url = URL.createObjectURL(content);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `screen_recorder_extension.zip`;
-      a.click();
-      URL.revokeObjectURL(url);
+      downloadOrShare(url, `screen_recorder_extension.zip`);
       toast.success('Screen recorder extension ZIP downloaded!');
     } catch (err) {
       toast.error('Failed to create package');
@@ -96,7 +93,7 @@ document.getElementById('stopBtn').addEventListener('click', () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
       <div className="bg-zinc-50 dark:bg-zinc-900/50 p-5 border border-zinc-200 dark:border-white/5 rounded-2xl">
-        <h2 className="text-xl font-bold text-zinc-955 dark:text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2">
           <Video className="w-5 h-5 text-indigo-500" />
           Tab Screen Recorder Extension Builder
         </h2>
@@ -117,7 +114,7 @@ document.getElementById('stopBtn').addEventListener('click', () => {
             />
           </div>
 
-          <button onClick={handleDownload} className="w-full mt-4 bg-indigo-650 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <button onClick={handleDownload} className="w-full mt-4 bg-[var(--accent)] hover:bg-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer">
             <Download className="w-4 h-4" /> Download Extension ZIP
           </button>
         </div>

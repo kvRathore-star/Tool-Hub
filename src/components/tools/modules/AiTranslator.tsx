@@ -82,13 +82,14 @@ ${inputText}`;
              </select>
            </div>
            
-           <button 
-             onClick={swapLanguages}
-             disabled={sourceLang === 'Auto Detect'}
-             className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50"
-           >
-             <svg className="w-5 h-5 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-           </button>
+<button 
+              onClick={swapLanguages}
+              disabled={sourceLang === 'Auto Detect'}
+              className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50"
+              aria-label="Swap"
+            >
+              <svg className="w-5 h-5 text-zinc-600 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+            </button>
 
            <div className="flex-1 w-full relative">
              <select 
@@ -126,6 +127,7 @@ ${inputText}`;
               <button 
                 onClick={copyToClipboard}
                 className="absolute top-4 right-4 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-white/10 p-2 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-600 transition-colors"
+                aria-label="Copy"
               >
                 <svg className="w-5 h-5 text-zinc-600 dark:text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
               </button>
